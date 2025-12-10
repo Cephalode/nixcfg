@@ -76,5 +76,5 @@
     };
   };
   # Let Manager install and manage itself.
-  programs.home_manager.enable = true;
+  programs.home-manager.enable = true;
 }
