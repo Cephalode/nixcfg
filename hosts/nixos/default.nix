@@ -11,25 +11,12 @@
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  programs.zsh.enable = true;
-
   users.users = {
     sqibo = {
       isNormalUser = true;
       description = "sqibo";
       extraGroups = [ "wheel" "networkmanager" "audio" ];
-      packages = [
-        inputs.home-manager.packages.${pkgs.system}.default
-      ];
-	  shell = pkgs.zsh;
     };
-  };
-
-  home-manager = {
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs outputs; };
-    users.sqibo =
-      import ../../home/sqibo/${config.networking.hostName}.nix;
   };
 
   nixpkgs.config.allowUnfree = true;

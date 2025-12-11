@@ -1,20 +1,13 @@
 {
   description = ''
-    For questions just DM me on X: https://twitter.com/@m3tam3re
-    There is also some NIXOS content on my YT channel: https://www.youtube.com/@m3tam3re
+    The Nix configuration flake for the Cephalode family of systems.
 
-    One of the best ways to learn NIXOS is to read other peoples configurations. I have personally learned a lot from Gabriel Fontes configs:
-    https://github.com/Misterio77/nix-starter-configs
-    https://github.com/Misterio77/nix-config
-
-    Please also check out the starter configs mentioned above.
+    This flake is based off the configuration of m3tam3re:
+	X: https://twitter.com/@m3tam3re
+    YouTube: https://www.youtube.com/@m3tam3re
   '';
 
   inputs = {
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 	niri.url = "github:sodiboo/niri-flake";
@@ -25,8 +18,8 @@
     let
       inherit (self) outputs;
       systems = [
-        "x86_64-linux"
-        "aarch64-darwin"
+        "x86_64-linux" # Laptop/Desktop
+        "aarch64-darwin" # Mac
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in {
@@ -38,12 +31,20 @@
 			niri.nixosModules.niri { programs.niri.enable = true; }
 		  ];
         };
-      };
-      homeConfigurations = {
-        "sqibo@loligo" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/sqibo/loligo.nix ];
+       
+        hapalo = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ 
+		    ./hosts/nixos/hapalo 
+			niri.nixosModules.niri { programs.niri.enable = true; }
+		  ];
+        };
+
+	    metasepia = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ 
+		    ./hosts/metasepia 
+		  ];
         };
       };
     };
