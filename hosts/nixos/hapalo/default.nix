@@ -75,18 +75,7 @@
 
   environment = {
 	systemPackages = with pkgs; [
-	  alacritty
-	  code-cursor-fhs
-	  firefox
-	  fuzzel
-	  fzf
-	  ghostty
-	  git
-	  neovim
-	  tree
-	  vim
-	  waybar
-	  wl-clipboard
+	  fastfetch
     ];
 	variables = {
 	  XDG_CONFIG_HOME="$HOME/.config";

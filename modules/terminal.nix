@@ -1,8 +1,8 @@
 { config, pkgs, lib, inputs, ... }: {
 
   environment.systemPackages = with pkgs; [
-    # CLI tools
 	clang
+	fastfetch
 	fzf
 	ghostty
 	ripgrep

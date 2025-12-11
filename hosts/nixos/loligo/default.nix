@@ -1,10 +1,40 @@
 { config, pkgs, inputs, outputs, lib, ... }: {
   imports = [
-    ../default.nix
 	./hardware-configuration.nix
+    ../.
   ];
   
   networking.hostName = "loligo";
+
+  services.xserver.videoDrivers = [
+    "modesetting"
+	"nvidia"
+  ];
+
+  hardware = {
+	nvidia = {
+  	  modesetting.enable = true;
+
+	  powerManagement = {
+	    enable = false;
+	    finegrained = true;
+	  };
+  
+	  open = false;
+  
+	  nvidiaSettings = true;
+	  package = config.boot.kernelPackages.nvidiaPackages.stable;
+  
+	  prime = {
+	    offload = {
+		  enable = true;
+		  enableOffloadCmd = true;
+	    };
+	    intelBusId = "PCI:0:2:0";
+	    nvidiaBusId = "PCI:1:0:0";
+	  };
+	};
+  };
 
   environment.systemPackages = with pkgs; [
 

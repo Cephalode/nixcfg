@@ -11,14 +11,6 @@
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  users.users = {
-    sqibo = {
-      isNormalUser = true;
-      description = "sqibo";
-      extraGroups = [ "wheel" "networkmanager" "audio" ];
-    };
-  };
-
   nixpkgs.config.allowUnfree = true;
 
   hardware.bluetooth = {
