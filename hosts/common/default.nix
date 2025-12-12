@@ -1,7 +1,7 @@
 # Common configuration for all hosts
 
 { lib, inputs, outputs, ... }: {
-  imports = [ ../../modules ];
+  imports = [ ../../modules/common ];
 
   users.users = {
     sqibo = {
@@ -15,6 +15,8 @@
     XDG_CONFIG_HOME = "$HOME/.config";
 	ZDOTDIR = "$XDG_CONFIG_HOME/zsh";
   };
+
+  nix.settings.trusted-users = [ "root" "sqibo" ];
 
   nixpkgs.config.allowUnfree = true;
 }

@@ -4,6 +4,7 @@
 	clang
 	fastfetch
 	fzf
+	git
 	ghostty
 	ripgrep
 	tree

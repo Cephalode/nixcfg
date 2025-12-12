@@ -1,7 +1,7 @@
 { config, pkgs, inputs, outputs, lib, ...}: {
   imports = [
     ../common
-	../../modules/nixos.nix
+	../../modules/nixos
   ];
 
   boot.loader.systemd-boot.enable = true; # (for UEFI systems only)
@@ -16,16 +16,7 @@
 	powerOnBoot = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    git
-	firefox
-  ];
-
   services = {
     openssh.enable = true;
   };
-
-  nix.settings.trusted-users = [ "root" "sqibo" ];
-
-  system.stateVersion = "25.05"; # Do not change
 }
