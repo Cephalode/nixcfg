@@ -6,4 +6,6 @@
 	mako
 	waybar
   ];
+
+  programs.niri.enable = true;
 }

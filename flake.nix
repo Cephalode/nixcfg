@@ -10,11 +10,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-	niri.url = "github:sodiboo/niri-flake";
 	neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = { self, home-manager, nixpkgs, niri, ... }@inputs:
+  outputs = { self, home-manager, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -28,7 +27,6 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ 
 		    ./hosts/nixos/loligo 
-			niri.nixosModules.niri { programs.niri.enable = true; }
 		  ];
         };
        
@@ -36,7 +34,6 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ 
 		    ./hosts/nixos/hapalo 
-			niri.nixosModules.niri { programs.niri.enable = true; }
 		  ];
         };
 

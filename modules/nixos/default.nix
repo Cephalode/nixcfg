@@ -4,6 +4,5 @@
     ./niri.nix
 	./kb.nix
 	./audio.nix
-	./programs.nix
   ];
 }

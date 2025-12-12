@@ -2,6 +2,7 @@
   imports = [
 	./hardware-configuration.nix
     ../.
+	../../../modules/nixos/loligo
   ];
   
   networking.hostName = "loligo";
