@@ -14,6 +14,9 @@
       unzip
       vim
       wget
+
+      # Neovim using NixCats
+      inputs.nvim.packages.${pkgs.system}.nvim
     ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
