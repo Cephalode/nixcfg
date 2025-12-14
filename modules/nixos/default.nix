@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
   imports = [
     ../common
-    ./niri.nix
-	./kb.nix
-	./audio.nix
+    ./kb.nix
+    ./audio.nix
+    ./wm
   ];
 }
