@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-	environment.systemPackages = with pkgs; [
-		code-cursor
-	];
+  environment.systemPackages = with pkgs; [
+    code-cursor
+  ];
 }

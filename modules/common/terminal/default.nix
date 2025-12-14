@@ -15,8 +15,10 @@
       vim
       wget
 
-      # Neovim using NixCats
-      inputs.nvim.packages.${pkgs.system}.nvim
+      # Neovim Language Servers
+      lua-language-server
+      typescript-language-server
+      nil # Nix language server
     ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
@@ -34,7 +36,4 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
-
-  # Neovim Nix-Lua integration
-  myNixCats = import ./nvim { inherit inputs; };
 }
