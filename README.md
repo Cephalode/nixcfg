@@ -20,3 +20,10 @@ These will not be in the hosts directory but may be referenced by name.
 ## Sepia (iPad)
 - Named after the common cuttlefish (sepia officinalis) since iPads are more creative machines and sepia is also the name of the ink cuttlefishes produce, which is widely used by artists.
 - Will only run iPadOS.
+
+# How to run
+`chmod 755 update.sh`
+`./update.sh`
+You will be prompted to enter your sudo password. The script simply calls one single nix-rebuild command:
+`sudo nixos-rebuild switch --flake .#$HOSTNAME`
+Will support `darwin-rebuild` soon.

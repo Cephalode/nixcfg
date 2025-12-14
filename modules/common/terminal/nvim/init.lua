@@ -1,0 +1,8 @@
+require("config.autocmd")
+require("config.globals")
+require("config.keymap")
+require("config.lsp")
+require("config.options")
+require("config.theme")
+require("plugins.lsp")
+dofile(vim.fn.stdpath("config") .. "/ancient/init.lua")
