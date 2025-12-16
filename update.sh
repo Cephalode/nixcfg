@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-if [$(uname -s)="Linux"]; then
+
+os="$(uname -s)"
+
+if [[ "$os" == "Linux" ]]; then
   sudo nixos-rebuild switch $1 --flake .#$HOSTNAME
-elif [$(uname -s)="Darwin"]; then
+elif [[ "$os" == "Darwin" ]]; then
   sudo darwin-rebuild switch $1 --flake .#HOSTNAME
 fi
