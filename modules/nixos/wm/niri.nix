@@ -6,6 +6,7 @@
       firefox
       fuzzel
       mako
+      swaylock
       waybar
       xwayland-satellite
 

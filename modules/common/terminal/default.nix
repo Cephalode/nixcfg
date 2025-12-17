@@ -10,6 +10,7 @@
       fzf
       git
       ghostty
+      killall
       ripgrep
       tmux
       tree
