@@ -15,9 +15,22 @@
       url = "path:./modules/common/terminal/nixCats";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+        flake = false;
+      };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
   };
 
-  outputs = { self, home-manager, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, nix-homebrew, homebrew-core, homebrew-cask, nvim, ... }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -30,22 +43,33 @@
         loligo = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [ 
-		    ./hosts/nixos/loligo 
-		  ];
-        };
-       
-        hapalo = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ 
-		    ./hosts/nixos/hapalo 
-		  ];
+            ./hosts/nixos/loligo 
+          ];
         };
 
-	    metasepia = nixpkgs.lib.nixosSystem {
+        hapalo = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ 
-		    ./hosts/metasepia 
-		  ];
+          modules = [
+            ./hosts/nixos/hapalo
+          ];
+        };
+      };
+
+      darwinConfigurations = {
+        metasepia = nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit self inputs outputs; };
+          modules = [
+            ./hosts/metasepia
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                # enableRosetta = true;
+                user = "sqibo";
+                autoMigrate = true;
+              };
+            }
+          ];
         };
       };
     };

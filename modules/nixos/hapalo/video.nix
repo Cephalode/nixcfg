@@ -1,31 +1,19 @@
-{ config, pkgs, lib, ... }: {
-  services.xserver.videoDrivers = [
-    "modesetting"
-	"nvidia"
-  ];
+{ config, pkgs, lib, ... }:
+{
+  services.xserver.videoDrivers = [ "nvidia" ];
 
-  hardware = {
-	nvidia = {
-  	  modesetting.enable = true;
+  hardware.graphics.enable = true;
 
-	  powerManagement = {
-	    enable = false;
-	    finegrained = true;
-	  };
-  
-	  open = false;
-  
-	  nvidiaSettings = true;
-	  package = config.boot.kernelPackages.nvidiaPackages.stable;
-  
-	  prime = {
-	    offload = {
-		  enable = true;
-		  enableOffloadCmd = true;
-	    };
-	    intelBusId = "PCI:0:2:0";
-	    nvidiaBusId = "PCI:1:0:0";
-	  };
-	};
+  hardware.nvidia = {
+    open = false;
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    powerManagement.enable = lib.mkDefault true;
   };
+
+  boot.blacklistedKernelModules = [ "nouveau" ];
+
+  # Optional: if you use Wayland and see weirdness, this usually helps:
+  # boot.kernelParams = [ "nvidia-drm.modeset=1" ];
 }

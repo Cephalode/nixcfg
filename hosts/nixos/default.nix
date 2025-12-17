@@ -18,4 +18,12 @@
   services = {
     openssh.enable = true;
   };
+
+  users.users = {
+    sqibo = {
+      isNormalUser = true;
+      description = "Main user.";
+      extraGroups = [ "wheel" "networkmanager" "audio" "seat" ];
+    };
+  };
 }
