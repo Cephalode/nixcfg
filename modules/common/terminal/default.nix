@@ -5,12 +5,16 @@
 
   environment = {
     systemPackages = with pkgs; [
+      btop
       cursor-cli
       fastfetch
+      fd
       fzf
       git
       kitty
+      neovim
       ripgrep
+      sk
       tmux
       tree
       unzip
