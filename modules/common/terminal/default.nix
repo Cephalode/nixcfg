@@ -12,9 +12,7 @@
       fzf
       git
       kitty
-      neovim
       ripgrep
-      sk
       tmux
       tree
       unzip
