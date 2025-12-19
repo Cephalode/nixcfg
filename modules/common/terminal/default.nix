@@ -7,10 +7,12 @@
     systemPackages = with pkgs; [
       cursor-cli
       fastfetch
+      fd
       fzf
       git
       ghostty
       ripgrep
+      tldr
       tmux
       tree
       unzip
