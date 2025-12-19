@@ -1,6 +1,4 @@
-# Hosts
-
-## NixOS
+# Hosts ## NixOS
 
 ### Hapalo (Gaming PC)
 - Named after the blue-ringed octopus (hapalochlaena) due to colorful RGB and deadly performance
@@ -22,8 +20,9 @@ These will not be in the hosts directory but may be referenced by name.
 - Will only run iPadOS.
 
 # How to run
-`chmod 755 update.sh`
 `./update.sh`
 You will be prompted to enter your sudo password. The script simply calls one single nix-rebuild command:
 `sudo nixos-rebuild switch --flake .#$HOSTNAME`
-Will support `darwin-rebuild` soon.
+
+or the following for MacOS on Nix Darwin:
+`sudo nix-darwin switch --flake .#$HOSTNAME`

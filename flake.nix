@@ -9,7 +9,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nvim = {
       url = "path:./modules/common/terminal/nixCats";

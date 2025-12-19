@@ -12,11 +12,19 @@
 
   hardware.bluetooth = {
     enable = true;
-	powerOnBoot = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+        FastConnectable = true;
+      };
+      Policy.AutoEnable = true;
+    };
   };
 
   services = {
     openssh.enable = true;
+    blueman.enable = ture;
   };
 
   users.users = {
