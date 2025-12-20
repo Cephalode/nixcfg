@@ -10,11 +10,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nvim = {
-      url = "path:./modules/common/terminal/nixCats";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +42,7 @@
         specialArgs = { inherit inputs outputs; };
         modules = [ 
           ./hosts/nixos/loligo
+          ./modules/nixos/loligo
         ];
       };
 
@@ -54,6 +50,7 @@
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./hosts/nixos/hapalo
+          ./modules/nixos/hapalo
         ];
       };
     };
@@ -65,6 +62,7 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./hosts/metasepia
+            ./modules/macos
           ];
         };
       in

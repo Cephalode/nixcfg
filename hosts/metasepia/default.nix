@@ -2,7 +2,6 @@
 {
   imports = [
     ../common
-    ../../modules/macos
   ];
 
   system = {

@@ -24,7 +24,7 @@
 
   services = {
     openssh.enable = true;
-    blueman.enable = ture;
+    blueman.enable = true;
   };
 
   users.users = {
