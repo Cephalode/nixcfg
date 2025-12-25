@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }: {
-	imports = [
-		../.
-		./video.nix
-	];
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [
+    ../.
+    ./video.nix
+  ];
 }

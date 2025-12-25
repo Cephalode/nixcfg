@@ -1,4 +1,10 @@
-{ inputs, config, pkgs, lib, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   # myNixCats = import ../../../../nvim { inherit inputs; };
 in
@@ -13,4 +19,3 @@ in
     nil # Nix language server
   ];
 }
-

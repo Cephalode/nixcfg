@@ -1,4 +1,12 @@
-{ config, pkgs, inputs, outputs, lib, ...}: {
+{
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  lib,
+  ...
+}:
+{
   imports = [
     ../common
   ];
@@ -33,7 +41,12 @@
     sqibo = {
       isNormalUser = true;
       description = "Main user.";
-      extraGroups = [ "wheel" "networkmanager" "audio" "seat" ];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "audio"
+        "seat"
+      ];
     };
   };
 }

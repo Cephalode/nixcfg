@@ -1,4 +1,11 @@
-{ config, pkgs, inputs, outputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  lib,
+  ...
+}:
 {
   imports = [
     ../common
@@ -31,7 +38,7 @@
       NSGlobalDomain.KeyRepeat = 2;
       LaunchServices.LSQuarantine = false;
     };
-    
+
     stateVersion = 6;
   };
 }

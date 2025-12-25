@@ -40,61 +40,74 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
-  let
-    inherit (self) outputs;
+  outputs =
+    inputs@{ self, nixpkgs, ... }:
+    let
+      inherit (self) outputs;
 
-    nixosInputs = {
-      inherit (inputs)
-        nixpkgs
-        nixpkgs-stable
-        neovim-nightly-overlay
+      nixosInputs = {
+        inherit (inputs)
+          nixpkgs
+          nixpkgs-stable
+          neovim-nightly-overlay
 
-        nixCats
-        noctalia
-        zen-browser;
-    };
-
-    darwinInputs = {
-      inherit (inputs)
-        nixpkgs
-        nix-darwin
-        nix-homebrew
-        homebrew-core
-        homebrew-cask
-
-        nixCats
-        neovim-nightly-overlay
-        zen-browser;
-    };
-  in {
-    nixosConfigurations = {
-      loligo = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit outputs; inputs = nixosInputs; };
-        modules = [
-          ./hosts/nixos/loligo
-          ./modules/nixos/loligo
-        ];
+          nixCats
+          noctalia
+          zen-browser
+          ;
       };
 
-      hapalo = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit outputs; inputs = nixosInputs; };
-        modules = [
-          ./hosts/nixos/hapalo
-          ./modules/nixos/hapalo
-        ];
-      };
-    };
+      darwinInputs = {
+        inherit (inputs)
+          nixpkgs
+          nix-darwin
+          nix-homebrew
+          homebrew-core
+          homebrew-cask
 
-    darwinConfigurations = {
-      metasepia = inputs.nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit outputs; inputs = darwinInputs; };
-        modules = [
-          ./hosts/metasepia
-          ./modules/macos
-        ];
+          nixCats
+          neovim-nightly-overlay
+          zen-browser
+          ;
+      };
+    in
+    {
+      nixosConfigurations = {
+        loligo = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit outputs;
+            inputs = nixosInputs;
+          };
+          modules = [
+            ./hosts/nixos/loligo
+            ./modules/nixos/loligo
+          ];
+        };
+
+        hapalo = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit outputs;
+            inputs = nixosInputs;
+          };
+          modules = [
+            ./hosts/nixos/hapalo
+            ./modules/nixos/hapalo
+          ];
+        };
+      };
+
+      darwinConfigurations = {
+        metasepia = inputs.nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = {
+            inherit outputs;
+            inputs = darwinInputs;
+          };
+          modules = [
+            ./hosts/metasepia
+            ./modules/macos
+          ];
+        };
       };
     };
-  };
 }

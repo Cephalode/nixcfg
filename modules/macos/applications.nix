@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   environment.systemPackages = with pkgs; [
     aerospace
@@ -20,7 +25,8 @@
       "obsidian"
       "mactex"
     ];
-    masApps = { # Mac Appstore apps
+    masApps = {
+      # Mac Appstore apps
     };
   };
 }
