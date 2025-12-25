@@ -1,6 +1,10 @@
 { config, pkgs, lib, inputs, ... }: {
   imports = [
-    ./terminal
-    ./applications.nix
+    ./development
+  ];
+
+  environment.systemPackages = with pkgs; [
+    equicord
+    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
   ];
 }

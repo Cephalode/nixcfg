@@ -1,6 +1,3 @@
-# UPDATE
-This repository is now archived due to it being encapsulated in my [dotfiles](https://github.com/Na51f/dotfiles) repository. This is due to not wanting to adopt home manager and having a closer access to all my other configurations.
-
 # Hosts ## NixOS
 
 ### Hapalo (Gaming PC)

@@ -33,9 +33,10 @@
     };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixCats = {
+      url = "github:BirdeeHub/nixCats-nvim";
     };
   };
 
@@ -48,6 +49,8 @@
         nixpkgs
         nixpkgs-stable
         neovim-nightly-overlay
+
+        nixCats
         noctalia
         zen-browser;
     };
@@ -59,6 +62,8 @@
         nix-homebrew
         homebrew-core
         homebrew-cask
+
+        nixCats
         neovim-nightly-overlay
         zen-browser;
     };

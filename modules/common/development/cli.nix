@@ -1,7 +1,8 @@
 { config, pkgs, lib, inputs, ... }:
 {
   imports = [
-    ./languages.nix
+    ./neovim.nix
+    ./tmux.nix
   ];
 
   environment = {
@@ -16,13 +17,10 @@
       kitty
       ripgrep
       tldr
-      tmux
       tree
       unzip
       vim
       wget
-
-      inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
     ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
