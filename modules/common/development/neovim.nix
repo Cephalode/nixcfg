@@ -1,10 +1,10 @@
 { inputs, config, pkgs, lib, ... }:
 let
-  myNixCats = import ../../../../nvim { inherit inputs; };
+  # myNixCats = import ../../../../nvim { inherit inputs; };
 in
 {
   environment.systemPackages = with pkgs; [
-    myNixCats.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # myNixCats.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Language servers
     python313Packages.pylsp-mypy
