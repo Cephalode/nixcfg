@@ -39,6 +39,10 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf = {
+      url = "github:notashelf/nvf"
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -66,6 +70,7 @@
           homebrew-core
           homebrew-cask
 
+          nvf
           neovim-nightly-overlay
           nvf
           zen-browser
