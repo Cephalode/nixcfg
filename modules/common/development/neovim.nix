@@ -6,6 +6,8 @@
   ...
 }:
 {
+  imports = [ inputs.nvf.nixosModules.default ];
+
   environment.systemPackages = with pkgs; [
     inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
 
@@ -15,4 +17,18 @@
     typescript-language-server
     nil # Nix language server
   ];
+
+  programs.nvf = {
+    enable = true
+
+    settings.vim = {
+      viAlias = false;
+      vimAlias = true;
+
+      lsp = {
+        enable = true;
+        formatOnSave = true;
+      };
+    };
+  };
 }

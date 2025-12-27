@@ -27,6 +27,10 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,6 +52,7 @@
           nixpkgs-stable
 
           neovim-nightly-overlay
+          nvf
           noctalia
           zen-browser
           ;
@@ -62,6 +67,7 @@
           homebrew-cask
 
           neovim-nightly-overlay
+          nvf
           zen-browser
           ;
       };
