@@ -7,7 +7,7 @@
 {
   imports = [
     ../common
-    ./wm
+    ./niri.nix
     ./kb.nix
     ./audio.nix
     ./video.nix
