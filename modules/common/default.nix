@@ -8,7 +8,6 @@
 {
   imports = [
     ./development
-    ./zen-browser.nix
   ];
 
   environment.systemPackages = with pkgs; [
