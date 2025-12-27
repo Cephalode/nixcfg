@@ -19,7 +19,7 @@
   ];
 
   programs.nvf = {
-    enable = true
+    enable = true;
 
     settings.vim = {
       viAlias = false;
