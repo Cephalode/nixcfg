@@ -13,7 +13,6 @@ in
     # myNixCats.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-
     # Language servers
     python313Packages.pylsp-mypy
     lua-language-server

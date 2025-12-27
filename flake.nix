@@ -80,7 +80,7 @@
           };
           modules = [
             ./hosts/nixos/loligo
-            ./modules/nixos/loligo
+            ./modules/nixos
           ];
         };
 
@@ -91,7 +91,7 @@
           };
           modules = [
             ./hosts/nixos/hapalo
-            ./modules/nixos/hapalo
+            ./modules/nixos
           ];
         };
       };

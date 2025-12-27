@@ -7,9 +7,10 @@
 {
   imports = [
     ../common
+    ./wm
     ./kb.nix
     ./audio.nix
-    ./wm
+    ./video.nix
   ];
 
   programs = {
