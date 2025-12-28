@@ -6,11 +6,6 @@
   ...
 }:
 {
-  imports = [
-    ./neovim.nix
-    ./tmux.nix
-  ];
-
   environment = {
     systemPackages = with pkgs; [
       bat

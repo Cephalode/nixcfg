@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
+    ./editor
     ./cli.nix
     ./languages.nix
   ];
