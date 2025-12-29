@@ -23,13 +23,13 @@ in {
       categoryDefinitions.replace = ({ pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
         lspsAndRuntimeDeps = {
           general = with pkgs; [
-            lua-language-server
-            nil
-            typescript-language-server
           ];
         };
         startupPlugins = {
-          general = [];
+          general = with pkgs.vimPlugins; [
+            oil-nvim
+            mini-pick
+          ];
           # themer = with pkgs; [
           #   # you can even make subcategories based on categories and settings sets!
           #   (builtins.getAttr packageDef.categories.colorscheme {
@@ -41,9 +41,6 @@ in {
           #     }
           #   )
           # ];
-          extra = with pkgs.vimPlugins; [
-            oil-nvim
-          ];
         };
         optionalPlugins = {
           general = [];
@@ -94,7 +91,7 @@ in {
             wrapRc = true;
             # unwrappedCfgPath = "/path/to/config";
             aliases = [ "nvim" "vim" "vi" ];
-            neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+            # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
           };
           # and a set of categories that you want
           # (and other information to pass to lua)
