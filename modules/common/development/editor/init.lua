@@ -4,4 +4,5 @@ require "config.keymap"
 require "config.lsp"
 require "config.options"
 require "config.theme"
-require "config.plugins"
+
+require "plugins.plugins"

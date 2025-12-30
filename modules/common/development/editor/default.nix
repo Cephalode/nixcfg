@@ -32,17 +32,6 @@ in {
             oil-nvim
             mini-pick
           ];
-          # themer = with pkgs; [
-          #   # you can even make subcategories based on categories and settings sets!
-          #   (builtins.getAttr packageDef.categories.colorscheme {
-          #       "onedark" = onedark-vim;
-          #       "catppuccin" = catppuccin-nvim;
-          #       "catppuccin-mocha" = catppuccin-nvim;
-          #       "tokyonight" = tokyonight-nvim;
-          #       "tokyonight-day" = tokyonight-nvim;
-          #     }
-          #   )
-          # ];
         };
         optionalPlugins = {
           general = [];
