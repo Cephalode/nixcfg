@@ -23,6 +23,8 @@ in {
       categoryDefinitions.replace = ({ pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
         lspsAndRuntimeDeps = {
           general = with pkgs; [
+            lua-language-server
+            nil
           ];
         };
         startupPlugins = {
