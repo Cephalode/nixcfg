@@ -1,9 +1,10 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./editor
+    ./neovim
     ./cli.nix
     ./languages.nix
+    ./tmux.nix
   ];
 
   environment.systemPackages = with pkgs; [

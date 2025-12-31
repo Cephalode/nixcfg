@@ -31,6 +31,8 @@ in {
           general = with pkgs.vimPlugins; [
             oil-nvim
             mini-pick
+            nvim-treesitter
+            nvim-lspconfig
           ];
         };
         optionalPlugins = {
@@ -91,19 +93,6 @@ in {
           };
         };
       };
-
-      # you can do it per user as well
-      # users.REPLACE_ME = {
-      #   enable = true;
-      #   packageNames = [ "REPLACE_MEs_VIM" ];
-      #   categoryDefinitions.replace = ({ pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {});
-      #   packageDefinitions.replace = {
-      #     REPLACE_MEs_VIM = {pkgs, name, ...}: {
-      #       settings = {};
-      #       categories = {};
-      #     };
-      #   };
-      # };
     };
   };
 }
