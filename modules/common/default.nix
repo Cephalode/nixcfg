@@ -9,7 +9,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    equibop
+    discordo
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
   ];
 }
