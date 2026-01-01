@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   inputs,
   ...
 }:
@@ -11,7 +9,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    equicord
+    equibop
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
   ];
 }

@@ -10,6 +10,7 @@
     ./devices
     ./niri.nix
     ./security.nix
+    ./games.nix
   ];
 
   programs = {
