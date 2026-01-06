@@ -10,6 +10,7 @@
     systemPackages = with pkgs; [
       bat
       btop
+      claude-code
       cursor-cli
       fastfetch
       fd
@@ -24,6 +25,7 @@
       uwufetch
       vim
       wget
+      yazi
     ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";

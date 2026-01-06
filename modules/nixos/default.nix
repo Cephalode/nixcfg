@@ -15,7 +15,6 @@
 
   programs = {
     zsh.enable = true;
-    yazi.enable = true;
   };
 
   users.defaultUserShell = pkgs.zsh;
