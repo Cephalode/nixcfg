@@ -38,10 +38,20 @@
         extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
-            caps a    s    d    f    j    k    l    ;    ret
+                 1    2
+            caps a    s    d    f    j    k    l    ;    ret  \
           )
           (deflayer main
-            @hyc @aC  @sA  @dS  @fM  @jM  @kS  @lA  @;C  @hyr
+                 _    _
+            @hyc @aC  @sA  @dS  @fM  @jM  @kS  @lA  @;C  @hyr @lay
+          )
+          (deflayer base
+                 _    _
+            _    _    _    _    _    _    _    _    _    _    _
+          )
+          (deflayer switch
+                 @l1  @l2
+            _    _    _    _    _    _    _    _    _    _    _
           )
           (defalias
             hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
@@ -54,6 +64,10 @@
             sA  (tap-hold       200 200 s   lalt)
             dS  (tap-hold       200 200 d   lsft)
             fM  (tap-hold       200 200 f   lmet)
+
+            lay (layer-while-held switch)
+            l1  (layer-switch main)
+            l2  (layer-switch base)
           )
         '';
       };

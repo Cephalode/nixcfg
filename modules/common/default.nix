@@ -12,5 +12,6 @@
     discord
     discordo
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
+    bambu-studio
   ];
 }
