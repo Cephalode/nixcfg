@@ -6,6 +6,7 @@
 {
   imports = [
     ./development
+    ./security
   ];
 
   environment.systemPackages = with pkgs; [
