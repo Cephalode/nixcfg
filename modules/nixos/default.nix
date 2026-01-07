@@ -11,11 +11,11 @@
     ./niri.nix
     ./security.nix
     ./games.nix
+    ./applications.nix
   ];
 
   programs = {
     zsh.enable = true;
-    yazi.enable = true;
   };
 
   users.defaultUserShell = pkgs.zsh;

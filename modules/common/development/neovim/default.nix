@@ -38,6 +38,7 @@ in
         {
           lspsAndRuntimeDeps = {
             general = with pkgs; [
+              gopls
               lua-language-server
               nixd
             ];

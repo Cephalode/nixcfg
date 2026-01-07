@@ -1,8 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
-  inputs,
   ...
 }:
 {
@@ -10,6 +7,7 @@
     systemPackages = with pkgs; [
       bat
       btop
+      claude-code
       cursor-cli
       fastfetch
       fd
@@ -17,6 +15,7 @@
       git
       killall
       kitty
+      lolcat
       ripgrep
       tldr
       tree
@@ -24,6 +23,7 @@
       uwufetch
       vim
       wget
+      yazi
     ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
