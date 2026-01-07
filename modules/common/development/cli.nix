@@ -1,15 +1,11 @@
 {
-  config,
   pkgs,
-  lib,
-  inputs,
   ...
 }:
 {
   environment = {
     systemPackages = with pkgs; [
       bat
-      bitwarden-cli
       btop
       claude-code
       cursor-cli
@@ -19,6 +15,7 @@
       git
       killall
       kitty
+      lolcat
       ripgrep
       tldr
       tree
