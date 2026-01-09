@@ -84,6 +84,17 @@
           ];
         };
 
+        lunalata = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit outputs;
+            inputs = nixosInputs;
+          };
+          modules = [
+            ./hosts/nixos/lunalata
+            ./modules/nixos
+          ];
+        };
+
         hapalo = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit outputs;
