@@ -16,15 +16,10 @@ in
       addOverlays = [
         (utils.standardPluginOverlay inputs)
       ];
-      # see the packageDefinitions below.
-      # This says which of those to install.
       packageNames = [ "myNixModuleNvim" ];
 
       luaPath = ./.;
 
-      # the .replace vs .merge options are for modules based on existing configurations,
-      # they refer to how multiple categoryDefinitions get merged together by the module.
-      # for useage of this section, refer to :h nixCats.flake.outputs.categories
       categoryDefinitions.replace = (
         {
           pkgs,
@@ -43,60 +38,55 @@ in
               nixd
             ];
           };
+
           startupPlugins = {
             general = with pkgs.vimPlugins; [
               oil-nvim
               mini-pick
-              nvim-treesitter
+              nvim-treesitter.withAllGrammars
               nvim-lspconfig
+              render-markdown-nvim
             ];
           };
+
           optionalPlugins = {
             general = [ ];
           };
-          # shared libraries to be added to LD_LIBRARY_PATH
-          # variable available to nvim runtime
+
           sharedLibraries = {
             general = with pkgs; [
               # libgit2
             ];
           };
+
           environmentVariables = {
             test = {
               CATTESTVAR = "It worked!";
             };
           };
+
           extraWrapperArgs = {
             test = [
               ''--set CATTESTVAR2 "It worked again!"''
             ];
           };
-          # lists of the functions you would have passed to
-          # python.withPackages or lua.withPackages
 
-          # get the path to this python environment
-          # in your lua config via
-          # vim.g.python3_host_prog
-          # or run from nvim terminal via :!<packagename>-python3
           python3.libraries = {
             test = (_: [ ]);
           };
-          # populates $LUA_PATH and $LUA_CPATH
+
           extraLuaPackages = {
             test = [ (_: [ ]) ];
           };
         }
       );
 
-      # see :help nixCats.flake.outputs.packageDefinitions
       packageDefinitions.replace = {
         # These are the names of your packages
         # you can include as many as you wish.
         myNixModuleNvim =
           { pkgs, name, ... }:
           {
-            # they contain a settings set defined above
-            # see :help nixCats.flake.outputs.settings
             settings = {
               suffix-path = true;
               suffix-LD = true;
@@ -109,8 +99,6 @@ in
               ];
               # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
             };
-            # and a set of categories that you want
-            # (and other information to pass to lua)
             categories = {
               general = true;
             };

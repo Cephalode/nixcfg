@@ -5,4 +5,6 @@ require "config.lsp"
 require "config.options"
 require "config.theme"
 
-require "plugins.plugins"
+require "plugins.files"
+require "plugins.treesitter"
+require "plugins.markdown"
