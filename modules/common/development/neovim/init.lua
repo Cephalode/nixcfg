@@ -6,5 +6,5 @@ require "config.options"
 require "config.theme"
 
 require "plugins.files"
-require "plugins.treesitter"
-require "plugins.markdown"
+require "plugins.style"
+-- require "plugins.treesitter"

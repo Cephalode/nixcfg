@@ -41,16 +41,19 @@ in
 
           startupPlugins = {
             general = with pkgs.vimPlugins; [
-              oil-nvim
               mini-pick
-              nvim-treesitter.withAllGrammars
+              nvim-treesitter
               nvim-lspconfig
+              oil-nvim
               render-markdown-nvim
+              smear-cursor-nvim
+              vim-be-good
             ];
           };
 
           optionalPlugins = {
-            general = [ ];
+            general = with pkgs.vimPlugins; [
+            ];
           };
 
           sharedLibraries = {
