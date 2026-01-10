@@ -42,7 +42,7 @@ in
           startupPlugins = {
             general = with pkgs.vimPlugins; [
               mini-pick
-              nvim-treesitter
+              nvim-treesitter.withAllGrammars
               nvim-lspconfig
               oil-nvim
               render-markdown-nvim
