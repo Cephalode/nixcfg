@@ -18,7 +18,7 @@
       dock = {
         autohide = true;
         autohide-delay = 0.00;
-        orientation = "left";
+        orientation = "right";
         persistent-apps = [
         ];
         scroll-to-open = true; # Scroll on a dock app to show all windows

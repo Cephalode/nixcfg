@@ -8,6 +8,7 @@
 {
   imports = [
     ../common
+    ./devices.nix
     ./homebrew.nix
     ./applications.nix
   ];

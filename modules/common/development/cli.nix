@@ -12,6 +12,7 @@
       fastfetch
       fd
       fzf
+      gh
       git
       killall
       kitty
