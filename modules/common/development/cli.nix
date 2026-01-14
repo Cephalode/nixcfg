@@ -7,6 +7,7 @@
     systemPackages = with pkgs; [
       bat
       btop
+      bun
       claude-code
       cursor-cli
       fastfetch
@@ -31,4 +32,8 @@
       ZDOTDIR = "$XDG_CONFIG_HOME/zsh";
     };
   };
+
+  fonts.packages = with pkgs.nerd-fonts; [
+    jetbrains-mono
+  ];
 }

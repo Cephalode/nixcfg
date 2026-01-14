@@ -1,1 +1,9 @@
-require 'render-markdown'.setup()
+require  "obsidian".setup({
+  legacy_commands = false,
+  workspaces = {
+    {
+      name = "main",
+      path = "~/notes",
+    },
+  },
+})

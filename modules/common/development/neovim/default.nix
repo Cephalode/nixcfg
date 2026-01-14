@@ -35,7 +35,9 @@ in
             general = with pkgs; [
               gopls
               lua-language-server
+              marksman
               nixd
+              zls
             ];
           };
 
@@ -44,10 +46,11 @@ in
               mini-pick
               nvim-treesitter.withAllGrammars
               nvim-lspconfig
+              obsidian-nvim
               oil-nvim
-              render-markdown-nvim
               smear-cursor-nvim
               vim-be-good
+              vim-tmux-navigator
             ];
           };
 
