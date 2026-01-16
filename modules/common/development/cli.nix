@@ -15,9 +15,12 @@
       fzf
       gh
       git
+      gnumake
       killall
       kitty
       lolcat
+      nodejs
+      npm
       ripgrep
       tldr
       tree
