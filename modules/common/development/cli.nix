@@ -20,7 +20,6 @@
       kitty
       lolcat
       nodejs
-      npm
       ripgrep
       tldr
       tree
