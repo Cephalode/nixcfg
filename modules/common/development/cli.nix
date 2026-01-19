@@ -10,6 +10,7 @@
       bun
       claude-code
       cursor-cli
+      diff-so-fancy
       fastfetch
       fd
       fzf
@@ -19,7 +20,7 @@
       killall
       kitty
       lolcat
-      nodejs
+      # nodejs
       ripgrep
       tldr
       tree
