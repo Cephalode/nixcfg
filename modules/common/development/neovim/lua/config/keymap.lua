@@ -8,6 +8,4 @@ map('n', '<leader>s', ":e #<CR>")          -- Open last file
 map('n', '<leader>S', ":sf #<CR>")         -- Open last file horizontally
 
 map('n', '<leader>o', ':update<CR>: source<CR>')
-map('n', '<leader>w', ':write<CR>')
-map('n', '<leader>q', ':quit<CR>')
 map({ 'n', 'v', 'x' }, '<leader>y', '"+y<CR>') -- copy to clipboard
