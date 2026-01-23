@@ -33,63 +33,49 @@ in
         {
           lspsAndRuntimeDeps = {
             general = with pkgs; [
+              ripgrep
+              fd
+              fzf
+              tree-sitter
+            ];
+
+            lsps = with pkgs; [
               gopls
               lua-language-server
               marksman
+              nix-doc
               nixd
               zls
             ];
           };
 
-          startupPlugins = {
-            general = with pkgs.vimPlugins; [
+          startupPlugins = with pkgs.vimPlugins; {
+            general = [
+              lze
+              lzextras
               mini-pick
-              nvim-treesitter.withAllGrammars
               nvim-lspconfig
-              obsidian-nvim
+              nvim-treesitter.withAllGrammars
               oil-nvim
-              smear-cursor-nvim
-              vim-be-good
               vim-tmux-navigator
             ];
-          };
 
-          optionalPlugins = {
-            general = with pkgs.vimPlugins; [
+            markdown = [
+              markdown-preview-nvim
+              obsidian-nvim
+              vim-pandoc
             ];
-          };
 
-          sharedLibraries = {
-            general = with pkgs; [
-              # libgit2
+            extra = [
+              image-nvim
+              smear-cursor-nvim
+              vim-be-good
             ];
-          };
-
-          environmentVariables = {
-            test = {
-              CATTESTVAR = "It worked!";
-            };
-          };
-
-          extraWrapperArgs = {
-            test = [
-              ''--set CATTESTVAR2 "It worked again!"''
-            ];
-          };
-
-          python3.libraries = {
-            test = (_: [ ]);
-          };
-
-          extraLuaPackages = {
-            test = [ (_: [ ]) ];
           };
         }
       );
 
       packageDefinitions.replace = {
-        # These are the names of your packages
-        # you can include as many as you wish.
         myNixModuleNvim =
           { pkgs, name, ... }:
           {
@@ -106,7 +92,11 @@ in
               # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
             };
             categories = {
+              # Enables custom categories in categoryDefinitions
               general = true;
+              lsps = true;
+              markdown = true;
+              extra = true;
             };
           };
       };

@@ -1,4 +1,3 @@
-require "nvim-treesitter.configs".setup({
-  ensure_installed = { "lua", },
-  highlight = { enable = true }
-})
+vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo[0][0].foldmethod = 'expr'
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexp()"
