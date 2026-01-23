@@ -1,0 +1,6 @@
+require "plugins.markdown"
+require "plugins.mini"
+require "plugins.oil"
+require "plugins.style"
+require "plugins.treesitter"
+require "plugins.vimbegood"

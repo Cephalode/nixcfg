@@ -1,0 +1,7 @@
+require "config.autocmd"
+require "config.globals"
+require "config.init"
+require "config.keymap"
+require "config.lsp"
+require "config.options"
+require "config.theme"

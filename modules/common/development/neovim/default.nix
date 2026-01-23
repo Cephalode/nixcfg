@@ -53,7 +53,6 @@ in
             general = [
               lze
               lzextras
-              mini-pick
               nvim-lspconfig
               nvim-treesitter.withAllGrammars
               oil-nvim
@@ -66,8 +65,15 @@ in
               vim-pandoc
             ];
 
+            mini = [
+              mini-pick
+            ];
+
             extra = [
+              fidget-nvim
               image-nvim
+              # lualine
+              repeat-vim
               smear-cursor-nvim
               vim-be-good
             ];
@@ -96,6 +102,7 @@ in
               general = true;
               lsps = true;
               markdown = true;
+              mini = true;
               extra = true;
             };
           };
