@@ -73,7 +73,7 @@ in
               fidget-nvim
               image-nvim
               # lualine
-              repeat-vim
+              vim-repeat
               smear-cursor-nvim
               vim-be-good
             ];
