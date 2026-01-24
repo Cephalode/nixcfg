@@ -1,10 +1,8 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    # Game launchers
-    # heroic
-    lutris
-
+    deluge
+    lutris # Game launcher  TODO: Use flatpak with bottles
     protonup-qt # GUI for custom Proton versions
     winetricks
   ];
