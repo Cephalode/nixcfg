@@ -51,11 +51,16 @@ in
 
           startupPlugins = with pkgs.vimPlugins; {
             general = [
+              # plugin loader / manager must be available immediately
               lze
               lzextras
+            ];
+          };
+
+          optionalPlugins = with pkgs.vimPlugins; {
+            general = [
               nvim-lspconfig
               nvim-treesitter.withAllGrammars
-              oil-nvim
               vim-tmux-navigator
             ];
 
@@ -65,14 +70,14 @@ in
               vim-pandoc
             ];
 
-            mini = [
+            navigation = [
               mini-pick
+              oil-nvim
             ];
 
             extra = [
               fidget-nvim
               image-nvim
-              # lualine
               vim-repeat
               smear-cursor-nvim
               vim-be-good
@@ -102,7 +107,7 @@ in
               general = true;
               lsps = true;
               markdown = true;
-              mini = true;
+              navigation = true;
               extra = true;
             };
           };
