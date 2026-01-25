@@ -1,18 +1,18 @@
-local lazy_ok, lazy = pcall(require, "lazy")
-if not lazy_ok then
+local ok, lazy = pcall(require, "lze")
+if not ok then
   return
 end
 
-lazy.setup({
+lazy.load({
   {
-    "nvim-lspconfig",
+    name = "nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("config.lsp")
     end,
   },
   {
-    "nvim-treesitter",
+    name = "nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },
     build = ":TSUpdate",
     config = function()
@@ -20,13 +20,13 @@ lazy.setup({
     end,
   },
   {
-    "markdown-preview.nvim",
+    name = "markdown-preview.nvim",
     ft = { "markdown" },
     build = "cd app && npm install",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
   },
   {
-    "obsidian.nvim",
+    name = "obsidian.nvim",
     ft = { "markdown" },
     -- dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -34,17 +34,17 @@ lazy.setup({
     end,
   },
   {
-    "oil.nvim",
+    name = "oil.nvim",
     cmd = { "Oil" },
     keys = {
-      { "-", "<cmd>Oil<cr>", desc = "Oil parent directory: },
+      { "-", "<cmd>Oil<cr>", desc = "Oil parent directory" },
     },
     config = function()
-      require("oil").setup()
+      require("plugins.oil")
     end,
   },
   {
-    "fidget.nvim",
+    name = "fidget.nvim",
     event = "LspAttach",
     config = function()
       require("fidget").setup()
