@@ -25,6 +25,8 @@
         show-recents = false;
       };
 
+      spaces.spans-displays = false;
+
       finder = {
         FXPreferredViewStyle = "clmv";
         FXEnableExtensionChangeWarning = false;
