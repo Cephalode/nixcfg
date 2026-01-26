@@ -57,6 +57,10 @@ in
               lzextras
             ];
 
+            debug = [
+              vim-startuptime
+            ];
+
             navigation = [
               mini-pick
               oil-nvim
@@ -106,6 +110,7 @@ in
             };
             categories = { # Enables custom categories in categoryDefinitions
               general = true;
+              debug = true;
               lsps = true;
               markdown = true;
               navigation = true;

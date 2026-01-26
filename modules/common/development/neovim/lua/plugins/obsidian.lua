@@ -13,11 +13,13 @@ return function()
 
     notes_subdir = "notes",
     daily_notes = {
-      folder = "notes/daily",
+      folder = "daily",
       date_format = "%Y-%m%d",
       default_tags = { "daily" },
       template = nil -- TODO add template
     },
+
+    legacy_commands = false,
 
     completion = {
       nvim_cmp = true,
@@ -57,9 +59,11 @@ return function()
       name = "mini.pick",
     },
 
-    search.sort_by = "accessed",
-    search.sort_reversed = true,
-    search.max_lines = 1000,
+    search = {
+      sort_by = "accessed",
+      sort_reversed = true,
+      max_lines = 1000,
+    };
 
     open_notes_in = "vsplit",
   }

@@ -1,4 +1,13 @@
 require("lze").load {
+  -- Diagnostics
+  {
+    "vim-startuptime",
+    cmd = "StartupTime",
+    before = function()
+      vim.g.startuptime_tries = 10
+    end,
+  },
+
   -- Navigation
   {
     "nvim-treesitter",
@@ -8,7 +17,7 @@ require("lze").load {
   {
     "oil.nvim",
     keys = {
-      { "<leader>e", "<CMD>Oil<CR>", desc = "Oil in parent directory" },
+      { "-", "<CMD>Oil<CR>", desc = "Oil in parent directory" },
     },
     after = function()
       require("oil").setup()
@@ -29,11 +38,11 @@ require("lze").load {
   {
     "markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = "markdown",
     build = "cd app && bun install",
-    init = function()
+    after = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
-    ft = { "markdown" },
   },
   {
     "obsidian.nvim",
@@ -50,8 +59,6 @@ require("lze").load {
   -- Extras
   {
     "smear-cursor.nvim",
-    after = function()
-      require "plugins.smear"
-    end,
+    after = require "plugins.smear",
   },
 }
