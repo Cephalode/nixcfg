@@ -31,29 +31,35 @@ in
           ...
         }@packageDef:
         {
-          lspsAndRuntimeDeps = {
-            general = with pkgs; [
+          lspsAndRuntimeDeps = with pkgs; {
+            general = [
               ripgrep
               fd
               fzf
               tree-sitter
             ];
 
-            lsps = with pkgs; [
+            lsps = [
               gopls
               lua-language-server
               marksman
-              nix-doc
               nixd
               zls
+            ];
+            extras = [
+              nix-doc
             ];
           };
 
           startupPlugins = with pkgs.vimPlugins; {
             general = [
-              # plugin loader / manager must be available immediately
               lze
               lzextras
+            ];
+
+            navigation = [
+              mini-pick
+              oil-nvim
             ];
           };
 
@@ -67,20 +73,16 @@ in
             markdown = [
               markdown-preview-nvim
               obsidian-nvim
-              vim-pandoc
-            ];
-
-            navigation = [
-              mini-pick
-              oil-nvim
+              # vim-pandoc
             ];
 
             extra = [
               fidget-nvim
               image-nvim
-              vim-repeat
+              pomo-nvim
               smear-cursor-nvim
               vim-be-good
+              vim-repeat
             ];
           };
         }
@@ -102,8 +104,7 @@ in
               ];
               # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
             };
-            categories = {
-              # Enables custom categories in categoryDefinitions
+            categories = { # Enables custom categories in categoryDefinitions
               general = true;
               lsps = true;
               markdown = true;

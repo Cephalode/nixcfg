@@ -1,53 +1,57 @@
-local ok, lazy = pcall(require, "lze")
-if not ok then
-  return
-end
-
-lazy.load({
+require("lze").load {
+  -- Navigation
   {
-    name = "nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      require("config.lsp")
-    end,
+    "nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate"
   },
   {
-    name = "nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
-    build = ":TSUpdate",
-    config = function()
-      require("plugins.treesitter")
-    end,
-  },
-  {
-    name = "markdown-preview.nvim",
-    ft = { "markdown" },
-    build = "cd app && npm install",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  },
-  {
-    name = "obsidian.nvim",
-    ft = { "markdown" },
-    -- dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("plugins.markdown")
-    end,
-  },
-  {
-    name = "oil.nvim",
-    cmd = { "Oil" },
+    "oil.nvim",
     keys = {
-      { "-", "<cmd>Oil<cr>", desc = "Oil parent directory" },
+      { "<leader>e", "<CMD>Oil<CR>", desc = "Oil in parent directory" },
     },
-    config = function()
-      require("plugins.oil")
+    after = function()
+      require("oil").setup()
     end,
   },
   {
-    name = "fidget.nvim",
-    event = "LspAttach",
-    config = function()
-      require("fidget").setup()
+    "mini.pick",
+    keys = {
+      { "<leader>fs", ":Pick files<CR>", desc = "Fuzzy file picker" },
+      { "<leader>fh", ":Pick help<CR>", desc = "Fuzzy help category picker" },
+    },
+    after = function()
+      require("mini.pick").setup()
     end,
   },
-})
+
+  -- Notes (markdown)
+  {
+    "markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && bun install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  },
+  {
+    "obsidian.nvim",
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      "plenary.nvim",
+      "mini.pick",
+      "nvim-treesitter",
+    },
+    after = require "plugins.obsidian",
+  },
+
+  -- Extras
+  {
+    "smear-cursor.nvim",
+    after = function()
+      require "plugins.smear"
+    end,
+  },
+}
