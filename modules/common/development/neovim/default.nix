@@ -77,6 +77,7 @@ in
             markdown = [
               markdown-preview-nvim
               obsidian-nvim
+              plenary-nvim
               # vim-pandoc
             ];
 

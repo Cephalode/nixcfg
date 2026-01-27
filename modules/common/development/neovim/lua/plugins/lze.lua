@@ -12,15 +12,19 @@ require("lze").load {
   {
     "nvim-treesitter",
     lazy = false,
-    build = ":TSUpdate"
+    build = {
+      ":TSUpdate",
+      require "plugins.treesitter",
+    },
   },
   {
     "oil.nvim",
+    lazy = false,
     keys = {
       { "-", "<CMD>Oil<CR>", desc = "Oil in parent directory" },
     },
-    after = function()
-      require("oil").setup()
+    before = function()
+      require("oil").setup({ default_file_explorer = true })
     end,
   },
   {
