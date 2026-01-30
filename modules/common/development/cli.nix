@@ -21,6 +21,7 @@
       kitty
       lolcat
       # nodejs
+      opencode
       ripgrep
       tldr
       tree
