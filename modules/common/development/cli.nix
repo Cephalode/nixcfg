@@ -5,32 +5,23 @@
 {
   environment = {
     systemPackages = with pkgs; [
-      bat
-      btop
-      bun
-      claude-code
-      cursor-cli
-      diff-so-fancy
-      fastfetch
-      fd
-      fzf
-      gh
-      git
-      gnumake
-      killall
-      kitty
-      lolcat
-      # nodejs
-      opencode
-      ripgrep
-      tldr
-      tree
-      unzip
-      uwufetch
-      vim
-      wget
-      yazi
-      zoxide
+      # TODO atuin
+      # TODO nodejs
+
+      # Terminal and Editor
+      kitty claude-code cursor-cli opencode vim
+
+      # Navigation
+      eza fd fzf ripgrep tree yazi zoxide
+
+      # Build and languages
+      bun typst typst-live
+
+      # Utils
+      bat btop diff-so-fancy dust gh git
+      gnumake killall tldr unzip wget
+
+      # Misc fastfetch lolcat uwufetch
     ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
