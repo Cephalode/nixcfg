@@ -46,6 +46,7 @@ in
               nixd
               zls
             ];
+
             extras = [
               nix-doc
             ];
@@ -56,15 +57,6 @@ in
               lze
               lzextras
             ];
-
-            debug = [
-              vim-startuptime
-            ];
-
-            navigation = [
-              mini-pick
-              oil-nvim
-            ];
           };
 
           optionalPlugins = with pkgs.vimPlugins; {
@@ -74,16 +66,31 @@ in
               vim-tmux-navigator
             ];
 
+            navigation = [
+              mini-pick
+              neo-tree-nvim
+              oil-nvim
+            ];
+
             markdown = [
               markdown-preview-nvim
               obsidian-nvim
-              plenary-nvim
               # vim-pandoc
+            ];
+
+            debug = [
+              vim-startuptime
+            ];
+
+            utils = [
+              plenary-nvim
             ];
 
             extra = [
               fidget-nvim
               image-nvim
+              nui-nvim
+              nvim-web-devicons
               pomo-nvim
               smear-cursor-nvim
               vim-be-good
@@ -113,6 +120,7 @@ in
               general = true;
               debug = true;
               lsps = true;
+              utils = true;
               markdown = true;
               navigation = true;
               extra = true;

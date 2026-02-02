@@ -17,13 +17,14 @@
     taps = [
     ];
     brews = [
+      "lume"
       "nvm" # node version manager
     ];
     casks = [
       "bambu-studio"
       "beeper" # the nix package does not support aarch64
+      "mactex-no-gui"
       "obsidian"
-      "mactex"
     ];
     masApps = {
       # Mac Appstore apps

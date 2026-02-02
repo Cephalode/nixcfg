@@ -21,7 +21,8 @@
       bat btop diff-so-fancy dust gh git
       gnumake killall tldr unzip wget
 
-      # Misc fastfetch lolcat uwufetch
+      # Misc
+      fastfetch lolcat uwufetch
     ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
