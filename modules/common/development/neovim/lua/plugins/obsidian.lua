@@ -63,7 +63,7 @@ return function()
       sort_by = "accessed",
       sort_reversed = true,
       max_lines = 1000,
-    };
+    },
 
     open_notes_in = "vsplit",
   }

@@ -39,11 +39,19 @@ in
               tree-sitter
             ];
 
+            format = [
+              stylua
+              nodePackages.prettier
+              nixfmt-rfc-style
+            ];
+
             lsps = [
               gopls
               lua-language-server
               marksman
               nixd
+              pyright
+              typescript-language-server
               zls
             ];
 
@@ -61,6 +69,7 @@ in
 
           optionalPlugins = with pkgs.vimPlugins; {
             general = [
+              cmp-nvim-lsp
               nvim-lspconfig
               nvim-treesitter.withAllGrammars
               vim-tmux-navigator
@@ -86,7 +95,7 @@ in
               plenary-nvim
             ];
 
-            extra = [
+            extras = [
               fidget-nvim
               image-nvim
               nui-nvim
@@ -109,6 +118,7 @@ in
               suffix-LD = true;
               wrapRc = true;
               # unwrappedCfgPath = "/path/to/config";
+              add_nix_path = true;
               aliases = [
                 "nvim"
                 "vim"
@@ -116,14 +126,16 @@ in
               ];
               # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
             };
-            categories = { # Enables custom categories in categoryDefinitions
+            # Enables custom categories in categoryDefinitions
+            categories = {
               general = true;
               debug = true;
+              format = true;
               lsps = true;
               utils = true;
               markdown = true;
               navigation = true;
-              extra = true;
+              extras = true;
             };
           };
       };

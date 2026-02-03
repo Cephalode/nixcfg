@@ -23,6 +23,19 @@ require("lze").load {
     },
   },
   {
+    "nvim-lspconfig",
+    lsp = function(plugin)
+      vim.lsp.config(plugin.name, plugin.lsp or {})
+      vim.lsp.enable(plugin.name)
+    end,
+    before = function()
+      vim.lsp.config('*', {
+        on_attach = require('myLuaConf.LSPs.on_attach'),
+      })
+      require "plugins.lsp"
+    end,
+  },
+  {
     "oil.nvim",
     lazy = false,
     keys = {
@@ -34,6 +47,7 @@ require("lze").load {
   },
   {
     "mini.pick",
+    lazy = false,
     keys = {
       { "<leader>fs", ":Pick files<CR>", desc = "Fuzzy file picker" },
       { "<leader>fh", ":Pick help<CR>", desc = "Fuzzy help category picker" },
@@ -69,14 +83,13 @@ require("lze").load {
   },
   {
     "obsidian.nvim",
-    lazy = true,
     ft = "markdown",
     dependencies = {
       "plenary.nvim",
       "nvim-treesitter",
+      "mini.pick",
     },
     keys = {
-      { "<leader>t", ":Pick files<CR>", desc = "Fuzzy file picker" },
     },
     after = require "plugins.obsidian",
   },
