@@ -30,7 +30,7 @@ require("lze").load {
     end,
     before = function()
       vim.lsp.config('*', {
-        on_attach = require('myLuaConf.LSPs.on_attach'),
+        on_attach = require "plugins.on_attach",
       })
       require "plugins.lsp"
     end,
