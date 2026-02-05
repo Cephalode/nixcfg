@@ -16,7 +16,7 @@ in
       addOverlays = [
         (utils.standardPluginOverlay inputs)
       ];
-      packageNames = [ "myNixModuleNvim" ];
+      packageNames = [ "nixCats" ];
 
       luaPath = ./.;
 
@@ -37,7 +37,11 @@ in
               fd
               fzf
               tree-sitter
+              universal-ctags
             ];
+
+            lint = [];
+            debug = [];
 
             format = [
               stylua
@@ -45,8 +49,7 @@ in
               nixfmt-rfc-style
             ];
 
-            lsps = [
-              gopls
+            neonixdev = [
               lua-language-server
               marksman
               nixd
@@ -54,31 +57,41 @@ in
               typescript-language-server
               zls
             ];
-
-            extras = [
-              nix-doc
-            ];
           };
 
           startupPlugins = with pkgs.vimPlugins; {
-            general = [
-              lze
-              lzextras
-            ];
+            debug = [];
+
+            general = {
+              always = [
+                lze
+                lzextras
+                vim-repeat
+                plenary-nvim
+                (nvim-notify.overrideAttrs { doCheck = false })
+              ];
+
+              extra = [
+                oil-nvim
+                nvim-web-devicons
+              ];
+            };
           };
 
           optionalPlugins = with pkgs.vimPlugins; {
-            general = [
-              cmp-nvim-lsp
-              nvim-lspconfig
-              nvim-treesitter.withAllGrammars
-              vim-tmux-navigator
-            ];
+            debug = {
+              default = [
+                nvim-dap
+                nvim-dap-ui
+                nvim-dap-virtual-text
+              ];
+            };
 
-            navigation = [
-              mini-pick
-              neo-tree-nvim
-              oil-nvim
+            lint = [
+              nvim-lint
+            ];
+            format = [
+              conform-nvim
             ];
 
             markdown = [
@@ -87,58 +100,124 @@ in
               # vim-pandoc
             ];
 
-            debug = [
-              vim-startuptime
+            neoixdev = [
+              lazydev-nvim
             ];
 
-            utils = [
-              plenary-nvim
-            ];
+            general = {
+              blink = [
+                blink-cmp
+                blink-compat
+                cmp-cmd-line
+                colorful-menu-nvim
+                luasnip
+              ];
 
-            extras = [
-              fidget-nvim
-              image-nvim
-              nui-nvim
-              nvim-web-devicons
-              pomo-nvim
-              smear-cursor-nvim
-              vim-be-good
-              vim-repeat
-            ];
+              treesitter = [
+              nvim-treesitter-textobjects
+              nvim-treesitter.withAllGrammars
+
+              mini = [
+                mini-pick
+              ];
+
+              always = [
+                gitsigns-nvim
+                lualine-nvim
+                nvim-lspconfig
+                nvim-surround
+                vim-sleuth
+                vim-fugitive
+                vim-rhubarb
+              ];
+
+              extra = [
+                comment-nvim
+                fidget-nvim
+                hlargs-nvim
+                image-nvim
+                indent-blankline-nvim
+                neotree
+                nui-nvim
+                pomo-nvim
+                smear-cursor-nvim
+                vim-be-good
+                vim-repeat
+                vim-startuptime
+                undotree
+                which-key-nvim
+              ];
+            };
           };
         }
       );
 
+      python3.libaries = {
+        test = (_:[]);
+      };
+      extraLuaPackages = {
+        general = [ (_:[]) ];
+      };
+
+      extraCats = {
+        test = [
+          [ "test" "default" ]
+        ];
+        debug = [
+          [ "debug" "default" ]
+        ];
+      };
+
       packageDefinitions.replace = {
-        myNixModuleNvim =
-          { pkgs, name, ... }:
-          {
-            settings = {
-              suffix-path = true;
-              suffix-LD = true;
-              wrapRc = true;
-              # unwrappedCfgPath = "/path/to/config";
-              add_nix_path = true;
-              aliases = [
-                "nvim"
-                "vim"
-                "vi"
-              ];
-              # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
-            };
-            # Enables custom categories in categoryDefinitions
-            categories = {
-              general = true;
-              debug = true;
-              format = true;
-              lsps = true;
-              utils = true;
-              markdown = true;
-              navigation = true;
-              extras = true;
+        nixCats = { pkgs, name, ... }@misc: {
+          settings = {
+            suffix-path = true;
+            suffix-LD = true;
+            aliases = [ "nvim" "vim" "vi" ];
+            wrapRc = true;
+            configDirName = "neovim";
+            # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+            hosts.python3.enable = true;
+            host.node.enable = true;
+          };
+
+          # Enables custom categories in categoryDefinitions
+          categories = {
+            markdown = true;
+            general = true;
+            lint = true;
+            format = true;
+            neonixdev = true;
+            lspDebugMode = false;
+          };
+        };
+
+        regularCats = { pkgs, ... }@misc: {
+          settings = {
+            suffix-path = true;
+            suffix-LD = true;
+            wrapRc = false;
+            configDirName = "neovim";
+            aliases = [ "testCat" ];
+          };
+
+          categories = {
+            markdown = true;
+            general = true;
+            neonixdev = true;
+            lint = true;
+            format = true;
+            lspDebugMode = false
+          };
+          extra = {
+            nixdExtras = {
+              nixpkgs = ''import ${pkgs.path} {}'';
             };
           };
+        };
       };
+
+      defaultPackageName = "nixCats";
     };
   };
 }

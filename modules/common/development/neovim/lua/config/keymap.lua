@@ -1,3 +1,6 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 local map = vim.keymap.set                        -- shorten mapping command
 map('n', '<leader>lf', vim.lsp.buf.format)        -- autoformat
 

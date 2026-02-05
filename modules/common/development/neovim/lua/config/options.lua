@@ -1,3 +1,6 @@
+-- Globals
+vim.g.have_nerd_font = true
+
 -- Relative and absolute line numbers combined
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -51,3 +54,5 @@ vim.opt.winborder = 'rounded'
 -- Theme
 vim.opt.termguicolors = false
 vim.opt.background = "dark"
+vim.cmd.colorscheme("default")
+
