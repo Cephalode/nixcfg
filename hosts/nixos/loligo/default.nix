@@ -12,6 +12,8 @@
     ../.
   ];
 
+  boot.loader.systemd-boot.enable = true; # (for UEFI systems only)
+
   networking.hostName = "loligo";
 
   services.xserver.videoDrivers = [

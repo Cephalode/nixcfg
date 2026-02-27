@@ -2,6 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     deluge
+    gamescope
     lutris # Game launcher  TODO: Use flatpak with bottles
     protonup-qt # GUI for custom Proton versions
     winetricks

@@ -25,7 +25,10 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [ wl-clipboard ];
+  environment.systemPackages = with pkgs; [ 
+    wl-clipboard
+    wlr-which-key
+  ];
 
   services.kanata = {
     enable = true;

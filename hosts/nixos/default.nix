@@ -11,8 +11,6 @@
     ../common
   ];
 
-  boot.loader.systemd-boot.enable = true; # (for UEFI systems only)
-
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Toronto";

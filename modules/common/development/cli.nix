@@ -18,8 +18,8 @@
       bun typst typst-live
 
       # Utils
-      bat btop diff-so-fancy dust gh git
-      gnumake killall tldr unzip wget
+      bat btop diff-so-fancy dust file gh
+      git gnumake killall tldr unzip wget
 
       # Misc
       fastfetch lolcat uwufetch
