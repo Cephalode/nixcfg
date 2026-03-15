@@ -15,7 +15,7 @@
       eza fd fzf ripgrep tree yazi zoxide
 
       # Build and languages
-      bun typst typst-live
+      bun nodejs_24 typst typst-live
 
       # Utils
       bat btop diff-so-fancy dust file gh
