@@ -30,6 +30,19 @@
     nixCats = {
       url = "github:BirdeeHub/nixCats-nvim";
     };
+    nix-wrapper-modules = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Neovim plugins for the wrapper modules
+    neovim-plugins-lze = {
+      url = "github:BirdeeHub/lze";
+      flake = false;
+    };
+    neovim-plugins-lzextras = {
+      url = "github:BirdeeHub/lzextras";
+      flake = false;
+    };
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -52,6 +65,7 @@
 
           neovim-nightly-overlay
           nixCats
+          nix-wrapper-modules
           noctalia
           zen-browser
           ;
@@ -67,6 +81,7 @@
 
           neovim-nightly-overlay
           nixCats
+          nix-wrapper-modules
           zen-browser
           ;
       };

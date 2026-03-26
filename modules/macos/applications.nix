@@ -18,13 +18,14 @@
     ];
     brews = [
       "lume"
-      "nvm" # node version manager
+      "nvm"
     ];
     casks = [
       "bambu-studio"
       "beeper" # the nix package does not support aarch64
       "mactex-no-gui"
       "obsidian"
+      "teamspeak-client@beta"
     ];
     masApps = {
       # Mac Appstore apps

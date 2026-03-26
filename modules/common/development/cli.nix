@@ -6,10 +6,9 @@
   environment = {
     systemPackages = with pkgs; [
       # TODO atuin
-      # TODO nodejs
 
       # Terminal and Editor
-      kitty claude-code cursor-cli opencode vim
+      kitty vim
 
       # Navigation
       eza fd fzf ripgrep tree yazi zoxide

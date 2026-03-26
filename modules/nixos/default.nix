@@ -12,6 +12,7 @@
     ./security.nix
     ./games.nix
     ./applications.nix
+    ./services.nix
   ];
 
   programs = {

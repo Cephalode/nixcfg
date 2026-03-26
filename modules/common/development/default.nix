@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 {
   imports = [
-    # ./neovim
+    ./neovim
+    ./agents.nix
     ./cli.nix
     ./languages.nix
     ./tmux.nix

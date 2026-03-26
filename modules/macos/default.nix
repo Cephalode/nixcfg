@@ -11,5 +11,14 @@
     ./devices.nix
     ./homebrew.nix
     ./applications.nix
+    ./services.nix
+    ./ai.nix
   ];
+
+  programs = {
+    zsh = {
+      enable = true;
+      promptInit = ""; # Disable default prompt
+    };
+  };
 }
