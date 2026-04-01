@@ -17,6 +17,7 @@
     taps = [
     ];
     brews = [
+      "himalaya"
       "lume"
       "nvm"
     ];
