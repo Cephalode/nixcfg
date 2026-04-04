@@ -7,7 +7,6 @@
   ...}:
 {
   environment.systemPackages = with pkgs; [
-    claude-code    # Anthropic's Claude Code agent
-    opencode       # AI coding assistant
+    opencode
   ];
 }
