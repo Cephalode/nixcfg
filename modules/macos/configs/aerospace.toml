@@ -1,0 +1,178 @@
+# Run commands
+after-startup-command = ['workspace browser']
+
+# Start AeroSpace at login
+start-at-login = true
+
+
+# Layout
+enable-normalization-flatten-containers = true # Nodes can't contain nodes that only have one child
+enable-normalization-opposite-orientation-for-nested-containers = true # Nodes cannot have a nested node with the same tiling style
+accordion-padding = 0 # Disabled if 0
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto' # Tall monitors tile vertically and wide, horizontally
+
+key-mapping.preset = 'qwerty' # Keyboard layout
+
+# Gaps around and between windows
+[gaps]
+inner.horizontal = 10
+inner.vertical =   10
+outer.left =       10
+outer.right =      10
+outer.bottom =     10
+outer.top = [{monitor.main = 0}, 10] # main monitor has top bar
+
+
+# Main bindings
+[mode.main.binding]
+# alt-ctrl-cmd = 'mode hyper'
+# [mode.hyper.binding]
+# See: https://nikitabobko.github.io/AeroSpace/commands#layout
+alt-ctrl-cmd-slash = 'layout tiles horizontal vertical'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+alt-ctrl-cmd-h = ['focus left', 'move-mouse window-force-center']
+alt-ctrl-cmd-j = ['focus down', 'move-mouse window-force-center']
+alt-ctrl-cmd-k = ['focus up', 'move-mouse window-force-center']
+alt-ctrl-cmd-l = ['focus right', 'move-mouse window-force-center']
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move
+alt-ctrl-cmd-shift-left = 'move left'
+alt-ctrl-cmd-shift-down = 'move down'
+alt-ctrl-cmd-shift-up = 'move up'
+alt-ctrl-cmd-shift-right = 'move right'
+
+alt-ctrl-cmd-shift-h = ['join-with left', 'mode main']
+alt-ctrl-cmd-shift-j = ['join-with down', 'mode main']
+alt-ctrl-cmd-shift-k = ['join-with up', 'mode main']
+alt-ctrl-cmd-shift-l = ['join-with right', 'mode main']
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#resize
+alt-ctrl-cmd-minus = 'resize smart -50'
+alt-ctrl-cmd-equal = 'resize smart +50'
+
+# workspace
+alt-ctrl-cmd-b = 'workspace browser'
+alt-ctrl-cmd-c = 'workspace code'
+alt-ctrl-cmd-x = 'workspace fullscreen'
+alt-ctrl-cmd-g = 'workspace game'
+alt-ctrl-cmd-o = 'workspace obs'
+alt-ctrl-cmd-p = 'workspace personal'
+alt-ctrl-cmd-s = 'workspace secondary'
+alt-ctrl-cmd-v = 'workspace vtubing'
+
+alt-ctrl-cmd-shift-b = ['move-node-to-workspace browser', 'workspace browser']
+alt-ctrl-cmd-shift-c = ['move-node-to-workspace code', 'workspace code']
+alt-ctrl-cmd-shift-x = ['move-node-to-workspace fullscreen', 'workspace fullscreen']
+alt-ctrl-cmd-shift-g = ['move-node-to-workspace game', 'workspace game']
+alt-ctrl-cmd-shift-o = ['move-node-to-workspace obs', 'workspace obs']
+alt-ctrl-cmd-shift-p = ['move-node-to-workspace personal', 'workspace personal']
+alt-ctrl-cmd-shift-s = ['move-node-to-workspace secondary', 'workspace secondary']
+alt-ctrl-cmd-shift-v = ['move-node-to-workspace vtubing', 'workspace vtubing']
+
+# alt-ctrl-cmd-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+alt-ctrl-cmd-shift-f = ['close-all-windows-but-current', 'fullscreen --no-outer-gaps']
+
+alt-ctrl-cmd-f = 'exec-and-forget ~/.local/bin/toggle-floating.sh' # Toggle always-on-top for current window
+
+alt-ctrl-cmd-shift-semicolon = 'mode service'
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+#r = ['flatten-workspace-tree', 'mode main'] # reset layout
+#s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
+f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+#backspace = ['close-all-windows-but-current', 'mode main']
+
+
+[workspace-to-monitor-force-assignment]
+secondary = 'secondary'
+
+
+# App startup
+[[on-window-detected]]
+  if.app-name-regex-substring="kitty" # enable ghostty to open new tabs without counting as new window
+  run= [
+    "layout tiling",
+    "move-node-to-workspace code",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="cursor"
+  run = [
+    "move-node-to-workspace code",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="veadotube"
+  run = [
+    "move-node-to-workspace vtubing",
+  ]
+
+[[on-window-detected]] 
+  if.app-name-regex-substring="obs"
+  run = [
+    "move-node-to-workspace obs",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="steam"
+  run = [
+    "layout tiling",
+    "move-node-to-workspace game",
+  ]
+[[on-window-detected]]
+  if.app-name-regex-substring="discord"
+  run = [
+    "move-node-to-workspace game",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="zen"
+  run = [
+    "move-node-to-workspace browser",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="spark"
+  run = [
+    "move-node-to-workspace personal",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="obsidian"
+  run = [
+    "move-node-to-workspace personal",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="messages"
+  run = [
+    "move-node-to-workspace messages",
+  ]
+
+[[on-window-detected]]
+  if.app-name-regex-substring="beeper"
+  run = [
+    "move-node-to-workspace secondary",
+  ]
+
+# Picture in picture for zen browser, obs and discord
+[[on-window-detected]]
+  if.window-title-regex-substring="picture-in-picture"
+  run = [
+    "move-node-to-workspace secondary",
+  ]
+[[on-window-detected]]
+  if.window-title-regex-substring="projector"
+  run = [
+    "move-node-to-workspace secondary",
+  ]
+[[on-window-detected]]
+  if.app-name-regex-substring="discord"
+  if.during-aerospace-startup=false
+  check-further-callbacks=true
+  run = [
+    "move-node-to-workspace secondary",
+  ]
+

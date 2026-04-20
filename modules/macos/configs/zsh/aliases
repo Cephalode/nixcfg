@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# File commands
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias dush='du -sh * | sort -hr'
+alias wget='wget --hsts-file=$XDG_DATA_HOME/wget-hsts'
+alias tree='tree --dirsfirst'
+alias cat='bat'
+alias ls='eza'
+
+# Editors
+alias svim='sudoedit'
+alias claude='claude --dangerously-skip-permissions'
+
+# Command shortcuts
+alias hist='history | grep'
+alias srczsh='source $XDG_CONFIG_HOME/zsh/.zshrc; source $XDG_CONFIG_HOME/zsh/.zshenv'
+alias fetch='uwufetch'
+alias golden='echo 0.61803398875'
+
+# Mac commands
+alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
+
+# Other apps
+alias adb='HOME="$XDG_DATA_HOME"/android adb' # adds xdg path
+
+# TMUX
+alias tn='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias ta='tmux attach-session'
+
+# Git
+alias gs='git status --short'
+alias gd="git diff --output-indicator-new=' ' --output-indicator-old=' '"
+alias ga='git add'
+alias gap='git add --patch'
+alias gc='git commit'
+alias gp='git push'
+alias gu='git pull'
+alias gl="git log --all --graph --pretty=\
+  format:'%C(magenta)%h %C(white) %an %ar%C(auto) %D%n%s%n'"
+alias gb='git branch'
+alias gco='git checkout'
+alias gi='git init'
+alias gcl='git clone'
+
+# Scripts
+alias on='$XDG_CONFIG_HOME/scripts/on'

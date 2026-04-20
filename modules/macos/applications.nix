@@ -1,13 +1,12 @@
 {
-  config,
-  pkgs,
   inputs,
+  pkgs,
   ...
 }:
 {
   environment.systemPackages = with pkgs; [
     aerospace
-    karabiner-elements
+    karabiner-elements # Required for VirtualHIDKeyboard driver — kanata uses it for output on macOS
     mas
     mkalias # Allows apps in /Applications/Nix to show up in Raycast
     raycast
@@ -17,8 +16,6 @@
     taps = [
     ];
     brews = [
-      "himalaya"
-      "lume"
       "nvm"
     ];
     casks = [

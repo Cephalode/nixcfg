@@ -1,0 +1,6 @@
+# Get app id from its name
+appid() {
+  ID=$(osascript -e "id of app \"$1\"")
+  echo $ID | pbcopy
+  echo $ID copied to the clipboard.
+}

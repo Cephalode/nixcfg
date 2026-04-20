@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Obsidian new note
+# Copied from ZarenCodes
+
+if [ -z "$1" ]; then
+  echo "Error: A file name must be set, e.g. on \"example note\"."
+  exit 1
+elif [ -z "$OBSIDIAN_MAIN_DIR" ]; then
+  echo "Error: OBSIDIAN_MAIN_DIR does not exist."
+  exit 2
+fi
+
+file_name=$(echo "$1" | tr ' ' '-')
+formatted_file_name=$(date "+%Y-%m-%d")-${file_name}.md /\<file_name\>
+cd "$OBSIDIAN_MAIN_DIR/" || exit
+vi "inbox/${formatted_file_name}" # vi is always available but can be overriden to nvim with an alias

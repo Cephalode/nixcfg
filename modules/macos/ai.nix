@@ -1,19 +1,30 @@
-# AI workloads and tools configuration for macOS
-# Includes local LLMs, ML development tools, and AI-related utilities
-# Note: Common agent tools are in modules/common/development/agents.nix
+# AI Configuration for OpenClaw
+#
+# z.ai GLM-4-7B Setup:
+# - Set ZAI_API_KEY environment variable with your z.ai API key
+# - The provider is configured in ~/.openclaw/openclaw.json
+# - Default model: zai/glm-4-7b
+# - Base URL: https://api.z.ai/v1
+#
+# Other available providers:
+# - ollama: Local models (gemma4:e2b by default)
+# - pi-coding-agent: For pi coding agent integration
 
-{ config, pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    ddgr           # DuckDuckGo CLI for web search (preferred over web_search)
-    himalaya       # Email CLI for Gmail read/search
-    openclaw       # OpenClaw Gateway agent infrastructure
+    ddgr
+    himalaya
+    ollama
+    openclaw
+    pi-coding-agent
+  ];
+  homebrew.brews = [
+    "lume"
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
-    "openclaw-2026.2.26"
-    "openclaw-2026.3.12"
-    "openclaw-2026.4.1"
+    "openclaw-2026.4.2"
   ];
 }

@@ -17,8 +17,18 @@
       bun nodejs_24 typst typst-live
 
       # Utils
-      bat btop diff-so-fancy dust file gh
-      git gnumake killall tldr unzip wget
+      bat btop cmake diff-so-fancy dust file gh
+      git gnumake grunt-cli jq killall pandoc pipx stow tldr
+      tesseract unzip wget
+
+        # Data & databases
+      dolt
+
+      # Languages (JVM)
+      jdk
+
+      # Languages (Rust)
+      cargo rustc
 
       # Misc
       fastfetch lolcat uwufetch
