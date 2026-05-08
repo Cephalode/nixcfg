@@ -3,16 +3,6 @@
   programs.tmux = {
     enable = true;
 
-    # Enable the bundled "sensible" defaults (256 color, base-index 1,
-    # escape-time 0, renumber-windows, new-window from current path)
-    enableSensible = true;
-
-    # Mouse support (clickable panes/windows, scroll, resize)
-    enableMouse = true;
-
-    # Vim-style pane nav (hjkl) + vi copy mode + pbcopy integration on macOS
-    enableVim = true;
-
     # ── Additional config ────────────────────────────────────
     extraConfig = ''
       # ── Extended keys (required for pi inside tmux) ────
