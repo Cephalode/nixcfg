@@ -10,7 +10,6 @@
     enable = true;
     defaultUser = "sqibo";
     startMenuLaunchers = true;
-    nativeSystemd = true;
     wslConf = {
       network.hostname = "lunalata";
       interop.enabled = true;
