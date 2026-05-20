@@ -27,6 +27,7 @@
     ];
     masApps = {
       # Mac Appstore apps
+      Tailscale = 1475387142; # https://apps.apple.com/app/tailscale/id1475387142
     };
   };
 }

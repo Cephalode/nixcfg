@@ -13,6 +13,7 @@
     ./games.nix
     ./applications.nix
     ./services.nix
+    ./physical.nix
   ];
 
   programs = {

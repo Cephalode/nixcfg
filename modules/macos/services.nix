@@ -3,11 +3,16 @@
 { config, pkgs, ... }:
 
 let
-  picordDir = "/Users/sqibo/devel/picord";
+  user = "sqibo";
+  home = "/Users/${user}";
+  picordDir = "${home}/devel/picord";
 in
 {
+  # Tailscale: disabled in favor of the Mac App Store version
+  # (nix tailscaled doesn't properly advertise IngressEnabled for Funnel)
+  # See applications.nix → masApps → Tailscale
   services.tailscale = {
-    enable = true;
+    enable = false;
     package = pkgs.tailscale;
   };
 
@@ -21,7 +26,7 @@ in
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_16;
-    dataDir = "/Users/sqibo/.local/share/postgresql";
+    dataDir = "${home}/.local/share/postgresql";
   };
 
   # ── Valkey (Redis-compatible) ──────────────────────────────────
@@ -32,7 +37,7 @@ in
       ProgramArguments = [
         "${pkgs.valkey}/bin/valkey-server"
         "--dir"
-        "/Users/sqibo/.local/share/valkey"
+        "${home}/.local/share/valkey"
         "--loglevel"
         "warning"
       ];
@@ -61,7 +66,7 @@ in
       StandardOutPath = "${picordDir}/debug/picord-launchd-stdout.log";
       StandardErrorPath = "${picordDir}/debug/picord-launchd-stderr.log";
       EnvironmentVariables = {
-        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/sqibo/.nix-profile/bin";
+        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${home}/.nix-profile/bin";
         SHELL = "/bin/bash";
       };
     };

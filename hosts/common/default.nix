@@ -1,5 +1,8 @@
 # Common configuration for all hosts
 
+let
+  user = "sqibo";
+in
 {
   lib,
   inputs,
@@ -10,7 +13,7 @@
   nix.settings = {
     trusted-users = [
       "root"
-      "sqibo"
+      user
     ];
     experimental-features = [
       "nix-command"

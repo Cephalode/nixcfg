@@ -23,32 +23,16 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixCats = {
-      url = "github:BirdeeHub/nixCats-nvim";
-    };
-    nix-wrapper-modules = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # Neovim plugins for the wrapper modules
-    neovim-plugins-lze = {
-      url = "github:BirdeeHub/lze";
-      flake = false;
-    };
-    neovim-plugins-lzextras = {
-      url = "github:BirdeeHub/lzextras";
-      flake = false;
-    };
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -58,40 +42,19 @@
     let
       inherit (self) outputs;
 
-      nixosInputs = {
-        inherit (inputs)
-          nixpkgs
-          nixpkgs-stable
-
-          neovim-nightly-overlay
-          nixCats
-          nix-wrapper-modules
-          noctalia
-          zen-browser
-          ;
-      };
-
-      darwinInputs = {
-        inherit (inputs)
-          nixpkgs
-          nix-darwin
-          nix-homebrew
-          homebrew-core
-          homebrew-cask
-
-          neovim-nightly-overlay
-          nixCats
-          nix-wrapper-modules
-          zen-browser
-          ;
-      };
+      # Inputs for NixOS GUI hosts (hapalo, loligo)
+      guiNixosInputs = { inherit (inputs) nixpkgs nixpkgs-stable noctalia zen-browser; };
+      # Inputs for NixOS WSL host (lunalata) — no noctalia (no GUI)
+      wslNixosInputs = { inherit (inputs) nixpkgs nixpkgs-stable zen-browser nixos-wsl; };
+      # Inputs for macOS host (metasepia)
+      darwinInputs = { inherit (inputs) nixpkgs nix-homebrew homebrew-core homebrew-cask zen-browser; };
     in
     {
       nixosConfigurations = {
         loligo = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit outputs;
-            inputs = nixosInputs;
+            inputs = guiNixosInputs;
           };
           modules = [
             ./hosts/nixos/loligo
@@ -100,20 +63,21 @@
         };
 
         lunalata = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
           specialArgs = {
             inherit outputs;
-            inputs = nixosInputs;
+            inputs = wslNixosInputs;
           };
           modules = [
             ./hosts/nixos/lunalata
-            ./modules/nixos
+            ./modules/common
           ];
         };
 
         hapalo = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit outputs;
-            inputs = nixosInputs;
+            inputs = guiNixosInputs;
           };
           modules = [
             ./hosts/nixos/hapalo

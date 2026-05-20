@@ -8,7 +8,7 @@
       # TODO atuin
 
       # Terminal and Editor
-      kitty vim
+      kitty neovim vim
 
       # Navigation
       eza fd fzf ripgrep tree yazi zoxide
@@ -34,6 +34,8 @@
       fastfetch lolcat uwufetch
     ];
     variables = {
+      EDITOR = "nvim";
+      MANPAGER = "nvim +Man!";
       XDG_CONFIG_HOME = "$HOME/.config";
       ZDOTDIR = "$XDG_CONFIG_HOME/zsh";
     };

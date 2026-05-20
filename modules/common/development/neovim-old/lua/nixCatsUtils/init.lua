@@ -1,2 +1,0 @@
--- This directory is to allow this neovim configuration
--- to work without nixCats when not running through nix

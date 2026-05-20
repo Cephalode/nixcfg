@@ -11,29 +11,10 @@
     ../common
   ];
 
-  networking.networkmanager.enable = true;
-
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Experimental = true;
-        FastConnectable = true;
-      };
-      Policy.AutoEnable = true;
-    };
-  };
-
-  services = {
-    openssh.enable = true;
-    blueman.enable = true;
-    power-profiles-daemon.enable = true;
-    upower.enable = true;
-  };
+  services.openssh.enable = true;
 
   users.users = {
     sqibo = {

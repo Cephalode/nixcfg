@@ -1,4 +1,8 @@
 { pkgs, ... }:
+
+let
+  user = "sqibo";
+in
 {
   environment.systemPackages = with pkgs; [
     deluge
@@ -23,7 +27,7 @@
   # Set up esync (speeds up games)
   # systemd.extraConfig = "DefaultLimitNOFILE=524288"; # this currently does not work
   security.pam.loginLimits = [{
-    domain = "sqibo";
+    domain = user;
     type = "hard";
     item = "nofile";
     value = "524288";
