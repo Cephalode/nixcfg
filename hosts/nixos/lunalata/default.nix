@@ -17,5 +17,11 @@
   };
 
   networking.hostName = "lunalata";
+
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+
   system.stateVersion = "25.05";
 }
