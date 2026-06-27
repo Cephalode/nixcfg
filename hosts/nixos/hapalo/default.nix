@@ -15,6 +15,8 @@
   networking.hostName = "hapalo";
   system.stateVersion = "25.05"; # Do not change
 
+  boot.loader.limine.configurationLimit = 3;
+
   hardware.kanata.devices = [
     "/dev/input/by-path/pci-0000:02:00.0-usb-0:9.2:1.0-event-kbd"
     "/dev/input/by-path/pci-0000:02:00.0-usb-0:9.3:1.1-event-kbd"
