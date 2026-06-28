@@ -21,7 +21,7 @@
 
     onActivation = {
       autoUpdate = true;
-      # cleanup = "zap"; # Has issues with aerospace
+      cleanup = "zap"; # Has issues with aerospace
       upgrade = true;
     };
     global = {

@@ -17,9 +17,9 @@
       bun nodejs_24 typst typst-live
 
       # Utils
-      bat btop cmake diff-so-fancy dust file gh
-      git gnumake grunt-cli jq killall pandoc pipx stow tldr
-      tesseract unzip wget
+      bat btop cmake diff-so-fancy dust file gh git 
+      gnumake grunt-cli jq killall pandoc pipx stow 
+      tailscale tldr tesseract unzip wget
 
         # Data & databases
       dolt

@@ -1,4 +1,4 @@
-#j/usr/bin/env bash
+#!/usr/bin/env bash
 
 os="$(uname -s)"
 

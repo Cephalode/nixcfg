@@ -9,6 +9,7 @@
     karabiner-elements # Required for VirtualHIDKeyboard driver — kanata uses it for output on macOS
     mas
     mkalias # Allows apps in /Applications/Nix to show up in Raycast
+    obsidian
     raycast
     sox
   ];
@@ -16,18 +17,13 @@
     taps = [
     ];
     brews = [
-      "nvm"
     ];
     casks = [
-      "bambu-studio"
       "beeper" # the nix package does not support aarch64
-      "mactex-no-gui"
-      "obsidian"
-      "teamspeak-client@beta"
     ];
     masApps = {
       # Mac Appstore apps
-      Tailscale = 1475387142; # https://apps.apple.com/app/tailscale/id1475387142
+      #Tailscale = 1475387142; # https://apps.apple.com/app/tailscale/id1475387142
     };
   };
 }
