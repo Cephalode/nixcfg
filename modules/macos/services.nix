@@ -27,6 +27,10 @@ in
     enable = true;
     package = pkgs.postgresql_16;
     dataDir = "${home}/.local/share/postgresql";
+    ensureUsers = [
+      { name = user; ensureClauses.superuser = true; }
+    ];
+    ensureDatabases = [ "inkwell" ];
   };
 
   # ── Valkey (Redis-compatible) ──────────────────────────────────
