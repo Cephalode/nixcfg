@@ -8,11 +8,10 @@ let
   picordDir = "${home}/devel/picord";
 in
 {
-  # Tailscale: disabled in favor of the Mac App Store version
-  # (nix tailscaled doesn't properly advertise IngressEnabled for Funnel)
-  # See applications.nix → masApps → Tailscale
+  # Tailscale: nix-managed CLI + daemon (was disabled for the MAS app, which
+  # is no longer installed). CLI also in common/development/cli.nix.
   services.tailscale = {
-    enable = false;
+    enable = true;
     package = pkgs.tailscale;
   };
 
@@ -52,6 +51,18 @@ in
       EnvironmentVariables = {
         PATH = "${pkgs.valkey}/bin:/usr/bin:/bin";
       };
+    };
+  };
+
+  # ── Sunshine (game stream host for Moonlight) ──────────────────
+  launchd.user.agents.sunshine = {
+    serviceConfig = {
+      Label = "org.LizardByte.Sunshine";
+      ProgramArguments = [ "${pkgs.sunshine}/bin/sunshine" ];
+      RunAtLoad = true;
+      KeepAlive = true;
+      StandardOutPath = "/tmp/sunshine.stdout.log";
+      StandardErrorPath = "/tmp/sunshine.stderr.log";
     };
   };
 

@@ -1,55 +1,76 @@
-{ config, pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  plugins = with pkgs.tmuxPlugins; [
+    sensible
+    yank
+    resurrect
+    continuum
+  ];
+  loadPlugins = lib.concatMapStringsSep "\n" (p: "run-shell ${p.rtp}") plugins;
+in
 {
   programs.tmux = {
     enable = true;
 
-    # ── Additional config ────────────────────────────────────
     extraConfig = ''
-      # ── Extended keys (required for pi inside tmux) ────
+      # ── Prefix: backtick ─────────────────────────────────
+      unbind C-b
+      set -g prefix `
+      bind ` send-prefix
+
+      # ── Base options ─────────────────────────────────────
+      set -g base-index 1
+      set -g pane-base-index 1
+      set -g renumber-windows on
+      set -g history-limit 100000
+      set -g escape-time 0
+      set -g mouse on
+      set -g repeat-time 1000
       set -g extended-keys on
       set -g extended-keys-format csi-u
 
-      # ── History ───────────────────────────────────────────
-      set -g history-limit 100000
-
-      # ── No auto-rename ───────────────────────────────────
+      # ── No auto-rename / bell ────────────────────────────
       set-option -g allow-rename off
-
-      # ── Disable bell ─────────────────────────────────────
       set -g visual-activity off
       set -g visual-bell off
       set -g visual-silence off
       setw -g monitor-activity off
       set -g bell-action none
 
-      # ── Fast config reload ───────────────────────────────
+      # ── Config reload ────────────────────────────────────
       bind r source-file /etc/tmux.conf \; display-message "Config reloaded!"
 
-      # ── Pane navigation without prefix (Alt + hjkl) ─────
+      # ── Pane navigation ──────────────────────────────────
+      # prefix + hjkl
+      bind-key h select-pane -L
+      bind-key j select-pane -D
+      bind-key k select-pane -U
+      bind-key l select-pane -R
+      # Alt + hjkl (no prefix)
       bind -n M-h select-pane -L
       bind -n M-j select-pane -D
       bind -n M-k select-pane -U
       bind -n M-l select-pane -R
 
-      # ── Pane resizing (prefix + H/J/K/L) ────────────────
+      # Pane resizing (prefix + H/J/K/L)
       bind -r H resize-pane -L 5
       bind -r J resize-pane -D 5
       bind -r K resize-pane -U 5
       bind -r L resize-pane -R 5
 
-      # ── Swap panes ──────────────────────────────────────
+      # Swap panes
       bind < swap-pane -U
       bind > swap-pane -D
 
-      # ── Vi-style copy mode bindings ─────────────────────
-      bind Enter copy-mode
-      bind -T copy-mode-vi C-v send-keys -X rectangle-toggle
-      bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+      # Split windows
+      bind '\' split-window -h
+      bind '-' split-window -v
+      bind f resize-pane -Z
 
-      # ── 24h clock ───────────────────────────────────────
+      # ── 24h clock ────────────────────────────────────────
       setw -g clock-mode-style 24
 
-      # ── Status line ─────────────────────────────────────
+      # ── Status line ──────────────────────────────────────
       set -g status-position bottom
       set -g status-justify left
       set -g status-style 'fg=white bg=black'
@@ -60,11 +81,10 @@
       set -g status-right '#[fg=yellow]%Y-%m-%d #[fg=cyan]%H:%M '
       set -g status-right-length 50
 
-      setw -g window-status-current-style 'fg=black bg=green bold'
-      setw -g window-status-current-format ' #I:#W#F '
-
-      setw -g window-status-style 'fg=white bg=black'
-      setw -g window-status-format ' #I:#W#F '
+      # Window dots
+      setw -g window-status-format ' #[fg=colour240]●'
+      setw -g window-status-current-format ' #[fg=magenta,bold]●'
+      setw -g window-status-bell-style 'fg=red,nobold'
 
       # Pane borders
       set -g pane-border-style 'fg=colour238'
@@ -72,13 +92,20 @@
 
       # Messages
       set -g message-style 'fg=black bg=yellow bold'
+
+      # ── Copy mode ────────────────────────────────────────
+      bind Enter copy-mode
+      bind -T copy-mode-vi C-v send-keys -X rectangle-toggle
+      # ponytail: tmux-yank handles clipboard per-platform (y in copy-mode-vi)
+
+      # ── Session persistence ──────────────────────────────
+      set -g @resurrect-capture-pane-contents 'on'
+      set -g @resurrect-strategy-nvim 'session'
+      set -g @continuum-restore 'on'
+      set -g @continuum-save-interval '10'
+
+      # ── Load plugins (must be last; continuum must be final) ──
+      ${loadPlugins}
     '';
   };
-
-  # tmux plugins (install as system packages)
-  environment.systemPackages =
-    (with pkgs.tmuxPlugins; [
-      resurrect
-      continuum
-    ]);
 }

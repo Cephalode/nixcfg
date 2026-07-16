@@ -5,6 +5,7 @@
     ./cli.nix
     ./languages.nix
     ./tmux.nix
+    ./neovim
     ./work.nix
   ];
 }

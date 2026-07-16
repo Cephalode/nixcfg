@@ -15,7 +15,14 @@
   networking.hostName = "hapalo";
   system.stateVersion = "25.05"; # Do not change
 
-  boot.loader.limine.configurationLimit = 3;
+  boot.loader.limine = {
+    maxGenerations = 3;
+    extraEntries = ''
+      /Windows
+        protocol: efi
+        path: boot():/EFI/Microsoft/Boot/bootmgfw.efi 
+    '';
+  };
 
   hardware.kanata.devices = [
     "/dev/input/by-path/pci-0000:02:00.0-usb-0:9.2:1.0-event-kbd"

@@ -16,7 +16,7 @@ in
     echo "Setting up nix-managed dotfiles..."
 
     # Ensure directories exist
-    for dir in git starship kitty tmux aerospace karabiner zsh scripts; do
+    for dir in git starship kitty aerospace karabiner zsh scripts; do
       mkdir -p "${configHome}/$dir"
     done
 
@@ -30,10 +30,6 @@ in
     # Kitty
     ln -sfn ${configs}/kitty.conf       ${configHome}/kitty/kitty.conf
     ln -sfn ${configs}/kitty-theme.conf ${configHome}/kitty/current-theme.conf
-
-    # Tmux (remove stale regular file if present, then symlink)
-    rm -f ${configHome}/tmux/tmux.conf
-    ln -sfn ${configs}/tmux.conf ${configHome}/tmux/tmux.conf
 
     # Aerospace
     ln -sfn ${configs}/aerospace.toml ${configHome}/aerospace/aerospace.toml

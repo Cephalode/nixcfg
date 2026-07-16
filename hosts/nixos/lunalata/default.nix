@@ -6,6 +6,8 @@
     ../../common
   ];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   wsl = {
     enable = true;
     defaultUser = "sqibo";

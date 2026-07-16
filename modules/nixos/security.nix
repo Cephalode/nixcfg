@@ -14,15 +14,9 @@
   
   boot.loader = {
     efi.canTouchEfiVariables = true;
-
     limine = {
       enable = true;
       secureBoot.enable = true;
-      extraEntries = ''
-        /Windows
-          protocol: efi
-          path: boot():/EFI/Microsoft/Boot/bootmgfw.efi 
-      '';
     };
   };
 }
