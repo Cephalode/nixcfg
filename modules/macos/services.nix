@@ -54,18 +54,6 @@ in
     };
   };
 
-  # ── Sunshine (game stream host for Moonlight) ──────────────────
-  launchd.user.agents.sunshine = {
-    serviceConfig = {
-      Label = "org.LizardByte.Sunshine";
-      ProgramArguments = [ "${pkgs.sunshine}/bin/sunshine" ];
-      RunAtLoad = true;
-      KeepAlive = true;
-      StandardOutPath = "/tmp/sunshine.stdout.log";
-      StandardErrorPath = "/tmp/sunshine.stderr.log";
-    };
-  };
-
   # ── Picord (pi coding agent daemon) ────────────────────────────
   launchd.user.agents.picord = {
     serviceConfig = {

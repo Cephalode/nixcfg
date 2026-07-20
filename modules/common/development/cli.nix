@@ -7,9 +7,6 @@
     systemPackages = with pkgs; [
       # TODO atuin
 
-      # Terminal and Editor
-      kitty
-
       # Navigation
       eza fd fzf ripgrep tree yazi zoxide
 
