@@ -6,6 +6,12 @@
   ...
 }:
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      notesmd-cli = final.callPackage ../../pkgs/notesmd-cli { };
+    })
+  ];
+
   imports = [
     ../common
     ./devices.nix
@@ -16,6 +22,10 @@
     ./ai.nix
     ./kanata.nix
   ];
+
+  security.sudo.extraConfig = ''
+    sqibo ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/darwin-rebuild
+  '';
 
   programs = {
     zsh = {

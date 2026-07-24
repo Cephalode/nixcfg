@@ -18,6 +18,7 @@ return {
       if vault then
         require("obsidian").setup({
           workspaces = { { name = "notes", path = vault } },
+          legacy_commands = false,
         })
       end
     end,

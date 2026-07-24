@@ -9,6 +9,7 @@
     karabiner-elements
     mas
     mkalias
+    notesmd-cli
     obsidian
     raycast
     sox
