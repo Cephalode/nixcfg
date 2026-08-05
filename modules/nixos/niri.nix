@@ -67,8 +67,9 @@
       };
     };
     seatd.enable = true;
-    noctalia-shell.enable = true;
   };
+
+  programs.noctalia.enable = true;
 
   security.polkit.enable = true;
 
