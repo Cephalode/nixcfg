@@ -56,12 +56,7 @@
       enable = true;
       settings = {
         default_session = {
-          command = ''
-            ${pkgs.tuigreet}/bin/tuigreet 
-            --time --remember \
-            --theme 'container=black;border=cyan;title=white;text=white;prompt=white;input=white;action=cyan;button=cyan'\
-            --cmd ${pkgs.niri}/bin/niri
-          '';
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --theme 'container=black;border=cyan;title=white;text=white;prompt=white;input=white;action=cyan;button=cyan' --cmd ${pkgs.niri}/bin/niri";
           user = "greeter";
         };
       };
