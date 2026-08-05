@@ -64,7 +64,10 @@
     seatd.enable = true;
   };
 
-  programs.noctalia.enable = true;
+  programs.noctalia = {
+    enable = true;
+    systemd.enable = true;
+  };
 
   security.polkit.enable = true;
 
