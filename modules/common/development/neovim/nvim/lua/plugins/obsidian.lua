@@ -3,6 +3,7 @@ return {
     "obsidian.nvim",
     auto_enable = true,
     ft = "markdown",
+    opts = { legacy_commands = false },
     after = function()
       -- Vault path from nix (info.obsidian_vault) or auto-detect
       local vault = nixInfo(nil, "info", "obsidian_vault")

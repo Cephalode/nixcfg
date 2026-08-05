@@ -19,8 +19,9 @@ in
       bind ` send-prefix
 
       # ── Base options ─────────────────────────────────────
+      # Windows and panes count from 1, not 0
       set -g base-index 1
-      set -g pane-base-index 1
+      setw -g pane-base-index 1
       set -g renumber-windows on
       set -g history-limit 100000
       set -g escape-time 0
@@ -28,6 +29,10 @@ in
       set -g repeat-time 1000
       set -g extended-keys on
       set -g extended-keys-format csi-u
+
+      # ── Vi mode ──────────────────────────────────────────
+      setw -g mode-keys vi
+      set -g status-keys vi
 
       # ── No auto-rename / bell ────────────────────────────
       set-option -g allow-rename off
@@ -62,6 +67,13 @@ in
       bind < swap-pane -U
       bind > swap-pane -D
 
+      # ── Window navigation (vim-style) ────────────────────
+      bind -r C-h previous-window
+      bind -r C-l next-window
+      # Move the current window left/right (< and > are swap-pane above)
+      bind -r M-h swap-window -d -t -1
+      bind -r M-l swap-window -d -t +1
+
       # Split windows
       bind '\' split-window -h
       bind '-' split-window -v
@@ -93,9 +105,14 @@ in
       # Messages
       set -g message-style 'fg=black bg=yellow bold'
 
-      # ── Copy mode ────────────────────────────────────────
+      # ── Copy mode (vi) ───────────────────────────────────
       bind Enter copy-mode
-      bind -T copy-mode-vi C-v send-keys -X rectangle-toggle
+      bind -T copy-mode-vi v      send-keys -X begin-selection
+      bind -T copy-mode-vi V      send-keys -X select-line
+      bind -T copy-mode-vi C-v    send-keys -X rectangle-toggle
+      bind -T copy-mode-vi Escape send-keys -X cancel
+      bind -T copy-mode-vi H      send-keys -X start-of-line
+      bind -T copy-mode-vi L      send-keys -X end-of-line
       # ponytail: tmux-yank handles clipboard per-platform (y in copy-mode-vi)
 
       # ── Session persistence ──────────────────────────────

@@ -27,6 +27,9 @@
       # Languages (Rust)
       cargo rustc
 
+      # Mail
+      aerc
+
       # Misc
       fastfetch lolcat uwufetch
     ];
