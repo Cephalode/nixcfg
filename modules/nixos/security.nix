@@ -14,9 +14,6 @@
   
   boot.loader = {
     efi.canTouchEfiVariables = true;
-    limine = {
-      enable = true;
-      secureBoot.enable = true;
-    };
+    limine.enable = true;
   };
 }

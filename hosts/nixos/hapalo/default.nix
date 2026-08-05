@@ -16,6 +16,7 @@
   system.stateVersion = "25.05"; # Do not change
 
   boot.loader.limine = {
+    secureBoot.enable = true;
     maxGenerations = 3;
     extraEntries = ''
       /Windows
