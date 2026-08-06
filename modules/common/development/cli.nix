@@ -4,35 +4,37 @@
 }:
 {
   environment = {
-    systemPackages = with pkgs; [
-      # TODO atuin
+  systemPackages = with pkgs; [
+    # Navigation
+    eza fd fzf ripgrep tree yazi zoxide
 
-      # Navigation
-      eza fd fzf ripgrep tree yazi zoxide
+    # Build and languages
+    bun nodejs_24 typst typst-live
 
-      # Build and languages
-      bun nodejs_24 typst typst-live
+    # Languages
+    go lua python3 typescript zig
+    # ponytail: zig also serves as C compiler (faster than gcc/clang)
 
-      # Utils
-      bat btop cmake diff-so-fancy dust file gh git 
-      gnumake grunt-cli jq killall pandoc pipx stow 
-      tailscale tldr tesseract unzip wget
+    # Utils
+    bat btop cmake diff-so-fancy dust file gh git 
+    gnumake grunt-cli jq killall pandoc pipx stow 
+    tailscale tldr tesseract unzip wget
 
-        # Data & databases
-      dolt
+      # Data & databases
+    dolt
 
-      # Languages (JVM)
-      jdk
+    # Languages (JVM)
+    jdk
 
-      # Languages (Rust)
-      cargo rustc
+    # Languages (Rust)
+    cargo rustc
 
-      # Mail
-      aerc
+    # Mail
+    aerc
 
-      # Misc
-      fastfetch lolcat uwufetch
-    ];
+    # Misc
+    fastfetch lolcat uwufetch
+  ];
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
       ZDOTDIR = "$XDG_CONFIG_HOME/zsh";
