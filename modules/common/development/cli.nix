@@ -16,7 +16,7 @@
     # ponytail: zig also serves as C compiler (faster than gcc/clang)
 
     # Utils
-    bat cmake diff-so-fancy dust file gh git 
+    bat cmake diff-so-fancy dust file gh 
     gnumake grunt-cli jq killall pandoc pipx stow 
     tailscale tldr tesseract unzip wget
 

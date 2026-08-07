@@ -11,7 +11,6 @@
   environment = {
     systemPackages = with pkgs; [
       alacritty
-      kitty
       firefox
       fuzzel
       mako

@@ -2,6 +2,8 @@
 {
   imports = [
     ./btop
+    ./git
+    ./kitty
     ./starship
   ];
 }
