@@ -67,7 +67,9 @@
 
   programs.noctalia = {
     enable = true;
-    systemd.enable = true;
+    # systemd service fails — Wayland isn't ready when systemd starts it.
+    # niri spawns noctalia via spawn-at-startup in config.kdl instead.
+    systemd.enable = false;
   };
 
   security.polkit.enable = true;

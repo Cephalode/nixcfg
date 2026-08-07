@@ -5,6 +5,7 @@
 }:
 {
   imports = [
+    ./cli
     ./development
     ./security
   ];
