@@ -12,7 +12,6 @@
     systemPackages = with pkgs; [
       alacritty
       firefox
-      fuzzel
       mako
       swaylock
       xwayland-satellite
