@@ -82,6 +82,9 @@ layout {
 
     border {
         width 4
+        active-color   "#7ed0ff"
+        inactive-color "#111416"
+        urgent-color   "#ffb4ab"
     }
 
     shadow {
@@ -91,7 +94,17 @@ layout {
         softness 20
         spread 10
         offset x=4 y=5
-        color "#0007"
+        color "#00000070"
+    }
+
+    tab-indicator {
+        active-color   "#7ed0ff"
+        inactive-color "#004c6a"
+        urgent-color   "#ffb4ab"
+    }
+
+    insert-hint {
+        color "#7ed0ff80"
     }
 
     struts {
@@ -400,4 +413,10 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
-include "./noctalia.kdl"
+
+recent-windows {
+    highlight {
+        active-color "#7ed0ff"
+        urgent-color "#ffb4ab"
+    }
+}
