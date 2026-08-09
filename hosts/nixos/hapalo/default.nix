@@ -25,11 +25,6 @@
     '';
   };
 
-  hardware.kanata.devices = [
-    "/dev/input/by-path/pci-0000:0a:00.3-usb-0:3.3:1.0-event-kbd"
-    "/dev/input/by-path/pci-0000:0a:00.3-usb-0:3.3:1.2-event-kbd"
-  ];
-
   hardware.customNvidia = {
     open = false;
   };
