@@ -9,7 +9,7 @@ Different OSes use different modifier keys for the same actions:
 - **Linux/Windows**: Ctrl+C copies, Ctrl+V pastes
 
 Instead of fighting muscle memory on each platform, kanata remaps keys at the
-keyboard level so **the same physical finger position always produces the same
+keyboard level so **the same physical key always produces the same
 role**, regardless of OS.
 
 ## Modifier Roles
@@ -40,26 +40,6 @@ To unify the experience, kanata **swaps Ctrl and Super/Win** on Linux and Window
 
 On macOS, no swap is needed — Cmd is already the system command key.
 
-## Home Row Mods
-
-Home row keys act as modifiers when held, normal letters when tapped.
-The pattern is identical on all platforms; only the OS key name differs:
-
-| Finger | Left hand role | macOS sends | Linux/Win sends |
-|--------|---------------|-------------|-----------------|
-| a (hold) | Workspace | Ctrl (lctl) | **Super/Win (lmet)** |
-| s (hold) | Navigation | Alt/Option (lalt) | Alt (lalt) |
-| d (hold) | Shift | Shift (lsft) | Shift (lsft) |
-| f (hold) | System commands | Cmd/Meta (lmet) | **Ctrl (lctl)** |
-| j (hold) | System commands | Cmd/Meta (rmet) | **Ctrl (rctl)** |
-| k (hold) | Shift | Shift (rsft) | Shift (rsft) |
-| l (hold) | Navigation | Alt/Option (ralt) | Alt (ralt) |
-| ; (hold) | Workspace | Ctrl (rctl) | **Super/Win (rmet)** |
-
-The **f and a columns are swapped** between macOS and Linux/Win so that:
-- f always triggers "system commands" (Cmd on macOS, Ctrl on Linux/Win)
-- a always triggers "workspace switching" (Ctrl on macOS, Super/Win on Linux/Win)
-
 ## Meh and Hyper Keys
 
 | Physical key | Tap | Hold | Works on |
@@ -71,15 +51,6 @@ The **f and a columns are swapped** between macOS and Linux/Win so that:
 Meh and Hyper are used for window manager shortcuts:
 - **aerospace** (macOS): `alt-ctrl-cmd` = Meh, `alt-ctrl-cmd-shift` = Hyper
 - **niri** (NixOS): these arrive as Ctrl+Alt+Super key combos
-
-## Layer Toggle
-
-| Key combo | Action |
-|-----------|--------|
-| Hold `\\`, then `1` | Enable home row mods (main layer) |
-| Hold `\\`, then `2` | Disable home row mods (base layer) |
-
-All modifier key swaps (Ctrl↔Super on Linux/Win) remain active in both layers.
 
 ## Keyboard Layout per Platform
 
@@ -98,14 +69,12 @@ On macOS, physical keys send their native values (no swap needed).
 
 ```
 (defsrc
-       1    2
-  caps a    s    d    f    j    k    l    ;    ret  \
+  caps ret
   lctl lmet rmet rctl
 )
 
 (deflayer main
-       _    _
-  @hyc @aM  @sA  @dS  @fC  @jC  @kS  @lA  @;M  @hyr @lay
+  @hyc @hyr
   lmet lctl lctl rmet      ← swapped modifiers
 )
 ```
@@ -114,25 +83,22 @@ On macOS, physical keys send their native values (no swap needed).
 
 ```
 (defsrc
-       1    2
-  caps a    s    d    f    j    k    l    ;    ret  \
+  caps ret
 )
 
 (deflayer main
-       _    _
-  @hyc @aC  @sA  @dS  @fM  @jM  @kS  @lA  @;C  @hyr @lay
-                                    ← no swap, native Cmd/Meta
+  @hyc @hyr
 )
 ```
 
 ## Quick Reference: Role → Physical Key per Platform
 
-| Role | Physical key (all platforms) | macOS sends | Linux/Win sends |
-|------|------------------------------|-------------|-----------------|
-| System commands | Pinky bottom-left (f, j) | Cmd/Meta | Ctrl |
-| Workspace | Pinky top-left (a, ;) | Ctrl | Super/Win |
-| Navigation | Ring finger (s, l) | Alt/Option | Alt |
-| Shift | Middle finger (d, k) | Shift | Shift |
+| Role | Physical key | macOS sends | Linux/Win sends |
+|------|-------------|-------------|-----------------|
+| System commands | Meta/Cmd or Ctrl key | Cmd/Meta | Ctrl |
+| Workspace | Ctrl or Super/Win key | Ctrl | Super/Win |
+| Navigation | Alt/Option key | Alt/Option | Alt |
+| Shift | Shift key | Shift | Shift |
 | Window mgmt | Caps or Enter (hold) | Ctrl+Alt+Cmd | Ctrl+Alt+Super |
 | Window mgmt+ | Caps or Enter + Shift | Ctrl+Alt+Cmd+Shift | Ctrl+Alt+Super+Shift |
 

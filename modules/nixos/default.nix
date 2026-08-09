@@ -9,6 +9,7 @@
     ../common
     ./devices
     ./niri.nix
+    ./niri
     ./security.nix
     ./games.nix
     ./physical.nix
