@@ -7,7 +7,6 @@
     ./fuzzel
     ./git
     ./kitty
-    ./niri
     ./starship
   ];
 }
