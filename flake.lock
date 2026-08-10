@@ -179,11 +179,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1786106723,
+        "narHash": "sha256-CgKDSHL6rqAAQkkvg1xaZDQXb77+4XW73iGcUMJ+2w0=",
+        "rev": "f13ff45afd1bb73e640eaa08a7066dbed07e3238",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1049422.f13ff45afd1b/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
+      }
+    },
     "noctalia": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1783795493,
@@ -210,7 +221,8 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "noctalia": "noctalia",
         "wrappers": "wrappers",
-        "zen-browser": "zen-browser"
+        "zen-browser": "zen-browser",
+        "zen-spaces": "zen-spaces"
       }
     },
     "wrappers": {
@@ -251,6 +263,26 @@
       "original": {
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
+        "type": "github"
+      }
+    },
+    "zen-spaces": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786332692,
+        "narHash": "sha256-zkmuYCn7Pd2vxcGR4R3nCsSuEVUFkxA1gQkXGwxiod8=",
+        "owner": "Cephalode",
+        "repo": "zen-spaces",
+        "rev": "2eb2755fe8100c5c09b4e36f208815861d443ed0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Cephalode",
+        "repo": "zen-spaces",
         "type": "github"
       }
     }
