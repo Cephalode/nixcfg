@@ -12,6 +12,7 @@
     ./niri
     ./security.nix
     ./games.nix
+    ./applications.nix
     ./physical.nix
   ];
 
