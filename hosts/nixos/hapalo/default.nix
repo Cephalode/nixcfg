@@ -15,6 +15,10 @@
   networking.hostName = "hapalo";
   system.stateVersion = "25.05"; # Do not change
 
+  environment.systemPackages = [
+    inputs.bedrock-on-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
+
   boot.loader.limine = {
     secureBoot.enable = true;
     maxGenerations = 3;
