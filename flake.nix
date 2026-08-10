@@ -38,7 +38,6 @@
     };
     bedrock-on-linux = {
       url = "github:Cephalode/BedrockOnLinux";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
