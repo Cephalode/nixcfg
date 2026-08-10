@@ -72,6 +72,14 @@
 
   security.polkit.enable = true;
 
+  # System-wide dark mode — apps read this via org.freedesktop.appearance.color-scheme
+  programs.dconf = {
+    enable = true;
+    profiles.user.databases = [{
+      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    }];
+  };
+
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];

@@ -1,6 +1,11 @@
 # Options
 setopt HIST_SAVE_NO_DUPS # No duplicates in zsh history
 
+# Auto-attach to tmux on terminal launch
+if [ -z "$TMUX" ]; then
+  exec tmux new-session -A -s main
+fi
+
 # ZSH setup
 source $ZDOTDIR/.zshenv
 source $ZDOTDIR/aliases
