@@ -20,6 +20,7 @@
   programs.zen-spaces = {
     enable = true;
     user = "sqibo";
+    profileName = "0vkp3u7b.Default Profile";
     spacesForce = true;
     spaces = {
       "Personal" = {
