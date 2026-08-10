@@ -47,11 +47,11 @@ let
     )
 
     (defsrc
-      caps ret
+      caps ret tab
     )
 
     (deflayer main
-      @hyc @hyr
+      @hyc @hyr @cmt
     )
 
     (defalias
@@ -60,6 +60,9 @@ let
       hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
       ;; Enter → Meh (Return on tap, Ctrl+Alt+Cmd on hold)
       hyr (tap-hold-press 200 200 ret (multi lctl lalt lmet))
+      ;; ── Ctrl+Meta keys ────────────────────────────────────────
+      ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Cmd on hold)
+      cmt (tap-hold-press 200 200 tab (multi lctl lmet))
     )
   '';
 

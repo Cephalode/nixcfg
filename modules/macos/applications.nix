@@ -6,6 +6,7 @@
 {
   environment.systemPackages = with pkgs; [
     aerospace
+    duti
     karabiner-elements
     mas
     mkalias

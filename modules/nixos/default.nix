@@ -21,4 +21,10 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
+
+  xdg.mime.defaultApplications = {
+    "text/html" = "zen-twilight.desktop";
+    "x-scheme-handler/http" = "zen-twilight.desktop";
+    "x-scheme-handler/https" = "zen-twilight.desktop";
+  };
 }
