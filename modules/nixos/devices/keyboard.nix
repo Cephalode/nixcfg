@@ -29,16 +29,18 @@
         extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
-            caps esc
+            caps esc tab
           )
 
           (deflayer main
-            @hyc grv
+            @hyc grv @cmt
           )
 
           (defalias
             ;; Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold)
             hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
+            ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
+            cmt (tap-hold-press 200 200 tab (multi lctl lmet))
           )
         '';
       };
