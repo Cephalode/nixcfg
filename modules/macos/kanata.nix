@@ -47,11 +47,11 @@ let
     )
 
     (defsrc
-      caps ret tab
+      caps ret esc tab
     )
 
     (deflayer main
-      @hyc @hyr @cmt
+      @hyc @hyr grv @cmt
     )
 
     (defalias

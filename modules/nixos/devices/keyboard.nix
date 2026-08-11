@@ -29,11 +29,11 @@
         extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
-            caps
+            caps esc
           )
 
           (deflayer main
-            @hyc
+            @hyc grv
           )
 
           (defalias
