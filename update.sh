@@ -6,5 +6,10 @@ os="$(uname -s)"
 if [[ "$os" == "Linux" ]]; then
   sudo nixos-rebuild switch $1 --flake .#$HOSTNAME
 elif [[ "$os" == "Darwin" ]]; then
+  if [ "$(launchctl managername)" != "Aqua" ]; then
+    echo "tmux session is in Background (started from SSH)." >&2
+    echo "Run 'tmux kill-server' from a local terminal, then restart tmux." >&2
+    exit 1
+  fi
   sudo darwin-rebuild switch $1 --flake .#$HOSTNAME
 fi

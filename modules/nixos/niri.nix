@@ -1,13 +1,7 @@
+{ pkgs, ... }:
 {
-  inputs,
-  pkgs,
-  ...
-}:
-{
-  imports = [
-    inputs.noctalia.nixosModules.default
-  ];
-
+  # ponytail: nixpkgs now ships programs.noctalia natively (nixos/modules/programs/wayland/noctalia.nix)
+  # — no need to import inputs.noctalia.nixosModules.default (it would re-declare the same option).
   environment = {
     systemPackages = with pkgs; [
       alacritty
@@ -17,7 +11,6 @@
       xwayland-satellite
 
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -83,7 +76,11 @@
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    config.common.default = [ "gtk" ];
+    config.common = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.ScreenCast" = [ "niri" ];
+      "org.freedesktop.impl.portal.Screenshot" = [ "niri" ];
+    };
   };
 
   systemd.defaultUnit = "graphical.target";

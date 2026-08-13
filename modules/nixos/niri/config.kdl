@@ -140,10 +140,9 @@ window-rule {
   open-fullscreen true
 }
 
-// Opacity of all windows
+// Rounded corners for all windows
 window-rule {
   match app-id=".*"
-  opacity 0.9
   geometry-corner-radius 10
   clip-to-geometry true
   draw-border-with-background false

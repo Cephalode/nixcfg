@@ -26,6 +26,7 @@ in
       set -g history-limit 100000
       set -g escape-time 0
       set -g mouse on
+      set -g set-clipboard on
       set -g repeat-time 1000
       set -g extended-keys on
       set -g extended-keys-format csi-u

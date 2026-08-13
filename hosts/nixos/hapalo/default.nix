@@ -29,6 +29,11 @@
     '';
   };
 
+  boot.kernelParams = [
+    "resume=UUID=c2fec9ea-c818-4e7f-9c58-fbce0a157ebb"
+    "resume_offset=9311"
+  ];
+
   hardware.customNvidia = {
     open = false;
   };

@@ -8,7 +8,7 @@
   '';
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # Fallback: pin to stable here so if unstable breaks a package,
     # we can quickly add an overlay pulling from stable.
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -61,8 +61,9 @@
         "x86_64-darwin"
       ];
 
-      mkNixosHost = { host, moduleSet }: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit outputs inputs; };
+      mkNixosHost = { host, moduleSet, system }: nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit outputs inputs system; };
         modules = [ ./hosts/nixos/${host} moduleSet ];
       };
     in
@@ -75,9 +76,9 @@
       });
 
       nixosConfigurations = {
-        hapalo = mkNixosHost { host = "hapalo"; moduleSet = ./modules/nixos; };
-        loligo = mkNixosHost { host = "loligo"; moduleSet = ./modules/nixos; };
-        lunalata = mkNixosHost { host = "lunalata"; moduleSet = ./modules/common; };
+        hapalo = mkNixosHost { host = "hapalo"; moduleSet = ./modules/nixos; system = "x86_64-linux"; };
+        loligo = mkNixosHost { host = "loligo"; moduleSet = ./modules/nixos; system = "x86_64-linux"; };
+        lunalata = mkNixosHost { host = "lunalata"; moduleSet = ./modules/common; system = "x86_64-linux"; };
       };
 
       darwinConfigurations = {
@@ -85,6 +86,7 @@
           system = "aarch64-darwin";
           specialArgs = {
             inherit outputs inputs;
+            system = "aarch64-darwin";
           };
           modules = [
             ./hosts/metasepia

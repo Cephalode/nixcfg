@@ -1,6 +1,8 @@
 {
   pkgs,
   inputs,
+  lib,
+  system,
   ...
 }:
 {
@@ -8,6 +10,7 @@
     ./cli
     ./development
     ./security
+  ] ++ lib.optionals (system == "x86_64-linux" || system == "aarch64-linux") [
     inputs.zen-spaces.nixosModules.default
   ];
 
@@ -16,7 +19,7 @@
     discordo
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
   ];
-
+} // lib.optionalAttrs (system == "x86_64-linux" || system == "aarch64-linux") {
   programs.zen-spaces = {
     enable = true;
     user = "sqibo";

@@ -9,6 +9,9 @@
   nixpkgs.overlays = [
     (final: prev: {
       notesmd-cli = final.callPackage ../../pkgs/notesmd-cli { };
+      # ponytail: kitty 0.47.4 linker crash (cctools ld SIGTRAP) on aarch64-darwin;
+      # use stable 0.44.0 which builds fine. Homebrew cask kitty is the real binary.
+      kitty = inputs.nixpkgs-stable.legacyPackages.${prev.stdenv.hostPlatform.system}.kitty;
     })
   ];
 
@@ -22,10 +25,6 @@
     ./ai.nix
     ./kanata.nix
   ];
-
-  security.sudo.extraConfig = ''
-    sqibo ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/darwin-rebuild
-  '';
 
   programs = {
     zsh = {

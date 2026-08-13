@@ -3,11 +3,11 @@
   environment.systemPackages = with pkgs; [
     efibootmgr
     sbctl # used to create keys
-    (writeShellScriptBin "reboot-windows" ''
+    (writeShellScriptBin "sw" ''
       set -euo pipefail
 
       ${efibootmgr}/bin/efibootmgr --bootnext 0000
-      ${systemd}/bin/systemctl reboot
+      ${systemd}/bin/systemctl hibernate
     '')
   ];
 
