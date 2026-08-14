@@ -75,13 +75,24 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-termfilechooser
+    ];
     config.common = {
       default = [ "gtk" ];
       "org.freedesktop.impl.portal.ScreenCast" = [ "niri" ];
       "org.freedesktop.impl.portal.Screenshot" = [ "niri" ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
     };
+    # programs.niri's portal config would otherwise route FileChooser to gnome/nautilus
+    config.niri."org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
   };
+
+  # termfilechooser reads config only from $XDG_CONFIG_HOME (SYSCONFDIR is a store path)
+  systemd.user.tmpfiles.rules = [
+    "L %h/.config/xdg-desktop-portal-termfilechooser/config - - - - ${./configs/xdg-desktop-portal-termfilechooser/config}"
+  ];
 
   systemd.defaultUnit = "graphical.target";
 }

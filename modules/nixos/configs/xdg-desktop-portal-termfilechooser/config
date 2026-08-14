@@ -1,0 +1,7 @@
+[filechooser]
+cmd=yazi-wrapper.sh
+default_dir=$HOME
+; NixOS: portal service needs the system profile on PATH for kitty/yazi (upstream #56)
+env=PATH=$PATH:/run/current-system/sw/bin
+open_mode=suggested
+save_mode=last
