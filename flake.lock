@@ -51,6 +51,24 @@
         "type": "github"
       }
     },
+    "grok-build": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1787017955,
+        "narHash": "sha256-E80/p+k7N9sslovTMjSKAca//XUqmHo15EOZr8wLnag=",
+        "owner": "AodhanHayter",
+        "repo": "grok-build-nix",
+        "rev": "b67f1b9927ec6c834d76f6161b1a4e839cf005e3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AodhanHayter",
+        "repo": "grok-build-nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -199,6 +217,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1785747939,
+        "narHash": "sha256-D740uKsMbgsfK2oaDenJLLPIZfq7W0/g4KN/Fls8eKs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "104240a772428cc2e20d8fd86c9ddbb886bbaff2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1786410043,
         "narHash": "sha256-JTbODJPDcd3d8U7lO4MVUU3Yo0jz2KQSAHXka+IWBEo=",
         "owner": "nixos",
@@ -213,7 +247,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1786106723,
         "narHash": "sha256-CgKDSHL6rqAAQkkvg1xaZDQXb77+4XW73iGcUMJ+2w0=",
@@ -228,7 +262,7 @@
     },
     "noctalia": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1783795493,
@@ -247,12 +281,13 @@
     "root": {
       "inputs": {
         "bedrock-on-linux": "bedrock-on-linux",
+        "grok-build": "grok-build",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "noctalia": "noctalia",
         "wrappers": "wrappers",

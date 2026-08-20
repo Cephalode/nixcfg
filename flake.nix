@@ -39,6 +39,9 @@
     bedrock-on-linux = {
       url = "github:Cephalode/BedrockOnLinux";
     };
+    grok-build = {
+      url = "github:AodhanHayter/grok-build-nix";
+    };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";

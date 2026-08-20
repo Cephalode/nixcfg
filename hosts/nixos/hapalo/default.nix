@@ -17,6 +17,7 @@
 
   environment.systemPackages = [
     inputs.bedrock-on-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.grok-build.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   boot.loader.limine = {
