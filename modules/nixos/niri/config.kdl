@@ -195,7 +195,7 @@ binds {
     // ── Window Manager: Meh (Ctrl+Alt+Super) — focus & view ────
 
     Ctrl+Alt+Super+O repeat=false { toggle-overview; }
-    Ctrl+Alt+Super+Q repeat=false { close-window; }
+    Ctrl+Super+Q repeat=false { close-window; }
 
     Ctrl+Alt+Super+Left  { focus-column-left; }
     Ctrl+Alt+Super+Down  { focus-window-down; }
