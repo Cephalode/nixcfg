@@ -165,10 +165,11 @@ binds {
 
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Ctrl+Super+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+Space hotkey-overlay-title="Run an Application: Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: Noctalia Lock" { spawn-sh "noctalia msg session lock"; }
-    Mod+B hotkey-overlay-title="Open a Browser: Zen" { spawn "zen"; }
+    Ctrl+Super+B hotkey-overlay-title="Open a Browser: Zen" { spawn "zen"; }
+    Ctrl+Super+D hotkey-overlay-title="Open Discord" { spawn "discord"; }
 
     // Function key mods
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
