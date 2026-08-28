@@ -58,7 +58,8 @@ EOF
   };
 
   # Let the agent run nixos-rebuild's privileged tail without a password
-  # (nixos-rebuild-ng --elevate=sudo: profile set + switch-to-configuration)
+  # (nixos-rebuild-ng --elevate=sudo: profile set + switch-to-configuration).
+  # Mirrors hapalo's rules — update.sh there already uses --elevate=sudo.
   security.sudo.extraRules = [
     {
       users = [ "sqibo" ];
