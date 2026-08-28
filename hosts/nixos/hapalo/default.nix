@@ -10,10 +10,15 @@
   imports = [
     ./hardware-configuration.nix
     ../.
+    ./powerbtn.nix
   ];
 
   networking.hostName = "hapalo";
   system.stateVersion = "25.05"; # Do not change
+
+  # Power button: owned by powerbtn.nix daemon (short press = sw, hold = poweroff).
+  # logind must ignore the key globally — its only sources here are the ACPI buttons.
+  services.logind.powerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
     google-chrome
