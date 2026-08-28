@@ -25,6 +25,12 @@
     powerKey = "suspend";
   };
 
+  # Battery: cap charge at 80% (Latitude EC honors these; start stays at the
+  # firmware default 50). Root-only sysfs write, re-applied at each boot.
+  systemd.tmpfiles.rules = [
+    "w /sys/class/power_supply/BAT0/charge_control_end_threshold - - - - 80"
+  ];
+
   # Timing for the noctalia "Sleep" panel entry (suspend-then-hibernate):
   # RTC check every 30s, hibernate once the battery estimate is under 45m.
   systemd.sleep.settings.Sleep = {
