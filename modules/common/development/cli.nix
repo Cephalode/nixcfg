@@ -30,7 +30,7 @@
     cargo rustc
 
     # Mail
-    aerc
+    aerc gnupg oama davmail
 
     # Misc
     fastfetch lolcat uwufetch

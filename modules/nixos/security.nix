@@ -6,7 +6,8 @@
     (writeShellScriptBin "sw" ''
       set -euo pipefail
 
-      ${efibootmgr}/bin/efibootmgr --bootnext 0000
+      # efivarfs writes need root; route through the NOPASSWD systemd-run bridge
+      sudo -n /run/current-system/sw/bin/systemd-run --wait --pipe --quiet ${efibootmgr}/bin/efibootmgr --bootnext 0000
       ${systemd}/bin/systemctl hibernate
     '')
   ];

@@ -4,7 +4,7 @@ os="$(uname -s)"
 
 # $1 can be used for adding --upgrade
 if [[ "$os" == "Linux" ]]; then
-  sudo nixos-rebuild switch $1 --flake .#$HOSTNAME
+  nixos-rebuild switch $1 --flake .#$HOSTNAME --elevate=sudo
 elif [[ "$os" == "Darwin" ]]; then
   if [ "$(launchctl managername)" != "Aqua" ]; then
     echo "tmux session is in Background (started from SSH)." >&2
