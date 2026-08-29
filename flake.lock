@@ -5,11 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1786465845,
-        "narHash": "sha256-mHyrU0/65c+DcOwSm3roY3N+1K+54w+jz1yTWV0CbrQ=",
+        "lastModified": 1788032016,
+        "narHash": "sha256-hte+zClEOm4gFanN9n2oiR4fP69fwxMY+eFn4AtGYCA=",
         "owner": "Cephalode",
         "repo": "BedrockOnLinux",
-        "rev": "f9e57b9a1259f780ac981f8ae82c333a61d6ff5d",
+        "rev": "a7a5294e36c95562d745c2c150f5367fde724f9c",
         "type": "github"
       },
       "original": {
