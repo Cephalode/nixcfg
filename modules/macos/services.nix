@@ -54,6 +54,22 @@ in
     };
   };
 
+  # ── DavMail (O365 -> IMAP/SMTP gateway, reachable over Tailscale) ──
+  environment.systemPackages = [ pkgs.davmail ];
+  launchd.user.agents.davmail = {
+    serviceConfig = {
+      Label = "nix.davmail";
+      ProgramArguments = [
+        "${pkgs.davmail}/bin/davmail"
+        "${home}/.config/davmail/davmail.properties"
+      ];
+      RunAtLoad = true;
+      KeepAlive = true;
+      StandardOutPath = "${home}/.local/state/davmail/davmail.out.log";
+      StandardErrorPath = "${home}/.local/state/davmail/davmail.err.log";
+    };
+  };
+
   # ── Picord (pi coding agent daemon) ────────────────────────────
   launchd.user.agents.picord = {
     serviceConfig = {

@@ -11,5 +11,5 @@ elif [[ "$os" == "Darwin" ]]; then
     echo "Run 'tmux kill-server' from a local terminal, then restart tmux." >&2
     exit 1
   fi
-  sudo darwin-rebuild switch $1 --flake .#$HOSTNAME
+  sudo darwin-rebuild-wrapper $1 --flake .#$HOSTNAME
 fi

@@ -1,4 +1,6 @@
-.DS_Store.ralph-tui/
+.DS_Store
+.ralph-tui/
 __pycache__/
 graphify-out/
 BedrockOnLinux/
+result

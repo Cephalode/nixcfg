@@ -22,6 +22,7 @@
     ./homebrew.nix
     ./applications.nix
     ./services.nix
+    ./sudo-rebuild.nix
     ./ai.nix
     ./kanata.nix
   ];
