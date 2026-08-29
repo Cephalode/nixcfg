@@ -7,6 +7,7 @@ KEY_POWER keys and their traffic are never touched. Rescans for devices every
 few seconds (event numbers can change across boots). Fallback if this dies:
 hardware 4-5s hold still hard-poweroffs via firmware.
 """
+import os
 import subprocess
 import time
 
@@ -70,6 +71,6 @@ while True:
             threading.Thread(target=watch, args=(dev,), daemon=True).start()
     # drop vanished devices so they can be re-opened
     for path, dev in list(watched.items()):
-        if not dev.fn or not dev.exists():
+        if not dev.fn or not dev.path or not os.path.exists(dev.path):
             watched.pop(path, None)
     time.sleep(POLL_SECS)
