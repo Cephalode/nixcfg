@@ -343,11 +343,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788038570,
-        "narHash": "sha256-vKIyPsdp3RPRJCUJhI1I4y/AmH9b+JEdJxE+Fu6eFA4=",
+        "lastModified": 1788039077,
+        "narHash": "sha256-JNWmtVdQATMEL6YDYbRcnNXAbLLEckrJfqYcFkLxybE=",
         "owner": "Cephalode",
         "repo": "zen-spaces",
-        "rev": "59a59bcd2ddc63d445a11f99974ce3504bb8d8d1",
+        "rev": "7affd2e2c34b93d4ad6f4ba1850fd0507b36b5a3",
         "type": "github"
       },
       "original": {
