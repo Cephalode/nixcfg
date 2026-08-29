@@ -71,6 +71,6 @@ while True:
             threading.Thread(target=watch, args=(dev,), daemon=True).start()
     # drop vanished devices so they can be re-opened
     for path, dev in list(watched.items()):
-        if not dev.fn or not dev.path or not os.path.exists(dev.path):
+        if not dev.path or not os.path.exists(dev.path):
             watched.pop(path, None)
     time.sleep(POLL_SECS)
