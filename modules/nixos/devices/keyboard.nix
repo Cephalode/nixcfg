@@ -2,6 +2,7 @@
 #
 # Kanata key remapper for NixOS
 # Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold)
+# Ctrl ↔ Super swap: physical Super = Ctrl (system), physical Ctrl = Super (Mod)
 
 { config, lib, pkgs, ... }:
 
@@ -29,11 +30,11 @@
         extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
-            caps esc tab
+            caps esc tab lctl lmet rmet rctl
           )
 
           (deflayer main
-            @hyc grv @cmt
+            @hyc grv @cmt lmet lctl lctl rmet
           )
 
           (defalias
@@ -41,6 +42,9 @@
             hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
             ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
             cmt (tap-hold-press 200 200 tab (multi lctl lmet))
+            ;; ── Ctrl ↔ Super swap ────────────────────────────────────
+            ;; Physical Super/Win → Ctrl (system commands: copy/paste)
+            ;; Physical Ctrl → Super (niri Mod: workspaces, launcher)
           )
         '';
       };
