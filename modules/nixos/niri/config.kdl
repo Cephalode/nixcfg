@@ -239,6 +239,7 @@ binds {
 
     Ctrl+Alt+Super+V { toggle-window-floating; }
     Ctrl+Alt+Super+W { toggle-column-tabbed-display; }
+    Ctrl+Alt+Super+Slash { toggle-column-tabbed-display; }  // layout cycle, parity w/ aerospace Meh+/
 
     // Mouse wheel (Meh = navigate)
     Ctrl+Alt+Super+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
