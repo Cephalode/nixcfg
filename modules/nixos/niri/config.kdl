@@ -166,7 +166,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Ctrl+Super+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+Space hotkey-overlay-title="Run an Application: Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Ctrl+Space hotkey-overlay-title="Run an Application: Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: Noctalia Lock" { spawn-sh "noctalia msg session lock"; }
     Ctrl+Super+B hotkey-overlay-title="Open a Browser: Zen" { spawn "zen-twilight"; }
     Ctrl+Super+D hotkey-overlay-title="Open Discord" { spawn "discord"; }
