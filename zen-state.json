@@ -141,13 +141,13 @@
     {
       "groupId": null,
       "index": 1,
-      "title": "Welcome • freemediaheckyeah",
-      "url": "https://fmhy.net/",
-      "userContextId": 10,
+      "title": "Z.ai API Platform — Start building with GLM-5.3",
+      "url": "https://z.ai/manage-apikey/coding-plan/personal/usage",
+      "userContextId": 0,
       "zenEssential": false,
       "zenStaticLabel": null,
-      "zenSyncId": "1786551662108-25",
-      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+      "zenSyncId": "1786340296575-27",
+      "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
     },
     {
       "groupId": null,
@@ -161,81 +161,48 @@
       "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
     },
     {
-      "groupId": "{4b0d4214-e15a-4c67-83df-aaaa59b254dd}",
+      "groupId": null,
       "index": 1,
-      "title": "NixOS Search - Packages",
-      "url": "https://search.nixos.org/packages",
+      "title": "AI Isn't Actually Replacing Developers (Big Tech Layoffs) - YouTube",
+      "url": "https://www.youtube.com/watch?v=7QKcphdM5Cw",
       "userContextId": 0,
       "zenEssential": false,
       "zenStaticLabel": null,
-      "zenSyncId": "{92e88764-6f0d-4227-b853-53eadf5c9759}",
-      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
-    },
-    {
-      "groupId": "{4b0d4214-e15a-4c67-83df-aaaa59b254dd}",
-      "index": 1,
-      "title": "GitHub",
-      "url": "https://github.com",
-      "userContextId": 0,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "{54516ee0-c579-4665-9b04-1982381a0977}",
-      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
-    },
-    {
-      "groupId": "{a8190b06-7704-4a6b-b2ea-65e66c24287a}",
-      "index": 1,
-      "title": "NixOS Options",
-      "url": "https://search.nixos.org/options",
-      "userContextId": 0,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "{a83ccf0a-baa6-4b21-9904-afd78fb4db9c}",
-      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
-    },
-    {
-      "groupId": "{a8190b06-7704-4a6b-b2ea-65e66c24287a}",
-      "index": 1,
-      "title": "Wikipedia",
-      "url": "https://wikipedia.org",
-      "userContextId": 0,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "{8e676796-7458-483a-af49-e84431ed33b3}",
+      "zenSyncId": "1786401404438-73",
       "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
     },
     {
       "groupId": null,
       "index": 1,
-      "title": "YouTube",
-      "url": "https://youtube.com",
+      "title": "Cephalode (Nasif)",
+      "url": "https://github.com/Cephalode",
       "userContextId": 0,
       "zenEssential": false,
       "zenStaticLabel": null,
-      "zenSyncId": "{5fdca60c-bb32-4316-a06a-b14fd024b0d8}",
-      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
-    },
-    {
-      "groupId": null,
-      "index": 1,
-      "title": "New chat - Claude",
-      "url": "https://claude.ai/new",
-      "userContextId": 0,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "1787934578798-27",
+      "zenSyncId": "1786401442205-28",
       "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
     },
     {
       "groupId": null,
       "index": 1,
-      "title": "Powerflex",
-      "url": "https://powerflex-fortitude4.vercel.app/",
-      "userContextId": 11,
+      "title": "App design philosophy improvement",
+      "url": "https://claude.ai/design/p/8fefe2e9-318a-4d95-938d-9a3c9f44ac52?file=Inkwell+Redesign.dc.html",
+      "userContextId": 10,
       "zenEssential": false,
-      "zenStaticLabel": "Powerflex Live",
-      "zenSyncId": "1786476006012-13",
-      "zenWorkspace": "{e5169fcc-316c-4202-b722-5a7d7b4d2228}"
+      "zenStaticLabel": null,
+      "zenSyncId": "1786419826922-66",
+      "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
+    },
+    {
+      "groupId": null,
+      "index": 1,
+      "title": "T3 Chat",
+      "url": "https://t3.chat/canvas/conversation/kd7d2fjw0cc6b23xt3rynzgan58dapj2?preview=kn78mf8dkeq18784nqhqs6yq098dbrnd",
+      "userContextId": 10,
+      "zenEssential": false,
+      "zenStaticLabel": null,
+      "zenSyncId": "1786466074202-43",
+      "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
     },
     {
       "groupId": null,
@@ -251,6 +218,39 @@
     {
       "groupId": null,
       "index": 1,
+      "title": "Powerflex",
+      "url": "https://powerflex-fortitude4.vercel.app/",
+      "userContextId": 11,
+      "zenEssential": false,
+      "zenStaticLabel": "Powerflex Live",
+      "zenSyncId": "1786476006012-13",
+      "zenWorkspace": "{e5169fcc-316c-4202-b722-5a7d7b4d2228}"
+    },
+    {
+      "groupId": null,
+      "index": 1,
+      "title": "Welcome • freemediaheckyeah",
+      "url": "https://fmhy.net/",
+      "userContextId": 10,
+      "zenEssential": false,
+      "zenStaticLabel": null,
+      "zenSyncId": "1786551662108-25",
+      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+    },
+    {
+      "groupId": null,
+      "index": 1,
+      "title": "Suno | AI Music Generator",
+      "url": "https://suno.com/",
+      "userContextId": 10,
+      "zenEssential": false,
+      "zenStaticLabel": null,
+      "zenSyncId": "1786581505224-82",
+      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+    },
+    {
+      "groupId": null,
+      "index": 1,
       "title": "Inkwell Videos",
       "url": "http://metasepia.tail6a0b7.ts.net:3005/",
       "userContextId": 13,
@@ -261,9 +261,9 @@
     },
     {
       "groupId": null,
-      "index": 3,
-      "title": "Vercel",
-      "url": "https://vercel.com/cephalode",
+      "index": 1,
+      "title": "calarme – Deployment Overview",
+      "url": "https://vercel.com/cephalode/calarme/FNDrP9DFew1NwWcLSe5dAi7QewZ8",
       "userContextId": 0,
       "zenEssential": false,
       "zenStaticLabel": null,
@@ -272,36 +272,80 @@
     },
     {
       "groupId": null,
-      "index": 5,
-      "title": "Z.ai API Platform — Start building with GLM-5.3",
-      "url": "https://z.ai/manage-apikey/coding-plan/personal/usage",
+      "index": 1,
+      "title": "New chat - Claude",
+      "url": "https://claude.ai/new#settings/usage",
       "userContextId": 0,
       "zenEssential": false,
       "zenStaticLabel": null,
-      "zenSyncId": "1786340296575-27",
+      "zenSyncId": "1787934578798-27",
       "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
     },
     {
-      "groupId": null,
-      "index": 9,
-      "title": "Claude Code",
-      "url": "https://claude.ai/code",
-      "userContextId": 10,
+      "groupId": "{4b0d4214-e15a-4c67-83df-aaaa59b254dd}",
+      "index": 1,
+      "title": "GitHub",
+      "url": "https://github.com",
+      "userContextId": 0,
       "zenEssential": false,
       "zenStaticLabel": null,
-      "zenSyncId": "1786419826922-66",
-      "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
+      "zenSyncId": "{54516ee0-c579-4665-9b04-1982381a0977}",
+      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+    },
+    {
+      "groupId": null,
+      "index": 1,
+      "title": "YouTube",
+      "url": "https://youtube.com",
+      "userContextId": 0,
+      "zenEssential": false,
+      "zenStaticLabel": null,
+      "zenSyncId": "{5fdca60c-bb32-4316-a06a-b14fd024b0d8}",
+      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+    },
+    {
+      "groupId": "{a8190b06-7704-4a6b-b2ea-65e66c24287a}",
+      "index": 1,
+      "title": "Wikipedia",
+      "url": "https://wikipedia.org",
+      "userContextId": 0,
+      "zenEssential": false,
+      "zenStaticLabel": null,
+      "zenSyncId": "{8e676796-7458-483a-af49-e84431ed33b3}",
+      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+    },
+    {
+      "groupId": "{4b0d4214-e15a-4c67-83df-aaaa59b254dd}",
+      "index": 1,
+      "title": "NixOS Search - Packages",
+      "url": "https://search.nixos.org/packages",
+      "userContextId": 0,
+      "zenEssential": false,
+      "zenStaticLabel": null,
+      "zenSyncId": "{92e88764-6f0d-4227-b853-53eadf5c9759}",
+      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+    },
+    {
+      "groupId": "{a8190b06-7704-4a6b-b2ea-65e66c24287a}",
+      "index": 1,
+      "title": "NixOS Options",
+      "url": "https://search.nixos.org/options",
+      "userContextId": 0,
+      "zenEssential": false,
+      "zenStaticLabel": null,
+      "zenSyncId": "{a83ccf0a-baa6-4b21-9904-afd78fb4db9c}",
+      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
     },
     {
       "groupId": null,
       "index": 11,
-      "title": "Suno | AI Music",
-      "url": "https://suno.com/create?wid=default",
-      "userContextId": 10,
+      "title": "Vercel",
+      "url": "https://vercel.com/fortitude4",
+      "userContextId": 11,
       "zenEssential": false,
       "zenStaticLabel": null,
-      "zenSyncId": "1786581505224-82",
-      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
+      "zenSyncId": "1786410095443-28",
+      "zenWorkspace": "{e5169fcc-316c-4202-b722-5a7d7b4d2228}"
     },
     {
       "groupId": null,
@@ -323,17 +367,6 @@
       "zenEssential": false,
       "zenStaticLabel": null,
       "zenSyncId": "1786475500962-66",
-      "zenWorkspace": "{e5169fcc-316c-4202-b722-5a7d7b4d2228}"
-    },
-    {
-      "groupId": null,
-      "index": 11,
-      "title": "Vercel",
-      "url": "https://vercel.com/fortitude4",
-      "userContextId": 11,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "1786410095443-28",
       "zenWorkspace": "{e5169fcc-316c-4202-b722-5a7d7b4d2228}"
     },
     {
@@ -371,28 +404,6 @@
     },
     {
       "groupId": null,
-      "index": 21,
-      "title": "Darkwave Song About Hidden Tears - T3 Chat",
-      "url": "https://t3.chat/chat/3c7bf4b7-d2c0-4a08-bc43-c0e2f671dc6b",
-      "userContextId": 10,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "1786466074202-43",
-      "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
-    },
-    {
-      "groupId": null,
-      "index": 23,
-      "title": "chore: update copyright year to 2026 by Cephalode · Pull Request #4 · Cephalode/NasifMauthoor.com",
-      "url": "https://github.com/Cephalode/NasifMauthoor.com/pull/4#issuecomment-4493300284",
-      "userContextId": 0,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "1786401442205-28",
-      "zenWorkspace": "{538dc38e-ee09-4dc6-bad9-477f7fcb2b3c}"
-    },
-    {
-      "groupId": null,
       "index": 28,
       "title": "Master of Science in Artificial Intelligence | Home | Coursera",
       "url": "https://www.coursera.org/degrees/ms-artificial-intelligence-boulder/home",
@@ -401,17 +412,6 @@
       "zenStaticLabel": null,
       "zenSyncId": "1787585625766-97",
       "zenWorkspace": "{0fe237b8-9337-4353-a107-51b1a465d936}"
-    },
-    {
-      "groupId": null,
-      "index": 48,
-      "title": "YouTube",
-      "url": "https://www.youtube.com/",
-      "userContextId": 0,
-      "zenEssential": false,
-      "zenStaticLabel": null,
-      "zenSyncId": "1786401404438-73",
-      "zenWorkspace": "{7a51bd40-5e5b-49d9-b29f-b2ba57b4f1a8}"
     }
   ],
   "version": 1
