@@ -6,5 +6,9 @@
   ];
   homebrew.brews = [
     "lume"
+    "xdevplatform/tap/xurl" # X/Twitter CLI — not in nixpkgs
+  ];
+  homebrew.taps = [
+    { name = "xdevplatform/tap"; trusted = true; }
   ];
 }
