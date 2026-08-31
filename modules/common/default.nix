@@ -12,6 +12,8 @@
     ./security
   ] ++ lib.optionals (system == "x86_64-linux" || system == "aarch64-linux") [
     inputs.zen-spaces.nixosModules.default
+  ] ++ [
+    ./syncthing.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -25,11 +27,11 @@
     user = "sqibo";
     profileName = "0vkp3u7b.Default Profile";
 
-    # Bidirectional sync: ~/devel/nix carries zen-state.json as the shared
-    # source of truth. Browser edits get committed+pushed back (5 min cycle);
-    # repo edits (any machine) apply to this machine's browser.
+    # REPLACED by modules/common/syncthing.nix: full-profile sync (cookies,
+    # history, storage) over the Tailscale mesh. The git reconciler deleted
+    # container definitions on apply, orphaning per-container cookie jars.
     sync = {
-      enable = true;
+      enable = false;
       repo = "/home/sqibo/devel/nix";
       stateFile = "zen-state.json";
       interval = "5m";

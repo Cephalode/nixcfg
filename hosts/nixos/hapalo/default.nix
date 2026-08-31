@@ -16,6 +16,9 @@
   networking.hostName = "hapalo";
   system.stateVersion = "25.05"; # Do not change
 
+  # Zen twilight profile — synced via syncthing (modules/common/syncthing.nix)
+  cephalode.zenProfilePath = "/home/sqibo/.zen/0vkp3u7b.Default Profile";
+
   # Power button: owned by powerbtn.nix daemon (short press = sw, hold = poweroff).
   # logind must ignore the key globally — its only sources here are the ACPI buttons.
   services.logind.powerKey = "ignore";
