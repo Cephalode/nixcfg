@@ -27,6 +27,7 @@
     ./tcc-apps.nix
     ./ai.nix
     ./kanata.nix
+    ./syncthing.nix
   ];
 
   programs = {

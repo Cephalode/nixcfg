@@ -14,6 +14,7 @@
     ./games.nix
     ./applications.nix
     ./physical.nix
+    ./syncthing.nix
   ];
 
   programs = {

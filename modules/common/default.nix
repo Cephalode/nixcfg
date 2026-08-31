@@ -12,8 +12,6 @@
     ./security
   ] ++ lib.optionals (system == "x86_64-linux" || system == "aarch64-linux") [
     inputs.zen-spaces.nixosModules.default
-  ] ++ [
-    ./syncthing.nix
   ];
 
   environment.systemPackages = with pkgs; [
