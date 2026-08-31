@@ -13,6 +13,7 @@
       # use stable 0.44.0 which builds fine. Homebrew cask kitty is the real binary.
       kitty = inputs.nixpkgs-stable.legacyPackages.${prev.stdenv.hostPlatform.system}.kitty;
     })
+    (import ../../overlays/tcc-friendly-apps.nix)
   ];
 
   imports = [
@@ -23,6 +24,7 @@
     ./applications.nix
     ./services.nix
     ./sudo-rebuild.nix
+    ./tcc-apps.nix
     ./ai.nix
     ./kanata.nix
   ];
