@@ -6,7 +6,10 @@
   ];
   homebrew.brews = [
     "lume"
-    "xdevplatform/tap/xurl" # X/Twitter CLI — not in nixpkgs
+  ];
+  # xurl ships in xdevplatform/tap as a CASK (no Formula dir) — not in nixpkgs
+  homebrew.casks = [
+    "xdevplatform/tap/xurl"
   ];
   homebrew.taps = [
     { name = "xdevplatform/tap"; trusted = true; }
