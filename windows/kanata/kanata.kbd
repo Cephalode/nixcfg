@@ -1,0 +1,32 @@
+;; windows/kanata/kanata.kbd
+;;
+;; Kanata key remapper for Windows — Unified Keybind Scheme
+;; Mirrors the NixOS config in modules/nixos/devices/keyboard.nix
+;;
+;;   Caps Lock          → Meh (Esc on tap, Ctrl+Alt+Super on hold)
+;;   Tab                → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
+;;   Esc                → Grave
+;;   Physical Ctrl      → Super/Win (workspace switching)
+;;   Physical Super/Win → Ctrl (system commands)
+;;
+;; Run (as admin, e.g. via Scheduled Task at logon):
+;;   kanata.exe -c kanata.kbd
+
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  caps esc tab lctl lmet rmet rctl
+)
+
+(deflayer main
+  @hyc grv @cmt lmet lctl lctl rmet
+)
+
+(defalias
+  ;; Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold)
+  hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
+  ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
+  cmt (tap-hold-press 200 200 tab (multi lctl lmet))
+)

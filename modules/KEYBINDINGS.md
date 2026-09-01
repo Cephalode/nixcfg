@@ -118,9 +118,10 @@ On macOS, physical keys send their native values (no swap needed).
 - Requires uinput kernel module and udev rules
 
 ### Windows
-- Use `kanata_winIOv2.exe` for best compatibility
-- May need administrator privileges or input monitoring permission
-- Uncomment and configure `windows-interception-keyboard-hwids` in defcfg if needed
+- Deploys to `C:\Users\Sqibo\kanata\` on lunalata (binaries from kanata v1.12.0 release zip)
+- Uses `kanata_windows_gui_winIOv2_x64.exe` (GUI build = no console window; winIOv2 driver)
+- Autostart: scheduled task `Kanata` (/sc onlogon /rl HIGHEST) runs `start-kanata.cmd`
+- Managed via `ssh lunalata` (same box as hapalo: `sw` hibernate-swaps between OSes)
 - The Win key sends Ctrl (system commands), physical Ctrl sends Win (workspace)
 
 ## Files
@@ -129,4 +130,4 @@ On macOS, physical keys send their native values (no swap needed).
 |----------|-------------|--------|
 | NixOS | `modules/nixos/devices/keyboard.nix` | `services.kanata` |
 | macOS | `modules/macos/kanata.nix` | `launchd.agents.kanata` |
-| Windows | `windows/kanata/kanata.kbd` | Manual — run `kanata_winIOv2.exe -c kanata.kbd` |
+| Windows | `windows/kanata/kanata.kbd` | Scheduled task `Kanata` → `start-kanata.cmd` |
