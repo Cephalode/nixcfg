@@ -20,5 +20,10 @@
 
   networking.hostName = "lunalata";
 
+  # Zen twilight profile — synced via syncthing (modules/nixos/syncthing.nix).
+  # Path is seeded (profiles.ini adopts it on first launch) so the synced
+  # folder matches hapalo's dir name.
+  cephalode.zenProfilePath = "/home/sqibo/.zen/0vkp3u7b.Default Profile";
+
   system.stateVersion = "25.05";
 }
