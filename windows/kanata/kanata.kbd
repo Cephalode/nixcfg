@@ -21,7 +21,7 @@
 )
 
 (deflayer main
-  @hyc grv @cmt lmet lctl lctl rmet
+  @hyc grv @cmt @cwm @swm lctl rmet
 )
 
 (defalias
@@ -29,4 +29,8 @@
   hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
   ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
   cmt (tap-hold-press 200 200 tab (multi lctl lmet))
+  ;; Physical Ctrl → Win as modifier, tap suppressed (Windows opens the
+  ;; Start menu on a lone Win tap; niri Mod tap does nothing)
+  cwm (tap-hold-press 200 200 XX lmet)
+  swm (tap-hold-press 200 200 XX rmet)
 )
