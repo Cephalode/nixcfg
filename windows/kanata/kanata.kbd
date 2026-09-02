@@ -21,7 +21,7 @@
 )
 
 (deflayer main
-  @hyc grv @cmt @cwm @swm @swm @cwm
+  @hyc grv @cmt @cwm lctl lctl @cwm
 )
 
 (defalias
@@ -32,6 +32,4 @@
   ;; Physical Ctrl → Win as modifier, tap suppressed (Windows opens the
   ;; Start menu on a lone Win tap; niri Mod tap does nothing)
   cwm (tap-hold-press 200 200 XX lmet)
-  ;; Physical Win → Ctrl as modifier, tap suppressed
-  swm (tap-hold-press 200 200 XX lctl)
 )
