@@ -43,7 +43,10 @@
       # and pass a literal to the root shell.
       alarm=$(( $(date +%s) + 150 ))
       sudo -n /run/current-system/sw/bin/systemd-run --wait --pipe --quiet ${pkgs.bash}/bin/bash -c "echo $alarm > /sys/class/rtc/rtc0/wakealarm"
-      ${pkgs.systemd}/bin/systemctl hibernate
+      # Hibernate through the root bridge: polkit denies hibernate from SSH
+      # sessions (no local seat); root bypasses it. Fire-and-forget — the box
+      # powers off mid-unit by design.
+      sudo -n /run/current-system/sw/bin/systemd-run --collect ${pkgs.systemd}/bin/systemctl hibernate
     '')
   ];
 
