@@ -35,10 +35,11 @@
     (writeShellScriptBin "sw" ''
       set -euo pipefail
 
-      # efivarfs writes need root; route through the NOPASSWD systemd-run bridge
+      # efivarfs and wakealarm writes need root; route through the NOPASSWD
+      # systemd-run bridge (plain `sudo tee` is NOT covered by the rules)
       sudo -n /run/current-system/sw/bin/systemd-run --wait --pipe --quiet ${pkgs.efibootmgr}/bin/efibootmgr --bootnext 0000
       # RTC wake ~150s out: enough margin for the hibernate image write
-      echo $(($(date +%s) + 150)) | sudo -n tee /sys/class/rtc/rtc0/wakealarm >/dev/null
+      sudo -n /run/current-system/sw/bin/systemd-run --wait --pipe --quiet ${pkgs.bash}/bin/bash -c 'echo $(( $(date +%s) + 150 )) > /sys/class/rtc/rtc0/wakealarm'
       ${pkgs.systemd}/bin/systemctl hibernate
     '')
   ];
