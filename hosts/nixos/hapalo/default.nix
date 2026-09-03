@@ -38,8 +38,11 @@
       # efivarfs and wakealarm writes need root; route through the NOPASSWD
       # systemd-run bridge (plain `sudo tee` is NOT covered by the rules)
       sudo -n /run/current-system/sw/bin/systemd-run --wait --pipe --quiet ${pkgs.efibootmgr}/bin/efibootmgr --bootnext 0000
-      # RTC wake ~150s out: enough margin for the hibernate image write
-      sudo -n /run/current-system/sw/bin/systemd-run --wait --pipe --quiet ${pkgs.bash}/bin/bash -c 'echo $(( $(date +%s) + 150 )) > /sys/class/rtc/rtc0/wakealarm'
+      # RTC wake ~150s out: enough margin for the hibernate image write.
+      # Compute the epoch in sw (transient units have a minimal PATH — no date)
+      # and pass a literal to the root shell.
+      alarm=$(( $(date +%s) + 150 ))
+      sudo -n /run/current-system/sw/bin/systemd-run --wait --pipe --quiet ${pkgs.bash}/bin/bash -c "echo $alarm > /sys/class/rtc/rtc0/wakealarm"
       ${pkgs.systemd}/bin/systemctl hibernate
     '')
   ];
