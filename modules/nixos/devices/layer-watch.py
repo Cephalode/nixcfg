@@ -50,7 +50,8 @@ def classify():
     w = niri_json("focused-window")
     if not isinstance(w, dict):
         return "main"
-    ws = w.get("window_size") or []
+    lay = w.get("layout") or {}
+    ws = lay.get("window_size") or []
     if len(ws) != 2:
         return "main"
     o = niri_json("focused-output")
