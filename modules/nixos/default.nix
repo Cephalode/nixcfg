@@ -41,8 +41,8 @@
     partOf = [ "graphical-session.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
-      mkdir -p %h/.config
-      cat > %h/.config/mimeapps.list <<EOF
+      mkdir -p "$HOME/.config"
+      cat > "$HOME/.config/mimeapps.list" <<EOF
 [Default Applications]
 text/html=zen-twilight.desktop
 text/xml=zen-twilight.desktop
