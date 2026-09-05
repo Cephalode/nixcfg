@@ -41,13 +41,12 @@ output "eDP-1" {
     position x=0 y=0
 }
 
-// Capture Card
-/-output "HDMI-A-1" {
-    // off
-    mode "2560x1080@60"
-    scale 1
-    transform "normal"
-    position x=0 y=-1
+// hapalo: UGREEN monitor on HDMI-A-1. Scale must match DP-1 (1.25):
+// mixed output scales break the Steam client's window math — it opens a
+// 35815px-wide window, GL texture alloc fails in niri, Xwayland BadAllocs,
+// xwayland-satellite panics, and every X11 app (Steam, Discord) crashes.
+output "HDMI-A-1" {
+    scale 1.25
 }
 
 // Main pc monitor
