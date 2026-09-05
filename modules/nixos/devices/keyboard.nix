@@ -72,7 +72,9 @@
         Restart = "on-failure";
         RestartSec = 3;
       };
-      environment.PATH = "/run/current-system/sw/bin";
+      # mkForce: systemd user units get a store-PATH default that would
+      # otherwise conflict. Needs `niri` (system sw) on PATH.
+      environment.PATH = lib.mkForce "/run/current-system/sw/bin";
     };
   };
 }
