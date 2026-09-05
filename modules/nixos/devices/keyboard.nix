@@ -27,6 +27,9 @@
     services.kanata = {
       enable = true;
       keyboards.internalKeyboard = {
+        # TCP server on localhost for layer switching (layer-watch.service).
+        # The nixpkgs module relaxes its sandbox when port != null.
+        port = 10051;
         extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
@@ -35,6 +38,13 @@
 
           (deflayer main
             @hyc grv @cmt lmet lctl lctl rmet
+          )
+
+          ;; Pass-through layer: no remaps. Switched to by layer-watch
+          ;; whenever a fullscreen window has focus (games choke on
+          ;; tap-hold and remapped modifiers).
+          (deflayer nofs
+            caps esc tab lctl lmet rmet rctl
           )
 
           (defalias
@@ -48,6 +58,21 @@
           )
         '';
       };
+    };
+
+    # Switch kanata to the `nofs` pass-through layer while a fullscreen
+    # window has focus (size-equality heuristic via niri IPC — niri has no
+    # is_fullscreen field). Runs as the user so it can reach niri's socket.
+    systemd.user.services.layer-watch = {
+      description = "Kanata pass-through layer watcher (fullscreen apps)";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.python3}/bin/python3 ${./layer-watch.py}";
+        Restart = "on-failure";
+        RestartSec = 3;
+      };
+      environment.PATH = "/run/current-system/sw/bin";
     };
   };
 }
