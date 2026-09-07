@@ -2,19 +2,18 @@
 #
 # Kanata key remapper for NixOS
 # Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold)
-# Ctrl ↔ Super swap: physical Super = Ctrl (system), physical Ctrl = Super (Mod)
-# Physical Ctrl (the Mod key after the swap) + HJKL → arrow keys (bare arrows:
+# Physical Ctrl (the Mod key) + HJKL → arrow keys (bare arrows:
 # the held Super is momentarily released around the tap so apps see a plain
 # keypress; Shift+HJKL = shift+arrow select)
 #
-# Modifier trio layout varies per host (cephalode.keyboard.altLayout):
-#   default (hapalo):  Ctrl Alt Super → roles: Ctrl=Mod  Super=Ctrl  (left Alt passes through unmapped)
-#   alt (loligo):      Ctrl Fn Super Alt — the Alt lands in kanata's rmet slot;
-#                      it is mapped to plain Alt instead of Ctrl, so the role
-#                      keys sit on the same physical keys on both hosts:
-#                      physical Ctrl = Super/Mod (workspaces, HJKL arrows),
-#                      physical Super = Ctrl (system commands). fn is not
-#                      remappable and is ignored.
+# Bottom-row roles per host (cephalode.keyboard.altLayout):
+#   default (hapalo, Ctrl Alt Super):      Ctrl→Super  Alt→Alt     Super→Ctrl
+#   alt (loligo, Ctrl Fn Super Alt):       Ctrl→Super  Super→Alt   Alt→Ctrl
+# OS-level Super stays on physical Ctrl on every host, so niri/OS binds
+# (Mod+0, Mod+HJKL, launcher) are written once and work everywhere.
+# fn is not remappable and is ignored. The Alt key's reported code varies
+# by hardware, so altLayout maps every candidate slot (lalt/rmet/rctl/ralt)
+# to Ctrl.
 
 {
   config,
@@ -24,18 +23,22 @@
 }:
 
 let
-  # Physical row: Ctrl ... Super [Alt]  →  roles: Mod ... Ctrl [Alt]
-  modRowDefault = [
-    "lctl"
-    "lmet"
-    "rmet"
+  # Values for defsrc slots [lmet lalt rmet rctl ralt] (lctl slot is @mod).
+  rowDefault = [
+    "lctl" # physical Super → Ctrl (system commands)
+    "lalt" # physical Alt → Alt (passthrough identity)
+    "lctl" # physical right Super → Ctrl
+    "rmet" # physical right Ctrl → Super (legacy, harmless)
+    "ralt" # (no key) identity
   ];
-  modRowAlt = [
-    "lctl"
-    "lmet"
-    "lalt"
+  rowAlt = [
+    "lalt" # physical Super → Alt
+    "lctl" # physical Alt → Ctrl
+    "lctl" # (no key) — Alt may report here on some hw
+    "lctl" # (no key) — or here
+    "lctl" # (no key) — or here
   ];
-  swapRow = mod: if mod then modRowAlt else modRowDefault;
+  modRow = row: if row then rowAlt else rowDefault;
 in
 
 {
@@ -43,9 +46,10 @@ in
     type = lib.types.bool;
     default = false;
     description = ''
-      Host puts Alt to the RIGHT of Super (Ctrl Fn Super Alt) instead of
-      between Ctrl and Super (Ctrl Alt Super). The swap then also moves
-      Alt onto the physical Super key so roles match the default layout.
+      Host bottom row is Ctrl Fn Super Alt (e.g. loligo) instead of
+      Ctrl Alt Super: physical Super emits Alt and physical Alt emits
+      Ctrl, so the row feels like Ctrl Alt Super hosts with roles
+      shifted one key right. OS Super stays on physical Ctrl either way.
     '';
   };
 
@@ -75,12 +79,14 @@ in
         extraDefCfg = "process-unmapped-keys yes";
         config = ''
           (defsrc
-            caps esc tab lctl lmet rmet rctl
+            caps esc tab
+            lctl lmet lalt rmet rctl ralt
             h j k l
           )
 
           (deflayer main
-            @hyc grv @cmt @mod ${lib.concatStringsSep " " (swapRow config.cephalode.keyboard.altLayout)}
+            @hyc grv @cmt
+            @mod ${lib.concatStringsSep " " (modRow config.cephalode.keyboard.altLayout)}
             h j k l
           )
 
@@ -89,7 +95,8 @@ in
           ;; everything else falls through to main, so every other Mod
           ;; combo still works.
           (deflayer arrows
-            _ _ _ _ _ _ _
+            _ _ _
+            _ _ _ _ _ _
             @arl @ard @aru @arr
           )
 
@@ -97,7 +104,8 @@ in
           ;; whenever a fullscreen window has focus (games choke on
           ;; tap-hold and remapped modifiers).
           (deflayer nofs
-            caps esc tab lctl lmet rmet rctl
+            caps esc tab
+            lctl lmet lalt rmet rctl ralt
             h j k l
           )
 
@@ -107,7 +115,6 @@ in
             ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
             cmt (tap-hold-press 200 200 tab (multi lctl lmet))
             ;; ── Ctrl ↔ Super swap + arrow layer ──────────────────────
-            ;; Physical Super/Win → Ctrl (system commands: copy/paste).
             ;; Physical Ctrl → Super (niri Mod: workspaces, launcher)
             ;; and while held, switches to the arrows layer for HJKL.
             mod (multi lmet (layer-while-held arrows))
