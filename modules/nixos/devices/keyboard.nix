@@ -6,10 +6,47 @@
 # Physical Ctrl (the Mod key after the swap) + HJKL → arrow keys (bare arrows:
 # the held Super is momentarily released around the tap so apps see a plain
 # keypress; Shift+HJKL = shift+arrow select)
-
-{ config, lib, pkgs, ... }:
+#
+# Modifier trio layout varies per host (cephalode.keyboard.altLayout):
+#   default (hapalo):   Ctrl  Alt  Super   → swap ends:        Super Alt Ctrl
+#   alt (loligo):       Ctrl  Fn   Super Alt → swap ends:   Super Fn Alt Ctrl
+# Either way the ROLE keys sit on the same physical keys on both hosts:
+# physical Ctrl = Super/Mod (workspaces, HJKL arrows), physical Super =
+# Ctrl (system commands). fn is not remappable and is ignored.
 
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  # Physical row: Ctrl ... Super [Alt]  →  roles: Mod ... Ctrl [Alt]
+  modRowDefault = [
+    "lctl"
+    "lmet"
+    "rmet"
+  ];
+  modRowAlt = [
+    "lctl"
+    "lmet"
+    "lalt"
+  ];
+  swapRow = mod: if mod then modRowAlt else modRowDefault;
+in
+
+{
+  options.cephalode.keyboard.altLayout = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+    description = ''
+      Host puts Alt to the RIGHT of Super (Ctrl Fn Super Alt) instead of
+      between Ctrl and Super (Ctrl Alt Super). The swap then also moves
+      Alt onto the physical Super key so roles match the default layout.
+    '';
+  };
+
   config = {
     boot.kernelModules = [ "uinput" ];
     hardware.uinput.enable = true;
@@ -41,7 +78,7 @@
           )
 
           (deflayer main
-            @hyc grv @cmt @mod lctl lctl rmet
+            @hyc grv @cmt @mod ${lib.concatStringsSep " " (swapRow config.cephalode.keyboard.altLayout)}
             h j k l
           )
 

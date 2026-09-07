@@ -79,6 +79,18 @@ On macOS, physical keys send their native values (no swap needed).
 )
 ```
 
+Variant for hosts whose bottom row is `Ctrl Fn Super Alt` (Alt RIGHT of
+Super — e.g. loligo; fn is not remappable): physical Super also emits
+Alt, so roles match the standard layout.
+
+```
+(deflayer main
+  @hyc @hyr
+  lmet lctl lctl lalt      ← physical Super = Ctrl + Alt (system role)
+)
+```
+Set per host via `cephalode.keyboard.altLayout = true;`.
+
 ### Full defsrc / deflayer (macOS)
 
 ```
