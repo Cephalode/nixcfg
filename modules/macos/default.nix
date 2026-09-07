@@ -28,6 +28,7 @@
     ./ai.nix
     ./kanata.nix
     ./syncthing.nix
+    ./zen-omni-relay.nix
   ];
 
   programs = {
