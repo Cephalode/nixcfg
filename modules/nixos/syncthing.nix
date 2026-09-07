@@ -31,6 +31,16 @@ let
   knownIds = removeAttrs ids [ "lunalata" ];
   folderName = "zen-profile";
 
+  # Space-profile folders, mirroring the hub's REST-provisioned folders
+  # (metasepia hosts the dirs; leaves sync under ~/.zen/<dir>).
+  spaceProfiles = [
+    { id = "zen-Personal"; dir = "jbnrnnnm.Personal"; }
+    { id = "zen-Dev";      dir = "jbnrnnnm.Dev"; }
+    { id = "zen-Work A";   dir = "55nr2ihj.Work A"; }
+    { id = "zen-Work B";   dir = "ra5bay4m.Work B"; }
+    { id = "zen-School";   dir = "hh82guxj.School"; }
+  ];
+
   # Leaves connect only to the hub; hub is the introducer, so full mesh
   # forms automatically once lunalata is added on both sides.
   hubDevice = name: id: {
@@ -46,6 +56,8 @@ in
     description = "This host's zen twilight profile directory (syncthing folder path).";
   };
 
+  options.cephalode.zenSpaceProfiles.enable = lib.mkEnableOption "Sync the 5 space-profile dirs (Personal/Dev/Work A/Work B/School) from the metasepia hub";
+
   config = lib.mkIf (config.cephalode.zenProfilePath != "") {
     services.syncthing = {
       enable = true;
@@ -59,18 +71,33 @@ in
       settings = {
         options.urAccepted = -1;
         devices = lib.mapAttrs hubDevice knownIds;
-        folders = {
-          ${folderName} = {
-            label = folderName;
-            path = config.cephalode.zenProfilePath;
-            devices = [ "metasepia" ];
-            ignorePerms = false;
-            versioning = {
-              type = "trashcan";
-              params.cleanoutDays = "30";
+        folders = lib.mkMerge [
+          {
+            ${folderName} = {
+              label = folderName;
+              path = config.cephalode.zenProfilePath;
+              devices = [ "metasepia" ];
+              ignorePerms = false;
+              versioning = {
+                type = "trashcan";
+                params.cleanoutDays = "30";
+              };
             };
-          };
-        };
+          }
+          (lib.mkIf config.cephalode.zenSpaceProfiles.enable (lib.listToAttrs (map (p: {
+            name = p.id;
+            value = {
+              label = "zen ${p.dir}";
+              path = "/home/sqibo/.zen/${p.dir}";
+              devices = [ "metasepia" ];
+              ignorePerms = false;
+              versioning = {
+                type = "trashcan";
+                params.cleanoutDays = "30";
+              };
+            };
+          }) spaceProfiles)))
+        ];
       };
     };
   };
