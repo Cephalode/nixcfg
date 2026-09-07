@@ -72,14 +72,13 @@
             ;; Physical Ctrl → Super (niri Mod: workspaces, launcher)
             ;; and while held, switches to the arrows layer for HJKL.
             mod (multi lmet (layer-while-held arrows))
-            ;; HJKL emit the full Meh chord: held lmet (physical Ctrl after
-            ;; the swap) + lctl + lalt + arrow = niri focus binds already
-            ;; live in the RUNNING config — no relogin needed.
-            ;; Shift+HJKL lands on the Hyper move binds.
-            arl (multi lctl lalt left)
-            ard (multi lctl lalt down)
-            aru (multi lctl lalt up)
-            arr (multi lctl lalt right)
+            ;; HJKL emit BARE arrows: unmod releases the held Super
+            ;; (subset = only lmet, Shift preserved) around the arrow,
+            ;; then re-presses it. Super+h literally = Left.
+            arl (unmod (lmet) left)
+            ard (unmod (lmet) down)
+            aru (unmod (lmet) up)
+            arr (unmod (lmet) right)
           )
         '';
       };
