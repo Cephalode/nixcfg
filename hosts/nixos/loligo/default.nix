@@ -27,6 +27,17 @@
     };
   };
 
+  # fprintd's D-Bus actions are polkit-gated (allow_active=yes), but the
+  # session-active lookup is unreliable here and denies legit sessions.
+  # wheel is trusted on this box anyway — allow explicitly.
+  environment.etc."polkit-1/rules.d/49-fingerprint-wheel.rules".text = ''
+    polkit.addRule(function(action, subject) {
+      if (action.id.indexOf("net.reactivated.fprint") == 0 && subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
   # Physical modifier row is Ctrl Fn Super Alt — the trailing Alt lands in
   # kanata's rmet slot; altLayout maps it to plain Alt (not Ctrl, as hapalo's
   # right Super needs) so roles match hapalo: physical Ctrl = Mod/Super,
