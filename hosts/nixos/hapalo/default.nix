@@ -68,4 +68,58 @@
   hardware.customNvidia = {
     open = false;
   };
+
+  # DT 900 Pro X headphone EQ — oratory1990 preset (2024-04-09 KEMAR rig) as a
+  # PipeWire filter-chain virtual sink: -5.3 dB preamp (0.54325 linear) into a
+  # single stereo param_eq (8 bands, both channels). Pure builtin biquads — no
+  # plugin packages. Shows up as "DT 900 Pro X EQ"; priority.session makes it
+  # the default sink and its playback follows the real output device.
+  services.pipewire.extraConfig.pipewire."10-dt900-eq" =
+    let
+      bands = [
+        { type = "bq_peaking"; freq = 47.0; gain = -2.1; q = 0.6; }
+        { type = "bq_lowshelf"; freq = 105.0; gain = 5.5; q = 0.71; }
+        { type = "bq_peaking"; freq = 220.0; gain = -2.4; q = 0.5; }
+        { type = "bq_peaking"; freq = 2600.0; gain = -1.8; q = 2.5; }
+        { type = "bq_peaking"; freq = 3800.0; gain = 2.2; q = 1.4; }
+        { type = "bq_peaking"; freq = 6350.0; gain = -5.5; q = 2.0; }
+        { type = "bq_peaking"; freq = 9000.0; gain = 1.0; q = 2.0; }
+        { type = "bq_highshelf"; freq = 11000.0; gain = 1.0; q = 0.71; }
+      ];
+    in
+    {
+      "context.modules" = [
+        {
+          name = "libpipewire-module-filter-chain";
+          args = {
+            "node.description" = "DT 900 Pro X EQ";
+            "filter.graph" = {
+              nodes = [
+                { type = "builtin"; name = "pre_l"; label = "linear";
+                  control = { Mult = 0.54325; Add = 0.0; }; }
+                { type = "builtin"; name = "pre_r"; label = "linear";
+                  control = { Mult = 0.54325; Add = 0.0; }; }
+                { type = "builtin"; name = "eq"; label = "param_eq";
+                  config = { filters = bands; }; }
+              ];
+              links = [
+                { output = "pre_l:Out"; input = "eq:In 1"; }
+                { output = "pre_r:Out"; input = "eq:In 2"; }
+              ];
+              inputs = [ "pre_l:In" "pre_r:In" ];
+              outputs = [ "eq:Out 1" "eq:Out 2" ];
+            };
+            "capture.props" = {
+              "node.name" = "effect_input.dt900_eq";
+              "media.class" = "Audio/Sink";
+              "priority.session" = 1010;
+            };
+            "playback.props" = {
+              "node.name" = "effect_output.dt900_eq";
+              "node.passive" = true;
+            };
+          };
+        }
+      ];
+    };
 }
