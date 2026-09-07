@@ -72,8 +72,11 @@ in
   # the Cmd/Meta key which is essential for home row mods on macOS
   environment.systemPackages = with pkgs; [ kanata-with-cmd ];
 
-  # Run kanata as a launchd agent so it starts at login and restarts on failure
-  launchd.agents.kanata = {
+  # Run kanata as a ROOT launchd daemon (not a user agent): kanata's macOS
+  # backend talks to Karabiner's virtual HID daemon over a root-only IPC
+  # socket (/Library/Application Support/org.pqrs/tmp/rootonly/), so a user
+  # agent crash-loops with "Permission denied". KeepAlive restarts on failure.
+  launchd.daemons.kanata = {
     command = "${pkgs.kanata-with-cmd}/bin/kanata --cfg ${kanataConfig} --no-wait";
     path = [ pkgs.kanata-with-cmd ];
     serviceConfig = {
