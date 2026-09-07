@@ -3,8 +3,9 @@
 # Kanata key remapper for NixOS
 # Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold)
 # Ctrl ↔ Super swap: physical Super = Ctrl (system), physical Ctrl = Super (Mod)
-# Physical Super + HJKL → arrow keys (bare arrows: the swapped Ctrl is
-# momentarily released around the arrow so apps see a plain keypress)
+# Physical Ctrl (the Mod key after the swap) + HJKL → arrow keys (bare arrows:
+# the held Super is momentarily released around the tap so apps see a plain
+# keypress; Shift+HJKL = shift+arrow select)
 
 { config, lib, pkgs, ... }:
 
@@ -40,13 +41,14 @@
           )
 
           (deflayer main
-            @hyc grv @cmt lmet @sup @sup rmet
+            @hyc grv @cmt @mod lctl lctl rmet
             h j k l
           )
 
-          ;; Arrow layer: active while physical Super is held (@sup).
-          ;; HJKL emit bare arrows; everything else falls through to main,
-          ;; so every other Super combo still acts as Ctrl.
+          ;; Arrow layer: active while physical Ctrl is held (@mod — it
+          ;; sends Super/Mod after the swap). HJKL emit bare arrows;
+          ;; everything else falls through to main, so every other Mod
+          ;; combo still works.
           (deflayer arrows
             _ _ _ _ _ _ _
             @arl @ard @aru @arr
@@ -66,15 +68,16 @@
             ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
             cmt (tap-hold-press 200 200 tab (multi lctl lmet))
             ;; ── Ctrl ↔ Super swap + arrow layer ──────────────────────
-            ;; Physical Super/Win → Ctrl (system commands: copy/paste),
+            ;; Physical Super/Win → Ctrl (system commands: copy/paste).
+            ;; Physical Ctrl → Super (niri Mod: workspaces, launcher)
             ;; and while held, switches to the arrows layer for HJKL.
-            sup (multi lctl (layer-while-held arrows))
-            ;; Arrows with the swapped Ctrl lifted around the tap so apps
-            ;; receive a bare arrow (Super+Shift+HJKL = shift+arrow select).
-            arl (macro (u lctl) left (d lctl))
-            ard (macro (u lctl) down (d lctl))
-            aru (macro (u lctl) up (d lctl))
-            arr (macro (u lctl) right (d lctl))
+            mod (multi lmet (layer-while-held arrows))
+            ;; Arrows with the held Super lifted around the tap so apps
+            ;; receive a bare arrow (Shift+HJKL = shift+arrow select).
+            arl (macro (u lmet) left (d lmet))
+            ard (macro (u lmet) down (d lmet))
+            aru (macro (u lmet) up (d lmet))
+            arr (macro (u lmet) right (d lmet))
           )
         '';
       };
