@@ -61,7 +61,7 @@
       sinks="$(printf '%s\n' "$status" | sed -n '/Sinks:/,/Sources:/p')"
       filters="$(printf '%s\n' "$status" | sed -n '/Filters:/,/Streams:/p')"
       eq_id="$( { printf '%s\n%s\n' "$sinks" "$filters"; } | awk '/effect_input\.dt900_eq/{print; exit}' | getid || true)"
-      def_id="$(printf '%s\n' "$status" | awk '/\*/{print; exit}' | getid)"
+      def_id="$( { printf '%s\n%s\n' "$sinks" "$filters"; } | awk '/\*/{print; exit}' | getid)"
       raw_id="$(printf '%s\n' "$sinks" | grep -v 'effect_input.dt900_eq' | grep -v '\*' | getid | head -1 || true)"
 
       if [ -z "$eq_id" ]; then echo "eq: EQ sink not found" >&2; exit 1; fi
