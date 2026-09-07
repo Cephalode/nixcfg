@@ -7,6 +7,10 @@
 # (/run/user/$UID/pulse) — a system-level shairport can't connect
 # ("failed to connect to the pulseaudio context -- Connection refused").
 # So: module off, user-level unit instead.
+#
+# mDNS: shairport-sync 5.x (tinysvcmdns build) only announces on IPv6 link-local
+# when avahi is absent, which macOS ignores. services.avahi.enable = true makes
+# it register over IPv4 and appear in the Mac's sound output list.
 {
   pkgs,
   lib,
@@ -23,6 +27,15 @@ let
 in
 {
   services.shairport-sync.enable = false;
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
 
   systemd.user.services.shairport-sync = {
     description = "AirPlay receiver (shairport-sync)";
