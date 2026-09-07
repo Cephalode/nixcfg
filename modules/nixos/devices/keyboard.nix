@@ -8,11 +8,13 @@
 # keypress; Shift+HJKL = shift+arrow select)
 #
 # Modifier trio layout varies per host (cephalode.keyboard.altLayout):
-#   default (hapalo):   Ctrl  Alt  Super   → swap ends:        Super Alt Ctrl
-#   alt (loligo):       Ctrl  Fn   Super Alt → swap ends:   Super Fn Alt Ctrl
-# Either way the ROLE keys sit on the same physical keys on both hosts:
-# physical Ctrl = Super/Mod (workspaces, HJKL arrows), physical Super =
-# Ctrl (system commands). fn is not remappable and is ignored.
+#   default (hapalo):  Ctrl Alt Super → roles: Ctrl=Mod  Super=Ctrl  (left Alt passes through unmapped)
+#   alt (loligo):      Ctrl Fn Super Alt — the Alt lands in kanata's rmet slot;
+#                      it is mapped to plain Alt instead of Ctrl, so the role
+#                      keys sit on the same physical keys on both hosts:
+#                      physical Ctrl = Super/Mod (workspaces, HJKL arrows),
+#                      physical Super = Ctrl (system commands). fn is not
+#                      remappable and is ignored.
 
 {
   config,

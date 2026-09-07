@@ -14,9 +14,10 @@
 
   networking.hostName = "loligo";
 
-  # Physical modifier row is Ctrl Fn Super Alt (Alt right of Super):
-  # swap Alt onto the physical Super key too, so roles match hapalo
-  # (physical Ctrl = Mod/Super, physical Super = Ctrl).
+  # Physical modifier row is Ctrl Fn Super Alt — the trailing Alt lands in
+  # kanata's rmet slot; altLayout maps it to plain Alt (not Ctrl, as hapalo's
+  # right Super needs) so roles match hapalo: physical Ctrl = Mod/Super,
+  # physical Super = Ctrl.
   cephalode.keyboard.altLayout = true;
 
   # Zen twilight profile — synced via syncthing (modules/common/syncthing.nix)
