@@ -14,6 +14,11 @@
 
   networking.hostName = "loligo";
 
+  # Fingerprint unlock: login (greetd substacks it), noctalia's lock screen
+  # (authenticates against "login" but drives the reader itself over D-Bus),
+  # and sudo/polkit all route through this. Enroll with fprintd-enroll.
+  services.fprintd.enable = true;
+
   # Physical modifier row is Ctrl Fn Super Alt — the trailing Alt lands in
   # kanata's rmet slot; altLayout maps it to plain Alt (not Ctrl, as hapalo's
   # right Super needs) so roles match hapalo: physical Ctrl = Mod/Super,
