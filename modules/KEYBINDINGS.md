@@ -80,14 +80,17 @@ On macOS, physical keys send their native values (no swap needed).
 ```
 
 Variant for hosts whose bottom row is `Ctrl Fn Super Alt` (Alt RIGHT of
-Super — e.g. loligo; fn is not remappable): kanata sees that trailing Alt
-in the `rmet` slot, so the slot maps to plain Alt instead of Ctrl. The
-role keys stay on the same physical keys as the standard layout.
+Super — e.g. loligo; fn is not remappable): roles shift one key right —
+physical Super emits Alt and physical Alt emits Ctrl, so the row feels
+`super fn alt ctrl` (hapalo feels `super alt ctrl`). OS-level Super stays
+on physical Ctrl on every host, so niri/OS binds are written once. The
+Alt key's reported code varies by hardware, so every candidate slot
+(`lmet lalt rmet rctl ralt`) maps to Ctrl in this variant.
 
 ```
 (deflayer main
   @hyc @hyr
-  lmet lctl lctl lalt      ← only the rmet slot differs (physical Alt = Alt)
+  lmet lalt lctl lctl lctl lctl   ← Super→Alt, Alt→Ctrl (candidates→Ctrl)
 )
 ```
 Set per host via `cephalode.keyboard.altLayout = true;`.
