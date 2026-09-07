@@ -17,7 +17,15 @@
   # Fingerprint unlock: login (greetd substacks it), noctalia's lock screen
   # (authenticates against "login" but drives the reader itself over D-Bus),
   # and sudo/polkit all route through this. Enroll with fprintd-enroll.
-  services.fprintd.enable = true;
+  # Scanner is a Broadcom 58200 (0a5c:5843) — needs the TOD driver, vanilla
+  # libfprint doesn't claim it.
+  services.fprintd = {
+    enable = true;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-broadcom;
+    };
+  };
 
   # Physical modifier row is Ctrl Fn Super Alt — the trailing Alt lands in
   # kanata's rmet slot; altLayout maps it to plain Alt (not Ctrl, as hapalo's
