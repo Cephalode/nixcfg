@@ -205,6 +205,12 @@ binds {
     Ctrl+Alt+Super+K     { focus-window-up; }
     Ctrl+Alt+Super+L     { focus-column-right; }
 
+    // Mod arrows (physical Ctrl+HJKL via kanata arrows layer)
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+
     Ctrl+Alt+Super+Home { focus-column-first; }
     Ctrl+Alt+Super+End  { focus-column-last; }
 
