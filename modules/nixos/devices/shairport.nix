@@ -37,9 +37,25 @@ in
     };
   };
 
+  # nqptp = AirPlay 2 timing daemon; shairport-sync only opens its AirPlay 2
+  # port (7000) when it's up. Binds privileged UDP 319/320 -> system service.
+  systemd.services.nqptp = {
+    description = "nqptp (AirPlay 2 timing)";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.nqptp}/bin/nqptp";
+      DynamicUser = true;
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+      CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
+  };
+
   systemd.user.services.shairport-sync = {
     description = "AirPlay receiver (shairport-sync)";
-    after = [ "pipewire.service" "pipewire-pulse.service" ];
+    after = [ "nqptp.service" "pipewire.service" "pipewire-pulse.service" ];
     wantedBy = [ "default.target" ];
     serviceConfig = {
       ExecStart = "${shairport}/bin/shairport-sync -c ${conf}";
