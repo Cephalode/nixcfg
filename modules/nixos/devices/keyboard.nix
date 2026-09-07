@@ -72,12 +72,13 @@
             ;; Physical Ctrl → Super (niri Mod: workspaces, launcher)
             ;; and while held, switches to the arrows layer for HJKL.
             mod (multi lmet (layer-while-held arrows))
-            ;; Arrows with the held Super lifted around the tap so apps
-            ;; receive a bare arrow (Shift+HJKL = shift+arrow select).
-            arl (macro (u lmet) left (d lmet))
-            ard (macro (u lmet) down (d lmet))
-            aru (macro (u lmet) up (d lmet))
-            arr (macro (u lmet) right (d lmet))
+            ;; Arrows: unmod momentarily drops the held Super around the
+            ;; tap so apps receive a bare arrow (Shift+HJKL = shift+arrow
+            ;; select; unmod does not touch Shift).
+            arl (macro (unmod lmet left))
+            ard (macro (unmod lmet down))
+            aru (macro (unmod lmet up))
+            arr (macro (unmod lmet right))
           )
         '';
       };
