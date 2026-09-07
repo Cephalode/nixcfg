@@ -48,10 +48,23 @@ let
 
     (defsrc
       caps ret esc tab
+      rcmd
+      h j k l
     )
 
     (deflayer main
       @hyc @hyr grv @cmt
+      @rarr
+      h j k l
+    )
+
+    ;; Right-Cmd held → HJKL become arrows (ported from the old Karabiner
+    ;; rule before its engine was disabled). Other held modifiers (Shift,
+    ;; etc.) pass through, so Shift+rcmd+h = shift+left.
+    (deflayer rcarr
+      _ _ _ _
+      _
+      left down up right
     )
 
     (defalias
@@ -63,6 +76,8 @@ let
       ;; ── Ctrl+Meta keys ────────────────────────────────────────
       ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Cmd on hold)
       cmt (tap-hold-press 200 200 tab (multi lctl lmet))
+      ;; ── Right-Cmd arrows ──────────────────────────────────────
+      rarr (layer-while-held rcarr)
     )
   '';
 
