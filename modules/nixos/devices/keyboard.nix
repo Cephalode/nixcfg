@@ -3,6 +3,8 @@
 # Kanata key remapper for NixOS
 # Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold)
 # Ctrl ↔ Super swap: physical Super = Ctrl (system), physical Ctrl = Super (Mod)
+# Physical Super + HJKL → arrow keys (bare arrows: the swapped Ctrl is
+# momentarily released around the arrow so apps see a plain keypress)
 
 { config, lib, pkgs, ... }:
 
@@ -34,10 +36,20 @@
         config = ''
           (defsrc
             caps esc tab lctl lmet rmet rctl
+            h j k l
           )
 
           (deflayer main
-            @hyc grv @cmt lmet lctl lctl rmet
+            @hyc grv @cmt lmet @sup @sup rmet
+            h j k l
+          )
+
+          ;; Arrow layer: active while physical Super is held (@sup).
+          ;; HJKL emit bare arrows; everything else falls through to main,
+          ;; so every other Super combo still acts as Ctrl.
+          (deflayer arrows
+            _ _ _ _ _ _ _
+            @arl @ard @aru @arr
           )
 
           ;; Pass-through layer: no remaps. Switched to by layer-watch
@@ -45,6 +57,7 @@
           ;; tap-hold and remapped modifiers).
           (deflayer nofs
             caps esc tab lctl lmet rmet rctl
+            h j k l
           )
 
           (defalias
@@ -52,9 +65,16 @@
             hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
             ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
             cmt (tap-hold-press 200 200 tab (multi lctl lmet))
-            ;; ── Ctrl ↔ Super swap ────────────────────────────────────
-            ;; Physical Super/Win → Ctrl (system commands: copy/paste)
-            ;; Physical Ctrl → Super (niri Mod: workspaces, launcher)
+            ;; ── Ctrl ↔ Super swap + arrow layer ──────────────────────
+            ;; Physical Super/Win → Ctrl (system commands: copy/paste),
+            ;; and while held, switches to the arrows layer for HJKL.
+            sup (multi lctl (layer-while-held arrows))
+            ;; Arrows with the swapped Ctrl lifted around the tap so apps
+            ;; receive a bare arrow (Super+Shift+HJKL = shift+arrow select).
+            arl (macro (u lctl) left (d lctl))
+            ard (macro (u lctl) down (d lctl))
+            aru (macro (u lctl) up (d lctl))
+            arr (macro (u lctl) right (d lctl))
           )
         '';
       };
