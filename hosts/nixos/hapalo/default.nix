@@ -48,6 +48,42 @@
       # powers off mid-unit by design.
       sudo -n /run/current-system/sw/bin/systemd-run --collect ${pkgs.systemd}/bin/systemctl hibernate
     '')
+    (writeShellScriptBin "eq" ''
+      # Toggle the DT 900 Pro X EQ: flips the default sink between the filter
+      # chain and the raw hardware sink. Usage: eq [on|off|toggle|status]
+      set -euo pipefail
+      export XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+      # First integer field on a wpctl status Sinks: line is the sink id.
+      getid() { awk '{for(i=1;i<=NF;i++){x=$i; gsub(/\./,"",x); if(x ~ /^[0-9]+$/){print x; exit}}}'; }
+      sinks="$(wpctl status | sed -n '/Sinks:/,/Sources:/p')"
+      eq_id="$(printf '%s\n' "$sinks" | awk '/effect_input\.dt900_eq/{print; exit}' | getid || true)"
+      def_id="$(printf '%s\n' "$sinks" | awk '/\*/{print; exit}' | getid)"
+      raw_id="$(printf '%s\n' "$sinks" | grep -v 'effect_input.dt900_eq' | grep -v '\*' | getid | head -1 || true)"
+
+      if [ -z "$eq_id" ]; then echo "eq: EQ sink not found" >&2; exit 1; fi
+      case "''${1:-toggle}" in
+        on)
+          wpctl set-default "$eq_id"
+          echo "EQ on (default sink = DT 900 Pro X EQ)" ;;
+        off)
+          if [ -z "$raw_id" ]; then echo "eq: no raw sink found" >&2; exit 1; fi
+          wpctl set-default "$raw_id"
+          echo "EQ bypassed (default sink = raw output)" ;;
+        status)
+          if [ "$def_id" = "$eq_id" ]; then echo "EQ active (default)"; else echo "EQ bypassed"; fi ;;
+        toggle)
+          if [ "$def_id" = "$eq_id" ]; then
+            if [ -z "$raw_id" ]; then echo "eq: no raw sink found" >&2; exit 1; fi
+            wpctl set-default "$raw_id"
+            echo "EQ bypassed (default sink = raw output)"
+          else
+            wpctl set-default "$eq_id"
+            echo "EQ on (default sink = DT 900 Pro X EQ)"
+          fi ;;
+        *) echo "usage: eq [on|off|toggle|status]" >&2; exit 1 ;;
+      esac
+    '')
   ];
 
   boot.loader.limine = {
