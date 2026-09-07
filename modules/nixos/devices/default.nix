@@ -5,6 +5,7 @@
   imports = [
     ./audio.nix
     ./keyboard.nix
+    ./shairport.nix
     ./video.nix
   ];
 
