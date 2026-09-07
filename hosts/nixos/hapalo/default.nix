@@ -54,11 +54,14 @@
       set -euo pipefail
       export XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
-      # First integer field on a wpctl status Sinks: line is the sink id.
+      # First integer field on a wpctl status line is the object id.
       getid() { awk '{for(i=1;i<=NF;i++){x=$i; gsub(/\./,"",x); if(x ~ /^[0-9]+$/){print x; exit}}}'; }
-      sinks="$(wpctl status | sed -n '/Sinks:/,/Sources:/p')"
-      eq_id="$(printf '%s\n' "$sinks" | awk '/effect_input\.dt900_eq/{print; exit}' | getid || true)"
-      def_id="$(printf '%s\n' "$sinks" | awk '/\*/{print; exit}' | getid)"
+      status="$(wpctl status)"
+      # Filter-chain sinks are listed under "Filters:", hardware under "Sinks:".
+      sinks="$(printf '%s\n' "$status" | sed -n '/Sinks:/,/Sources:/p')"
+      filters="$(printf '%s\n' "$status" | sed -n '/Filters:/,/Streams:/p')"
+      eq_id="$( { printf '%s\n%s\n' "$sinks" "$filters"; } | awk '/effect_input\.dt900_eq/{print; exit}' | getid || true)"
+      def_id="$(printf '%s\n' "$status" | awk '/\*/{print; exit}' | getid)"
       raw_id="$(printf '%s\n' "$sinks" | grep -v 'effect_input.dt900_eq' | grep -v '\*' | getid | head -1 || true)"
 
       if [ -z "$eq_id" ]; then echo "eq: EQ sink not found" >&2; exit 1; fi
