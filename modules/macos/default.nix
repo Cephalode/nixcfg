@@ -26,7 +26,10 @@
     ./sudo-rebuild.nix
     ./tcc-apps.nix
     ./ai.nix
-    ./kanata.nix
+    # ./kanata.nix  # retired on metasepia: Karabiner-Elements is the remapper here
+    # (kanata's macOS backend needs Karabiner's root-only vhid socket AND an
+    # exclusive keyboard grab, which Karabiner's engine also holds). Esc→`
+    # added to configs/karabiner.json; rcmd+hjkl→arrows keeps working there too.
     ./syncthing.nix
     ./zen-omni-relay.nix
   ];
