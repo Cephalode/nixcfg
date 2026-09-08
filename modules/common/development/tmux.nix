@@ -47,16 +47,14 @@ in
       bind r source-file /etc/tmux.conf \; display-message "Config reloaded!"
 
       # ── Pane navigation ──────────────────────────────────
-      # prefix + hjkl
+      # prefix + hjkl only. Root Alt+hjkl binds removed: hosts with
+      # cephalode.keyboard.altLayout (loligo) emit Alt on the physical
+      # Super key, so root M-hjkl stole those combos from the shell and
+      # diverged from hosts where physical Super = Ctrl (hapalo).
       bind-key h select-pane -L
       bind-key j select-pane -D
       bind-key k select-pane -U
       bind-key l select-pane -R
-      # Alt + hjkl (no prefix)
-      bind -n M-h select-pane -L
-      bind -n M-j select-pane -D
-      bind -n M-k select-pane -U
-      bind -n M-l select-pane -R
 
       # Pane resizing (prefix + H/J/K/L)
       bind -r H resize-pane -L 5
