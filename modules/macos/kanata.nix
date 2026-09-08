@@ -101,4 +101,22 @@ in
       StandardErrorPath = "/tmp/kanata.err.log";
     };
   };
+
+  # Retire Karabiner's modifier engine (Core-Service) — it exclusively
+  # grabs the keyboards and starves kanata. Its VirtualHIDDevice driver +
+  # daemon STAY: they are kanata's output backend. BTM re-registers the
+  # engine at each boot, so this one-shot daemon bootouts it again; kanata
+  # (KeepAlive) recovers as soon as the bootout lands.
+  launchd.daemons.retire-karabiner-engine = {
+    command = pkgs.writeShellScript "retire-karabiner-engine" ''
+      /bin/launchctl bootout system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
+      /bin/launchctl disable system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
+      echo "$(date) retire-karabiner-engine ran" >> /tmp/retire-karabiner.log
+    '';
+    serviceConfig = {
+      RunAtLoad = true;
+      KeepAlive = false;
+      StandardErrorPath = "/tmp/retire-karabiner.log";
+    };
+  };
 }
