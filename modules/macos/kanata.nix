@@ -48,7 +48,7 @@ let
 
     (defsrc
       caps ret esc tab
-      rcmd
+      rmet
       h j k l
     )
 
