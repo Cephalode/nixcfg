@@ -58,8 +58,7 @@ let
       h j k l
     )
 
-    ;; Right-Cmd held → HJKL become arrows (ported from the old Karabiner
-    ;; rule before its engine was disabled). Other held modifiers (Shift,
+    ;; Right-Cmd held → HJKL become arrows. Other held modifiers (Shift,
     ;; etc.) pass through, so Shift+rcmd+h = shift+left.
     (deflayer rcarr
       _ _ _ _
@@ -79,6 +78,26 @@ let
       ;; ── Right-Cmd arrows ──────────────────────────────────────
       rarr (layer-while-held rcarr)
     )
+  '';
+
+  # Boot-order fix: at boot, BTM re-registers Karabiner's Core-Service
+  # engine, which EXCLUSIVELY GRABS the keyboards; kanata then crash-loops
+  # ("another process is already grabbing your keyboard exclusively") and
+  # launchd throttles it to death. A plain RunAtLoad one-shot races the
+  # engine's registration and always loses. Instead: WAIT for the engine
+  # service to appear, boot it out, then kick kanata so it grabs cleanly.
+  retireEngine = pkgs.writeShellScript "retire-karabiner-engine" ''
+    echo "$(date) retire-karabiner-engine: waiting for Karabiner engine to register..."
+    for i in $(seq 1 60); do
+      if /bin/launchctl print system/org.pqrs.service.daemon.Karabiner-Core-Service >/dev/null 2>&1; then
+        break
+      fi
+      /bin/sleep 2
+    done
+    /bin/launchctl bootout system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
+    /bin/launchctl disable system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
+    echo "$(date) retire-karabiner-engine: engine booted out, kicking kanata"
+    /bin/launchctl kick -k system/org.nixos.kanata 2>/dev/null || true
   '';
 
 in
@@ -102,20 +121,16 @@ in
     };
   };
 
-  # Retire Karabiner's modifier engine (Core-Service) — it exclusively
-  # grabs the keyboards and starves kanata. Its VirtualHIDDevice driver +
-  # daemon STAY: they are kanata's output backend. BTM re-registers the
-  # engine at each boot, so this one-shot daemon bootouts it again; kanata
-  # (KeepAlive) recovers as soon as the bootout lands.
+  # Karabiner's remapping engine must NOT hold the keyboards (kanata is the
+  # remapper). Its VirtualHIDDevice driver + daemon STAY: they are kanata's
+  # output backend. BTM re-registers the engine at each boot; this daemon
+  # waits for that registration, boots the engine out, then kicks kanata.
   launchd.daemons.retire-karabiner-engine = {
-    command = pkgs.writeShellScript "retire-karabiner-engine" ''
-      /bin/launchctl bootout system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
-      /bin/launchctl disable system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
-      echo "$(date) retire-karabiner-engine ran" >> /tmp/retire-karabiner.log
-    '';
+    command = "${retireEngine}";
     serviceConfig = {
       RunAtLoad = true;
       KeepAlive = false;
+      StandardOutPath = "/tmp/retire-karabiner.log";
       StandardErrorPath = "/tmp/retire-karabiner.log";
     };
   };
