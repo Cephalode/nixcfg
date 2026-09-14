@@ -82,12 +82,14 @@ in
             caps esc tab
             lctl lmet lalt rmet rctl ralt
             h j k l
+            . ;
           )
 
           (deflayer main
             @hyc grv @cmt
             @mod ${lib.concatStringsSep " " (modRow config.cephalode.keyboard.altLayout)}
             h j k l
+            . ;
           )
 
           ;; Arrow layer: active while physical Ctrl is held (@mod — it
@@ -98,6 +100,7 @@ in
             _ _ _
             _ _ _ _ _ _
             @arl @ard @aru @arr
+            XX _
           )
 
           ;; Pass-through layer: no remaps. Switched to by layer-watch
@@ -107,6 +110,7 @@ in
             caps esc tab
             lctl lmet lalt rmet rctl ralt
             h j k l
+            . ;
           )
 
           (defalias
