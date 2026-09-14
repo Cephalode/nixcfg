@@ -8,6 +8,12 @@
 ;;   Esc                → Grave
 ;;   Physical Ctrl      → Super/Win (workspace switching)
 ;;   Physical Super/Win → Ctrl (system commands)
+;;   Emoji picker: Windows' panel is bound to BOTH Win+. and Win+;.
+;;   While Win is held (physical Ctrl), a `winheld` layer blocks `.`
+;;   (the emoji panel used to pop on Ctrl+.) and leaves `;` transparent,
+;;   so the picker is effectively on Super+; only. Plain . ; and app
+;;   Ctrl+. (physical Super+.) are untouched.
+
 ;;
 ;; Run (as admin, e.g. via Scheduled Task at logon):
 ;;   kanata.exe -c kanata.kbd
@@ -18,10 +24,20 @@
 
 (defsrc
   caps esc tab lctl lmet rmet rctl
+  .
 )
 
 (deflayer main
   @hyc grv @cmt @cwm lctl lctl @cwm
+  @dot
+)
+
+;; Active while physical Ctrl is held (@cwm sends Win as the modifier).
+;; Blocks `.` so Win+. can't trigger Windows' emoji panel; `;` stays
+;; transparent, so Win+; still opens it.
+(deflayer winheld
+  _ _ _ _ _ _ _
+  XX
 )
 
 (defalias
@@ -30,6 +46,9 @@
   ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
   cmt (tap-hold-press 200 200 tab (multi lctl lmet))
   ;; Physical Ctrl → Win as modifier, tap suppressed (Windows opens the
-  ;; Start menu on a lone Win tap; niri Mod tap does nothing)
-  cwm (tap-hold-press 200 200 XX lmet)
+  ;; Start menu on a lone Win tap; niri Mod tap does nothing), plus the
+  ;; winheld layer that blocks Win+.
+  cwm (tap-hold-press 200 200 XX (multi lmet (layer-while-held winheld)))
+  ;; `.` outside the Win-held layer is a plain period.
+  dot .
 )
