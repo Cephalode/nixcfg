@@ -103,11 +103,13 @@ in
             XX _
           )
 
-          ;; Pass-through layer: no remaps. Switched to by layer-watch
-          ;; whenever a fullscreen window has focus (games choke on
-          ;; tap-hold and remapped modifiers).
+          ;; Pass-through layer: no remaps except Caps→Meh (scheme-doc
+          ;; invariant: caps is Esc-on-tap/Meh-on-hold on every platform).
+          ;; The rest stays raw — switched to by layer-watch whenever a
+          ;; fullscreen window has focus (games choke on tap-hold and
+          ;; remapped modifiers).
           (deflayer nofs
-            caps esc tab
+            @hyc esc tab
             lctl lmet lalt rmet rctl ralt
             h j k l
             . ;
