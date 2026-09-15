@@ -48,6 +48,10 @@
   cephalode.zenProfilePath = "/home/sqibo/.zen/7r0v1cgu.Default Profile";
   cephalode.zenSpaceProfiles.enable = true;
 
+  # ~/dev synced from metasepia hub (modules/nixos/syncthing.nix). Deploy repo
+  # lives separately at ~/devel/nix so it never syncs over itself.
+  cephalode.develSync.enable = true;
+
   # Hibernate: resume from the swap partition (nvme0n1p3)
   boot.kernelParams = [ "resume=UUID=62569a8c-85a6-4eb0-80fd-5297dbabe399" ];
 
