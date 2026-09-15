@@ -48,6 +48,20 @@ let
     addresses = [ "tcp://${name}:22000" ];
     introducer = name == "metasepia";
   };
+
+  develFolder = {
+    "devel-sync" = {
+      label = "devel";
+      path = "/home/sqibo/dev";
+      type = "sendreceive";
+      devices = [ "metasepia" ];
+      ignorePerms = true;
+      versioning = {
+        type = "trashcan";
+        params.cleanoutDays = "30";
+      };
+    };
+  };
 in
 {
   options.cephalode.zenProfilePath = lib.mkOption {
@@ -57,6 +71,8 @@ in
   };
 
   options.cephalode.zenSpaceProfiles.enable = lib.mkEnableOption "Sync the 5 space-profile dirs (Personal/Dev/Work A/Work B/School) from the metasepia hub";
+
+  options.cephalode.develSync.enable = lib.mkEnableOption "Sync ~/dev from the metasepia hub (pull-only leaf)";
 
   config = lib.mkIf (config.cephalode.zenProfilePath != "") {
     services.syncthing = {
@@ -72,6 +88,7 @@ in
         options.urAccepted = -1;
         devices = lib.mapAttrs hubDevice knownIds;
         folders = lib.mkMerge [
+          (lib.mkIf config.cephalode.develSync.enable develFolder)
           {
             ${folderName} = {
               label = folderName;
