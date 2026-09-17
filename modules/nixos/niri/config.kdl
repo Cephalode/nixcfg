@@ -218,6 +218,9 @@ binds {
     Ctrl+Alt+Super+U         { focus-workspace-down; }
     Ctrl+Alt+Super+I         { focus-workspace-up; }
 
+    Ctrl+Alt+Super+M { focus-workspace "main"; }
+    Ctrl+Alt+Super+G { focus-workspace "game"; }
+
     Ctrl+Alt+Super+1 { focus-workspace 1; }
     Ctrl+Alt+Super+2 { focus-workspace 2; }
     Ctrl+Alt+Super+3 { focus-workspace 3; }
@@ -269,6 +272,9 @@ binds {
     Ctrl+Alt+Super+Shift+Page_Up   { move-column-to-workspace-up; }
     Ctrl+Alt+Super+Shift+U         { move-column-to-workspace-down; }
     Ctrl+Alt+Super+Shift+I         { move-column-to-workspace-up; }
+
+    Ctrl+Alt+Super+Shift+M { move-column-to-workspace "main"; }
+    Ctrl+Alt+Super+Shift+G { move-column-to-workspace "game"; }
 
     Ctrl+Alt+Super+Shift+1 { move-column-to-workspace 1; }
     Ctrl+Alt+Super+Shift+2 { move-column-to-workspace 2; }
