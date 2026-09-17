@@ -121,6 +121,11 @@ animations {
     slowdown 0.5 // Speed scale
 }
 
+// Named workspaces — always exist, listed before dynamic ones.
+// "main" = merged browser + code workspace.
+workspace "main"
+workspace "game"
+
 // Browser floating PiP
 window-rule {
     match title="^Picture-in-Picture$"
