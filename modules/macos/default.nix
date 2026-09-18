@@ -28,7 +28,7 @@
     ./ai.nix
     ./kanata.nix  # kanata = the remapper; retires Karabiner's engine at each boot
     ./syncthing.nix
-    ./zen-omni-relay.nix
+    # ./zen-omni-relay.nix  # omni-sync disabled 2026-09-18 — re-enable to restore relay
   ];
 
   programs = {
