@@ -12,7 +12,7 @@
   ];
 
   system = {
-    primaryUser = "sqibo"; # Sets user
+    primaryUser = "cephalode"; # Sets user (renamed from sqibo 2026-09; /Users/sqibo is a symlink alias)
     configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null; # Sets git hash
     defaults = {
       dock = {

@@ -1,7 +1,7 @@
 { pkgs, lib, config, inputs, ... }:
 let
   cfg = config.development.neovim;
-  homePrefix = if pkgs.stdenv.isDarwin then "/Users/sqibo" else "/home/sqibo";
+  homePrefix = if pkgs.stdenv.isDarwin then "/Users/cephalode" else "/home/sqibo";
 in
 {
   options.development.neovim = {

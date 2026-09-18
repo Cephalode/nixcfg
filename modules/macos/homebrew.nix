@@ -12,7 +12,7 @@
   nix-homebrew = {
     enable = true;
     # enableRosetta = true;
-    user = "sqibo";
+    user = "cephalode"; # renamed from sqibo
     autoMigrate = true;
   };
 
@@ -27,5 +27,6 @@
     global = {
       brewfile = true;
     };
+    brews = [ "zsh-autosuggestions" ]; # .zshrc sources it from /opt/homebrew/share
   };
 }

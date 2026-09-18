@@ -3,7 +3,7 @@
 { config, pkgs, ... }:
 
 let
-  user = "sqibo";
+  user = "cephalode"; # renamed from sqibo; /Users/sqibo is a symlink alias
   home = "/Users/${user}";
   picordDir = "${home}/devel/picord";
 in

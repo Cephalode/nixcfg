@@ -8,7 +8,7 @@
 
 let
   configs = ./configs;
-  user = "sqibo";
+  user = "cephalode"; # renamed from sqibo; /Users/sqibo is a symlink alias
   configHome = "/Users/${user}/.config";
 in
 {

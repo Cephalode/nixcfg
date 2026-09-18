@@ -40,8 +40,8 @@
   };
 
   system.activationScripts.setBrowser.text = ''
-    sudo -u sqibo ${pkgs.duti}/bin/duti -s app.zen-browser.zen http
-    sudo -u sqibo ${pkgs.duti}/bin/duti -s app.zen-browser.zen https
-    sudo -u sqibo ${pkgs.duti}/bin/duti -s app.zen-browser.zen .html
+    sudo -u cephalode ${pkgs.duti}/bin/duti -s app.zen-browser.zen http
+    sudo -u cephalode ${pkgs.duti}/bin/duti -s app.zen-browser.zen https
+    sudo -u cephalode ${pkgs.duti}/bin/duti -s app.zen-browser.zen .html
   '';
 }
