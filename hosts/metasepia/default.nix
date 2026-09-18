@@ -43,4 +43,6 @@
 
     stateVersion = 6;
   };
+
+  power.sleep.display = "never";
 }
