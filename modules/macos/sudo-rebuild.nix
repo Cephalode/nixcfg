@@ -9,7 +9,9 @@ let
 in
 {
   security.sudo.extraConfig = ''
-    sqibo ALL=(root) NOPASSWD: ${rebuild}/bin/darwin-rebuild-wrapper
+    # %admin (not a hardcoded username): the account was renamed sqibo ->
+    # cephalode once already; group rule survives future renames.
+    %admin ALL=(root) NOPASSWD: ${rebuild}/bin/darwin-rebuild-wrapper
   '';
 
   environment.systemPackages = [ rebuild ];

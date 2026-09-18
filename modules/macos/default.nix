@@ -9,9 +9,10 @@
   nixpkgs.overlays = [
     (final: prev: {
       notesmd-cli = final.callPackage ../../pkgs/notesmd-cli { };
-      # ponytail: kitty 0.47.4 linker crash (cctools ld SIGTRAP) on aarch64-darwin;
-      # use stable 0.44.0 which builds fine. Homebrew cask kitty is the real binary.
-      kitty = inputs.nixpkgs-stable.legacyPackages.${prev.stdenv.hostPlatform.system}.kitty;
+      # NOTE: no kitty override here. The nix kitty wrapper breaks its code
+      # signature (empty AX tree -> invisible to OmniWM); macOS kitty is the
+      # Homebrew cask in modules/macos/applications.nix. The nix wrapper is
+      # Linux-only (modules/common/cli/default.nix).
     })
     (import ../../overlays/tcc-friendly-apps.nix)
   ];
