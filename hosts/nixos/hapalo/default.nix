@@ -104,6 +104,11 @@
     "resume_offset=43235328"
   ];
 
+  # 2026-09-18 hard-reset crash (SIGBUS storm -> instant power loss, no kernel
+  # trace): log MCE/EDAC hardware-error precursors so a failing DIMM/CPU/PSU
+  # leaves evidence before the next one.
+  hardware.rasdaemon.enable = true;
+
   hardware.customNvidia = {
     open = false;
   };
