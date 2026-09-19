@@ -183,7 +183,9 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-    Mod+Shift+S { screenshot; }
+    // OS-level Ctrl (physical Super+Shift+S after the kanata Ctrl<->Super
+    // swap) — matches the Windows/macOS screenshot muscle memory.
+    Ctrl+Shift+S { screenshot; }
     Alt+Print { screenshot-window; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
