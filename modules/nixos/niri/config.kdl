@@ -46,6 +46,7 @@ output "eDP-1" {
 // 35815px-wide window, GL texture alloc fails in niri, Xwayland BadAllocs,
 // xwayland-satellite panics, and every X11 app (Steam, Discord) crashes.
 output "HDMI-A-1" {
+    off
     scale 1.25
 }
 
