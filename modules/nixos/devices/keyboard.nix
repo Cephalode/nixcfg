@@ -25,7 +25,7 @@
 let
   # Values for defsrc slots [lmet lalt rmet rctl ralt] (lctl slot is @mod).
   rowDefault = [
-    "lctl" # physical Super → Ctrl (system commands)
+    "@sup" # physical Super → Ctrl + emoji-picker layer (Cmd+. blocked, Cmd+; = picker)
     "lalt" # physical Alt → Alt (passthrough identity)
     "lctl" # physical right Super → Ctrl
     "rmet" # physical right Ctrl → Super (legacy, harmless)
@@ -103,6 +103,18 @@ in
             XX _
           )
 
+          ;; Emoji picker layer: active while Cmd (physical Super) is held.
+          ;; The GTK emoji chooser lives on Ctrl+. (Ctrl = what Super emits
+          ;; after the swap), so `.` is blocked here and `;` emits `.` —
+          ;; Cmd+. does nothing, Cmd+; opens the picker. Everything else
+          ;; falls through to main, so all other Cmd shortcuts keep working.
+          (deflayer emoji
+            _ _ _
+            _ _ _ _ _ _
+            _ _ _ _
+            XX .
+          )
+
           ;; Pass-through layer: no remaps except Caps→Meh (scheme-doc
           ;; invariant: caps is Esc-on-tap/Meh-on-hold on every platform).
           ;; The rest stays raw — switched to by layer-watch whenever a
@@ -124,6 +136,9 @@ in
             ;; Physical Ctrl → Super (niri Mod: workspaces, launcher)
             ;; and while held, switches to the arrows layer for HJKL.
             mod (multi lmet (layer-while-held arrows))
+            ;; Physical Super → Ctrl, and while held, switches to the
+            ;; emoji layer (blocks ., maps ; → . for the GTK chooser).
+            sup (multi lctl (layer-while-held emoji))
             ;; HJKL emit BARE arrows: unmod releases the held Super
             ;; (subset = only lmet, Shift preserved) around the arrow,
             ;; then re-presses it. Super+h literally = Left.
