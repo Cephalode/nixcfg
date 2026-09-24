@@ -24,6 +24,7 @@
   services.logind.powerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
+    cmus
     google-chrome
     inputs.bedrock-on-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.grok-build.packages.${pkgs.stdenv.hostPlatform.system}.default
