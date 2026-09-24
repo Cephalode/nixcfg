@@ -103,16 +103,18 @@ in
             XX _
           )
 
-          ;; Emoji picker layer: active while Cmd (physical Super) is held.
-          ;; The GTK emoji chooser lives on Ctrl+. (Ctrl = what Super emits
-          ;; after the swap), so `.` is blocked here and `;` emits `.` —
-          ;; Cmd+. does nothing, Cmd+; opens the picker. Everything else
-          ;; falls through to main, so all other Cmd shortcuts keep working.
+          ;; Emoji-picker alias layer: active while Cmd (physical Super) is
+          ;; held. `;` emits `.` — under the held Ctrl (what Super emits after
+          ;; the swap) that's Ctrl+., GTK's hardcoded emoji-chooser combo, so
+          ;; Cmd+; pops the picker. `.` itself passes through: Cmd+. keeps
+          ;; reaching apps (VS Code quick fix etc.). GTK apps will still show
+          ;; the picker on Cmd+. too — that binding is baked into GTK text
+          ;; widgets and cannot be moved or disabled, only aliased like this.
           (deflayer emoji
             _ _ _
             _ _ _ _ _ _
             _ _ _ _
-            XX .
+            _ .
           )
 
           ;; Pass-through layer: no remaps except Caps→Meh (scheme-doc
