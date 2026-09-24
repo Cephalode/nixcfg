@@ -130,8 +130,15 @@ in
           )
 
           (defalias
-            ;; Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold)
-            hyc (tap-hold-press 200 200 esc (multi lctl lalt lmet))
+            ;; Caps Lock → Meh (Esc on tap, Ctrl+Alt+Super on hold).
+            ;; Plain tap-hold, NOT tap-hold-press: -press latches the hold
+            ;; (meh) as soon as ANY key overlaps the 200ms window, so a meh
+            ;; tap followed by a quick key (e.g. o = toggle-overview) fired
+            ;; the meh bind. With plain tap-hold an overlapping press
+            ;; resolves as tap instead: esc + the plain key are emitted and
+            ;; the modifiers are gone once caps is released — meh binds are
+            ;; only possible while caps is physically held.
+            hyc (tap-hold 200 200 esc (multi lctl lalt lmet))
             ;; Tab → Ctrl+Meta (Tab on tap, Ctrl+Super on hold)
             cmt (tap-hold-press 200 200 tab (multi lctl lmet))
             ;; ── Ctrl ↔ Super swap + arrow layer ──────────────────────
