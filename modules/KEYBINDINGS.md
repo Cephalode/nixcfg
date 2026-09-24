@@ -52,6 +52,12 @@ Meh and Hyper are used for window manager shortcuts:
 - **aerospace** (macOS): `alt-ctrl-cmd` = Meh, `alt-ctrl-cmd-shift` = Hyper
 - **niri** (NixOS): these arrive as Ctrl+Alt+Super key combos
 
+Meh keys use plain `tap-hold` (not `tap-hold-press`): `-press` latches the
+hold modifier as soon as ANY key overlaps the 200ms window, so a Meh tap
+followed by a quick key (e.g. `o` = toggle-overview) fired the bind with the
+modifier already released. With plain `tap-hold`, meh binds are only possible
+while the physical key is held.
+
 ## Keyboard Layout per Platform
 
 ### Physical Modifier Swap (Linux & Windows only)
