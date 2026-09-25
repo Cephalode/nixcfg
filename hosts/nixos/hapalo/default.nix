@@ -119,7 +119,6 @@
     settings = {
       global = {
         "server min protocol" = "SMB2";
-        "mdns" = "yes"; # Bonjour advert (best effort; manual entry always works)
       };
       homes = {
         browseable = "yes";
