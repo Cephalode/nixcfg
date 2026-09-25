@@ -85,7 +85,7 @@ in
       StandardOutPath = "${picordDir}/debug/picord-launchd-stdout.log";
       StandardErrorPath = "${picordDir}/debug/picord-launchd-stderr.log";
       EnvironmentVariables = {
-        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${home}/.nix-profile/bin";
+        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${home}/.local/state/nix/profile/bin";
         SHELL = "/bin/bash";
       };
     };
