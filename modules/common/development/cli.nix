@@ -8,6 +8,9 @@
     # Navigation
     eza fd fzf ripgrep tree yazi zoxide
 
+    # Music
+    cmus
+
     # Build and languages
     bun nodejs_24 typst typst-live
 

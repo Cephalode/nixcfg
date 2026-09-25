@@ -10,6 +10,7 @@
     ./cli
     ./development
     ./security
+    ./yazi.nix
   ] ++ lib.optionals (system == "x86_64-linux" || system == "aarch64-linux") [
     inputs.zen-spaces.nixosModules.default
   ];
