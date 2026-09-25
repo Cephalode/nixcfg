@@ -94,7 +94,7 @@
   # and exec's `cmd` via `sh -c` with a PATH that lacks the package's share dir —
   # so bake the wrapper's absolute store path in at build time (substituteAll).
   systemd.user.tmpfiles.rules = [
-    "L %h/.config/xdg-desktop-portal-termfilechooser/config - - - - ${pkgs.replaceVars ./configs/xdg-desktop-portal-termfilechooser/config {
+    "L+ %h/.config/xdg-desktop-portal-termfilechooser/config - - - - ${pkgs.replaceVars ./configs/xdg-desktop-portal-termfilechooser/config {
       wrapper = "${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh";
     }}"
   ];
