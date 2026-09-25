@@ -122,7 +122,9 @@
             "capture.props" = {
               "node.name" = "effect_input.mtw4_eq";
               "media.class" = "Audio/Sink";
-              "priority.session" = 1010;
+              # Must beat bluez_output's own 1010 or the default is a coin
+              # flip whenever the buds reconnect.
+              "priority.session" = 1500;
             };
             "playback.props" = {
               "node.name" = "effect_output.mtw4_eq";
@@ -148,7 +150,18 @@
       filters="$(printf '%s\n' "$status" | sed -n '/Filters:/,/Streams:/p')"
       eq_id="$( { printf '%s\n%s\n' "$sinks" "$filters"; } | awk '/effect_input\.mtw4_eq/{print; exit}' | getid || true)"
       def_id="$( { printf '%s\n%s\n' "$sinks" "$filters"; } | awk '/\*/{print; exit}' | getid)"
-      raw_id="$(printf '%s\n' "$sinks" | grep -v 'effect_input.mtw4_eq' | grep -v '\*' | getid | head -1 || true)"
+      # Bypass target = highest-priority real sink (buds when connected, else
+      # speakers). pw-dump gives numeric priority.session per node.
+      # ponytail: "first listed" is order-of-appearance, not priority — it
+      # picked analog over the buds.
+      raw_id="$(pw-dump | jq -r '
+        [.[] | select(.info.props["media.class"]=="Audio/Sink"
+                       and (.info.props["node.name"] | startswith("effect_input.") | not))]
+        | sort_by(-(.info.props["priority.session"] // 0))
+        | (.[0].id // empty | tostring)' 2>/dev/null || true)"
+      if [ -z "$raw_id" ]; then
+        raw_id="$(printf '%s\n' "$sinks" | grep -v 'effect_input.mtw4_eq' | grep -v '\*' | getid | head -1 || true)"
+      fi
 
       if [ -z "$eq_id" ]; then echo "eq: EQ sink not found" >&2; exit 1; fi
       case "''${1:-toggle}" in
