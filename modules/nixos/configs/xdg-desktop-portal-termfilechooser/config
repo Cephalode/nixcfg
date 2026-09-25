@@ -1,7 +1,10 @@
 [filechooser]
-cmd=yazi-wrapper.sh
+; cmd is exec'd via `sh -c` with the portal service's PATH, which never contains
+; this package's share dir (upstream issue #56) — a bare name dies with exit -127.
+; @wrapper@ is filled at build time with the absolute store path (substituteAll).
+cmd=@wrapper@
 default_dir=$HOME
-; NixOS: portal service needs the system profile on PATH for kitty/yazi (upstream #56)
+; kitty/yazi (invoked by the wrapper) live in the system profile
 env=PATH=$PATH:/run/current-system/sw/bin
 open_mode=suggested
 save_mode=last
