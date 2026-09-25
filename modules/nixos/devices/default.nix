@@ -4,7 +4,6 @@
 {
   imports = [
     ./audio.nix
-    ./iphone.nix
     ./keyboard.nix
     ./shairport.nix
     ./video.nix

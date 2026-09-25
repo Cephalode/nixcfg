@@ -110,6 +110,25 @@
   # leaves evidence before the next one.
   hardware.rasdaemon.enable = true;
 
+  # SMB server — browse hapalo's filesystem from the iPhone Files app:
+  # Files → ⋯ → "Connect to Server" → smb://hapalo (login: cephalode).
+  # homes = each user's own /home. iOS speaks SMB2/3; pinned as the floor.
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      global = {
+        "server min protocol" = "SMB2";
+        "mdns" = "yes"; # Bonjour advert (best effort; manual entry always works)
+      };
+      homes = {
+        browseable = "yes";
+        "read only" = "no";
+        "valid users" = "%S";
+      };
+    };
+  };
+
   hardware.customNvidia = {
     open = false;
   };
