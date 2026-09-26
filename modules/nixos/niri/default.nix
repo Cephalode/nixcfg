@@ -7,7 +7,8 @@ let
 in
 {
   config = lib.mkIf (pkgs.stdenv.isLinux) {
-    environment.systemPackages = [ niriWrapped ];
+    # wf-recorder + slurp: screen recording wired to niri Ctrl+Shift+R
+    environment.systemPackages = [ niriWrapped pkgs.wf-recorder pkgs.slurp ];
 
     # greetd launches niri-session, whose niri.service ExecStarts the STORE binary
     # directly — bypassing the wrapper (and its NIRI_CONFIG). niri.service is a
