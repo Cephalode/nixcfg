@@ -23,6 +23,15 @@
   cephalode.nixosUser = "cephalode";
   cephalode.nixosUid = 1000;
 
+  # Legacy account kept as console fallback after the rename (drop when
+  # nothing needs it); uid pinned clear of cephalode's 1000.
+  users.users.sqibo = {
+    isNormalUser = true;
+    description = "Legacy account (renamed to cephalode 2026-09-24).";
+    uid = 1001;
+    extraGroups = [ "wheel" "networkmanager" ];
+  };
+
   # Zen twilight profile — synced via syncthing (modules/common/syncthing.nix)
   cephalode.zenProfilePath = "/home/sqibo/.zen/0vkp3u7b.Default Profile";
 
