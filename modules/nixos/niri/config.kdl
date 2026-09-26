@@ -189,12 +189,14 @@ binds {
     Ctrl+Shift+S { screenshot; }
     Alt+Print { screenshot-window; }
 
-    // Screen recording — mirrors the screenshot key. wf-recorder selects a
-    // region with slurp and writes ~/Videos/rec-<timestamp>.mp4; pressing the
-    // key again sends SIGINT (clean finalize) instead of starting a second one.
-    // libx264 explicitly: hapalo has no usable VAAPI/NVENC path (verified live);
-    // software encoding works everywhere.
-    Ctrl+Shift+R { spawn-sh "if pkill -INT -x wf-recorder 2>/dev/null; then :; else mkdir -p \"$HOME/Videos\"; wf-recorder -c libx264 -g \"$(slurp)\" -f \"$HOME/Videos/rec-$(date +%Y%m%d-%H%M%S).mp4\"; fi"; }
+    // Screen recording — mirrors the Game Bar record chord (Win+Alt+R): after
+    // the kanata Ctrl<->Super swap this lands on OS Ctrl+Alt+R (press physical
+    // Super+Alt+R). Ctrl+Shift+R stays free for browser hard-reload. wf-recorder
+    // selects a region with slurp and writes ~/Videos/rec-<timestamp>.mp4;
+    // pressing the key again sends SIGINT (clean finalize) instead of a second
+    // recording. libx264 explicitly: hapalo has no usable VAAPI/NVENC path
+    // (verified live); software encoding works everywhere.
+    Ctrl+Alt+R { spawn-sh "if pkill -INT -x wf-recorder 2>/dev/null; then :; else mkdir -p \"$HOME/Videos\"; wf-recorder -c libx264 -g \"$(slurp)\" -f \"$HOME/Videos/rec-$(date +%Y%m%d-%H%M%S).mp4\"; fi"; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
