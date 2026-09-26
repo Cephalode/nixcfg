@@ -22,9 +22,10 @@
   };
 
   users.users = {
-    sqibo = {
+    ${config.cephalode.nixosUser} = {
       isNormalUser = true;
       description = "Main user.";
+      uid = if config.cephalode.nixosUid != null then config.cephalode.nixosUid else null;
       extraGroups = [
         "wheel"
         "networkmanager"

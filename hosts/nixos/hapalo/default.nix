@@ -16,6 +16,13 @@
   networking.hostName = "hapalo";
   system.stateVersion = "25.05"; # Do not change
 
+  # Primary account was renamed sqibo -> cephalode (live usermod, 2026-09-24);
+  # declared here so activation stops dropping it from /etc/passwd (2026-09-25
+  # ssh lockout after an undeclared-account switch). uid pinned to the existing
+  # 1000 (syncthing's configured user + home-dir ownership).
+  cephalode.nixosUser = "cephalode";
+  cephalode.nixosUid = 1000;
+
   # Zen twilight profile — synced via syncthing (modules/common/syncthing.nix)
   cephalode.zenProfilePath = "/home/sqibo/.zen/0vkp3u7b.Default Profile";
 
