@@ -37,7 +37,7 @@
 
   # Power button: owned by powerbtn.nix daemon (short press = sw, hold = poweroff).
   # logind must ignore the key globally — its only sources here are the ACPI buttons.
-  services.logind.powerKey = "ignore";
+  services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
     cmus
