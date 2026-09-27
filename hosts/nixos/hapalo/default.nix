@@ -133,12 +133,12 @@
   # cost. nvidia-smi has no nixpkgs option; boot-time oneshot is enough —
   # the limit persists until the next reboot.
   systemd.services.nvidia-power-limit = {
-    description = "Clamp GPU power limit to 300W (PSU OCP mitigation)";
+    description = "Clamp GPU power limit to 325W (PSU OCP mitigation)";
     wantedBy = [ "multi-user.target" ];
     after = [ "systemd-modules-load.service" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "/run/current-system/sw/bin/nvidia-smi -pl 300";
+      ExecStart = "/run/current-system/sw/bin/nvidia-smi -pl 325";
     };
   };
 
