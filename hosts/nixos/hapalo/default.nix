@@ -126,6 +126,22 @@
   # leaves evidence before the next one.
   hardware.rasdaemon.enable = true;
 
+  # RTX 3080 millisecond transient spikes trip the PSU's over-current
+  # protection (instant power-off with zero kernel trace — 2026-09-18 and
+  # 2026-09-26 crashes right at game launch; standby LED latches on until
+  # AC is pulled). Clamp the board limit: spikes scale with it, ~3-5% perf
+  # cost. nvidia-smi has no nixpkgs option; boot-time oneshot is enough —
+  # the limit persists until the next reboot.
+  systemd.services.nvidia-power-limit = {
+    description = "Clamp GPU power limit to 300W (PSU OCP mitigation)";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-modules-load.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "/run/current-system/sw/bin/nvidia-smi -pl 300";
+    };
+  };
+
   # SMB server — browse hapalo's filesystem from the iPhone Files app:
   # Files → ⋯ → "Connect to Server" → smb://hapalo (login: cephalode).
   # homes = each user's own /home. iOS speaks SMB2/3; pinned as the floor.
