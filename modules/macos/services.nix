@@ -5,7 +5,7 @@
 let
   user = "cephalode"; # renamed from sqibo; /Users/sqibo is a symlink alias
   home = "/Users/${user}";
-  picordDir = "${home}/devel/picord";
+  picordDir = "${home}/dev/picord";
 in
 {
   # Tailscale: nix-managed CLI + daemon (was disabled for the MAS app, which

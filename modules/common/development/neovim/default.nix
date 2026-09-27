@@ -24,7 +24,7 @@ in
         { inherit pkgs; }
         ({ info.obsidian_vault = cfg.obsidianVault; }
           // (lib.optionalAttrs cfg.impureConfig {
-            settings.config_directory = "${homePrefix}/devel/nix/modules/common/development/neovim/nvim";
+            settings.config_directory = "${homePrefix}/dev/nix/modules/common/development/neovim/nvim";
           }))
       ])
     ];
