@@ -25,9 +25,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-    };
     zen-spaces = {
       url = "github:Cephalode/zen-spaces";
       inputs.nixpkgs.follows = "nixpkgs";

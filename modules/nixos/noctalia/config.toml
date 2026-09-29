@@ -1,0 +1,133 @@
+# Noctalia v5 config — shared across NixOS hosts (flake-managed).
+# $HOME forms keep it portable across usernames (hapalo=cephalode, loligo=sqibo).
+# v5 expands env vars in config values; the shell expands them in exec actions.
+
+[shell]
+telemetry_enabled = false
+settings_show_advanced = true
+time_format = "{:%H:%M}"
+
+    [shell.animation]
+    enabled = true
+    speed = 1.0
+
+    [shell.launcher]
+    categories = true
+    sort_by_usage = true
+    show_icons = true
+
+    [shell.screenshot]
+    copy_to_clipboard = true
+    save_to_file = true
+
+    [shell.shadow]
+    direction = "down"
+
+# ui_scale moved to [accessibility] upstream (HEAD); older binaries warn and
+# ignore it, matching the old [shell] ui_scale = 0.8 behavior.
+[accessibility]
+ui_scale = 0.8
+
+[bar]
+order = [ "default" ]
+
+    [bar.default]
+    position = "top"
+    background_opacity = 0.85
+    radius = 12
+    padding = 14
+    widget_spacing = 6
+    start = [ "launcher", "clock", "cpu", "ram", "active_window", "media" ]
+    center = [ "workspaces" ]
+    end = [ "tray", "notifications", "battery", "volume", "brightness", "eq-toggle", "mic-record", "control-center" ]
+
+[widget.cpu]
+stat = "cpu_usage"
+type = "sysmon"
+
+[widget.ram]
+stat = "ram_used"
+type = "sysmon"
+
+[widget.active_window]
+type = "active_window"
+
+# Headphone EQ toggle (param_eq lives in each host's own config; the `eq` CLI
+# guard keeps this widget harmless on hosts that lack it).
+[widget.eq-toggle]
+type = "custom_button"
+glyph = "wave-sine"
+tooltip = "Toggle headphone EQ"
+
+    [widget.eq-toggle.actions]
+    left = "exec eq toggle >/dev/null 2>&1 || true"
+    right = "exec eq status 2>/dev/null | noctalia dmenu -p EQ || true"
+    middle = "exec eq status || true"
+
+# Mic recording toggle (hapalo: ~/.local/bin/mic-record-toggle; guarded so it
+# is a no-op elsewhere).
+[widget.mic-record]
+type = "custom_button"
+glyph = "microphone"
+tooltip = "Toggle mic recording"
+
+    [widget.mic-record.actions]
+    left = "exec $HOME/.local/bin/mic-record-toggle"
+
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Noctalia"
+
+[wallpaper]
+directory = "$HOME/Pictures/Wallpapers"
+directory_dark = "$HOME/Pictures/Wallpapers"
+enabled = true
+fill_mode = "crop"
+fill_color = "#000000"
+
+    [wallpaper.automation]
+    enabled = false
+    interval_seconds = 300
+    order = "random"
+
+[nightlight]
+enabled = false
+temperature_day = 6500
+temperature_night = 1000
+
+[idle]
+pre_action_fade_seconds = 5.0
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = false
+    timeout = 660.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = false
+    timeout = 600.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = false
+    timeout = 1800.0
+
+[notification]
+position = "top_right"
+background_opacity = 1.0
+
+[osd]
+position = "top_right"
+
+[lockscreen]
+enabled = true
+blur_intensity = 0.0
+
+[system.monitor]
+enabled = true
+cpu_poll_seconds = 2.0
+memory_poll_seconds = 2.0
+disk_poll_seconds = 10.0
+network_poll_seconds = 3.0

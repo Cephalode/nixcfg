@@ -10,6 +10,7 @@
     ./devices
     ./niri.nix
     ./niri
+    ./noctalia
     ./security.nix
     ./games.nix
     ./applications.nix
