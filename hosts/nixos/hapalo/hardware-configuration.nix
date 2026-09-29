@@ -24,7 +24,9 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/home/sqibo/games" =
+  # Games drive — mountpoint follows the renamed primary account (cephalode,
+  # 2026-09-24); was /home/sqibo/games.
+  fileSystems."/home/cephalode/games" =
     { device = "/dev/disk/by-uuid/b4da49af-d9fb-4382-8d7b-31ec7e612405";
       fsType = "ext4";
     };

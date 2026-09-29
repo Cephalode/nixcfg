@@ -16,12 +16,28 @@
   networking.hostName = "hapalo";
   system.stateVersion = "25.05"; # Do not change
 
+  # Primary account was renamed sqibo -> cephalode (live usermod, 2026-09-24);
+  # declared here so activation stops dropping it from /etc/passwd (2026-09-25
+  # ssh lockout after an undeclared-account switch). uid pinned to the existing
+  # 1000 (syncthing's configured user + home-dir ownership).
+  cephalode.nixosUser = "cephalode";
+  cephalode.nixosUid = 1000;
+
+  # Legacy account kept as console fallback after the rename (drop when
+  # nothing needs it); uid pinned clear of cephalode's 1000.
+  users.users.sqibo = {
+    isNormalUser = true;
+    description = "Legacy account (renamed to cephalode 2026-09-24).";
+    uid = 1001;
+    extraGroups = [ "wheel" "networkmanager" ];
+  };
+
   # Zen twilight profile — synced via syncthing (modules/common/syncthing.nix)
   cephalode.zenProfilePath = "/home/sqibo/.zen/0vkp3u7b.Default Profile";
 
   # Power button: owned by powerbtn.nix daemon (short press = sw, hold = poweroff).
   # logind must ignore the key globally — its only sources here are the ACPI buttons.
-  services.logind.powerKey = "ignore";
+  services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
     cmus
@@ -109,6 +125,24 @@
   # trace): log MCE/EDAC hardware-error precursors so a failing DIMM/CPU/PSU
   # leaves evidence before the next one.
   hardware.rasdaemon.enable = true;
+
+  # SMB server — browse hapalo's filesystem from the iPhone Files app:
+  # Files → ⋯ → "Connect to Server" → smb://hapalo (login: cephalode).
+  # homes = each user's own /home. iOS speaks SMB2/3; pinned as the floor.
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      global = {
+        "server min protocol" = "SMB2";
+      };
+      homes = {
+        browseable = "yes";
+        "read only" = "no";
+        "valid users" = "%S";
+      };
+    };
+  };
 
   hardware.customNvidia = {
     open = false;
