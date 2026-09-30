@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# yazi-cmus — yazi opener helper (nix-managed via modules/common/yazi.nix).
+#
+# cmus-remote -q alone only enqueues the file into the queue view; the player
+# stays stopped and cmus shows "library 0 tracks". This helper makes opening
+# an audio file in yazi actually PLAY it (and adds it to the library):
+#   - nothing playing -> replace the queue with this file and play it
+#   - already playing -> append this file behind the queue, don't interrupt
+#   - every file      -> also `cmus-remote -a` into the library
+#   - no daemon       -> start cmus (tmux on Linux, kitty on macOS), wait for
+#                        the remote socket (~10s budget), then queue + play
+set -u
+f=$1
+[ -f "$f" ] || exit 0
+
+if ! cmus-remote -Q >/dev/null 2>&1; then
+	case "$(uname -s)" in
+	Darwin)
+		open -na kitty --args cmus
+		;;
+	Linux)
+		tmux kill-session -t cmus 2>/dev/null
+		if ! tmux new-session -d -s cmus 'cmus' 2>/dev/null; then
+			alacritty -e cmus >/dev/null 2>&1 ||
+				kitty cmus >/dev/null 2>&1 || true
+		fi
+		;;
+	esac
+	i=0
+	while [ "$i" -lt 20 ] && ! cmus-remote -Q >/dev/null 2>&1; do
+		sleep 0.5
+		i=$((i + 1))
+	done
+fi
+cmus-remote -Q >/dev/null 2>&1 || exit 0
+
+cmus-remote -l "$f" 2>/dev/null # library: file shows up in view 1
+
+if cmus-remote -Q 2>/dev/null | grep -q '^status playing'; then
+	cmus-remote -q "$f"
+else
+	cmus-remote -c # drop stale queue entries
+	cmus-remote -q "$f"
+	cmus-remote -p # -q alone leaves the player stopped
+fi
