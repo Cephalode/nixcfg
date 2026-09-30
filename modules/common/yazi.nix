@@ -14,4 +14,10 @@
 {
   environment.etc."yazi/yazi.toml".source = ./configs/yazi/yazi.toml;
   environment.variables.YAZI_CONFIG_HOME = "/etc/yazi";
+
+  # Opener helper for audio: queue into cmus AND start playback (see
+  # configs/yazi/yazi-cmus header). Referenced by name from yazi.toml.
+  environment.systemPackages = [ (pkgs.runCommand "yazi-cmus" { } ''
+    install -Dm755 ${./configs/yazi/yazi-cmus} $out/bin/yazi-cmus
+  '') ];
 }

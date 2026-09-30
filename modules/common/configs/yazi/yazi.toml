@@ -1,13 +1,13 @@
 # Yazi file opener config (nix-managed via modules/common/yazi.nix — do not
-# edit in ~/.config). Audio files are queued into cmus via cmus-remote; if no
-# cmus daemon is running yet, one is started in a terminal window first, and
-# the queue command retries until the daemon's socket is up (~10s budget).
-# Everything else keeps yazi's default openers (prepend keeps our rule first).
+# edit in ~/.config). Audio files are handed to the yazi-cmus helper, which
+# queues the file into cmus AND starts playback (auto-starting the cmus
+# daemon in a terminal first if none is running). A bare `cmus-remote -q`
+# only enqueues and leaves the player stopped. Everything else keeps yazi's
+# default openers (prepend keeps our rule first).
 
 [opener]
 cmus = [
-	{ run = 'i=0; while [ $i -lt 20 ]; do cmus-remote -q %s && exit 0; [ $i -eq 0 ] && open -na kitty --args cmus; sleep 0.5; i=$((i+1)); done', orphan = true, for = "macos", desc = "Queue in cmus" },
-	{ run = 'i=0; while [ $i -lt 20 ]; do cmus-remote -q %s && exit 0; [ $i -eq 0 ] && alacritty -e cmus; sleep 0.5; i=$((i+1)); done', orphan = true, for = "linux", desc = "Queue in cmus" },
+	{ run = 'yazi-cmus "%s"', orphan = true, desc = "Play in cmus" },
 ]
 
 [open]
