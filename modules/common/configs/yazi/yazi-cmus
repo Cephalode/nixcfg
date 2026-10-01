@@ -7,7 +7,9 @@
 #   - nothing playing -> replace the queue with this file and play it
 #   - already playing -> append this file behind the queue, don't interrupt
 #   - every file      -> also `cmus-remote -a` into the library
-#   - no daemon       -> start cmus (tmux on Linux, kitty on macOS), wait for
+#   - no daemon       -> open a terminal window running cmus in tmux
+#                        (kitty on macOS, alacritty on Linux; tmux new -A
+#                        attaches if the session already exists), wait for
 #                        the remote socket (~10s budget), then queue + play
 set -u
 f=$1
@@ -16,14 +18,13 @@ f=$1
 if ! cmus-remote -Q >/dev/null 2>&1; then
 	case "$(uname -s)" in
 	Darwin)
-		open -na kitty --args cmus
+		open -na kitty --args tmux new-session -A -s cmus cmus
 		;;
 	Linux)
 		tmux kill-session -t cmus 2>/dev/null
-		if ! tmux new-session -d -s cmus 'cmus' 2>/dev/null; then
-			alacritty -e cmus >/dev/null 2>&1 ||
-				kitty cmus >/dev/null 2>&1 || true
-		fi
+		WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-1} \
+			XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)} \
+			alacritty -e tmux new-session -A -s cmus cmus >/dev/null 2>&1 &
 		;;
 	esac
 	i=0
