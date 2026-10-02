@@ -14,6 +14,9 @@
   ];
 
   networking.hostName = "hapalo";
+
+  # rtkit: grants RT thread priority to apps that ask (Zrythm RT-scheduling warning)
+  security.rtkit.enable = true;
   system.stateVersion = "25.05"; # Do not change
 
   # Primary account was renamed sqibo -> cephalode (live usermod, 2026-09-24);
