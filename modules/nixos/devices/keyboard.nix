@@ -68,6 +68,15 @@ in
         "input"
         "uinput"
       ];
+      # A USB device glitching on a shared hub (e.g. an audio interface
+      # re-enumerating with error -71) can make the grabbed evdev device
+      # vanish mid-read: kanata exits with "failed read: No such device"
+      # and, with the default Restart=no, stays dead forever — it never
+      # rescans /dev/input, so keys pass through unremapped. Restart on
+      # failure; the startup rescan picks the keyboard back up once the
+      # device node re-appears.
+      Restart = "on-failure";
+      RestartSec = "2";
     };
 
     services.kanata = {
