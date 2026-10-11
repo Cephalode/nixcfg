@@ -189,6 +189,13 @@ binds {
     Ctrl+Shift+S { screenshot; }
     Alt+Print { screenshot-window; }
 
+    // Clipboard history — physical Cmd+Shift+V after the kanata Ctrl<->Super
+    // swap (matches the macOS paste-from-history chord). Lists recorded
+    // selections in fuzzel; the pick is re-copied to the clipboard, then
+    // paste as usual. Requires the cliphist user service (records history
+    // while logged in). Fuzzel closes on Esc — no clipboard is touched.
+    Ctrl+Shift+V hotkey-overlay-title="Clipboard History: cliphist" { spawn-sh "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
     // Screen recording — mirrors the Game Bar record chord (Win+Alt+R): after
     // the kanata Ctrl<->Super swap this lands on OS Ctrl+Alt+R (press physical
     // Super+Alt+R). Ctrl+Shift+R stays free for browser hard-reload. wf-recorder

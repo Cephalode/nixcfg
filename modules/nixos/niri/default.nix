@@ -19,5 +19,22 @@ in
     systemd.user.services.niri = lib.mkIf config.programs.niri.enable {
       serviceConfig.ExecStart = lib.mkForce [ "" "${niriWrapped}/bin/niri --session" ];
     };
+
+    # Clipboard history daemon — records wl-clipboard selections so the
+    # cliphist+fuzzel picker (niri Ctrl+Shift+V = physical Cmd+Shift+V after
+    # the kanata Ctrl<->Super swap) has history to list. Dies with the
+    # graphical session (partOf), restarts on crash. History lives in
+    # ~/.cache/cliphist, capped by cliphist's own max-items default.
+    systemd.user.services.cliphist = {
+      description = "cliphist: Wayland clipboard history daemon";
+      wantedBy = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.cliphist}/bin/cliphist watch";
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+    };
   };
 }
