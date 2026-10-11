@@ -138,6 +138,7 @@ Set per host via `cephalode.keyboard.altLayout = true;`.
 - No modifier swap conflicts — Ctrl and Super are remapped cleanly
 - niri keybinds using `Mod` (Super) are naturally triggered by physical Ctrl key
 - Requires uinput kernel module and udev rules
+- Clipboard history: niri `Ctrl+Shift+V` (= physical Cmd+Shift+V after the swap) opens the cliphist+fuzzel picker; history is recorded by the `cliphist.service` user unit (`wl-paste --watch cliphist store` — cliphist 0.7.0 dropped its own `watch` subcommand)
 
 ### Windows
 - Deploys to `C:\Users\Sqibo\kanata\` on lunalata (binaries from kanata v1.12.0 release zip)
