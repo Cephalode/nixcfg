@@ -25,13 +25,15 @@ in
     # the kanata Ctrl<->Super swap) has history to list. Dies with the
     # graphical session (partOf), restarts on crash. History lives in
     # ~/.cache/cliphist, capped by cliphist's own max-items default.
+    # NOTE: cliphist 0.7.0 REMOVED its `watch` subcommand — the storage side
+    # is a wl-paste --watch pipeline now.
     systemd.user.services.cliphist = {
       description = "cliphist: Wayland clipboard history daemon";
       wantedBy = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.cliphist}/bin/cliphist watch";
+        ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
         Restart = "on-failure";
         RestartSec = 5;
       };
