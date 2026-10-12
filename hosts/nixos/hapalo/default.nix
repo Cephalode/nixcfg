@@ -11,7 +11,15 @@
     ./hardware-configuration.nix
     ../.
     ./powerbtn.nix
+    inputs.openwhispr.nixosModules.default
   ];
+
+  # Voice-to-text dictation (OpenWhispr). Upstream module also wires
+  # ydotoold + uinput for Wayland auto-paste under niri.
+  programs.openwhispr = {
+    enable = true;
+    users = [ "cephalode" ];
+  };
 
   networking.hostName = "hapalo";
 
