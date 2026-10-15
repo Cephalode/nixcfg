@@ -137,7 +137,6 @@ window-rule {
 // Games Workspace
 window-rule {
   match app-id="^steam"
-  match app-id="^discord$"
   open-on-workspace "game"
 }
 window-rule {
