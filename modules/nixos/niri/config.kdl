@@ -150,6 +150,8 @@ window-rule {
   geometry-corner-radius 10
   clip-to-geometry true
   draw-border-with-background false
+  // Floating windows anchor top-right instead of center
+  default-floating-position x=0 y=0 relative-to="top-right"
 }
 
 // Notifications
