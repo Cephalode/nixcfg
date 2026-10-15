@@ -87,14 +87,12 @@
       "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
     };
     # programs.niri generates niri-portals.conf (default=gnome;gtk) which BEATS
-    # portals.conf under XDG_CURRENT_DESKTOP=niri — every interface we care about
-    # must be routed in config.niri too, or it silently falls to gnome (no
-    # Mutter under niri → ScreenCast session dies instantly = broken screen share).
-    config.niri = {
-      "org.freedesktop.impl.portal.ScreenCast" = [ "niri" ];
-      "org.freedesktop.impl.portal.Screenshot" = [ "niri" ];
-      "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
-    };
+    # portals.conf under XDG_CURRENT_DESKTOP=niri. ScreenCast/Screenshot MUST
+    # stay on gnome here: niri ships no portal backend — it implements
+    # org.gnome.Mutter.ScreenCast on the bus and xdg-desktop-portal-gnome is its
+    # intended consumer (niri wiki screen-sharing path). Only FileChooser needs
+    # an override (gnome would route it to nautilus instead of termfilechooser).
+    config.niri."org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
   };
 
   # termfilechooser reads config only from $XDG_CONFIG_HOME (SYSCONFDIR is a store path)
