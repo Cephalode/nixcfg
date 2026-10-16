@@ -34,6 +34,12 @@
   ];
 
   config = {
+  # New nixpkgs zrythm wrapper hard-fails (XDG_DATA_DIRS #error in fixupPhase);
+  # pull from the pinned stable input until upstream fixes it.
+  nixpkgs.overlays = [
+    (final: prev: { zrythm = inputs.nixpkgs-stable.legacyPackages.${prev.system}.zrythm; })
+  ];
+
   programs = {
     zsh.enable = true;
   };
