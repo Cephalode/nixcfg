@@ -294,6 +294,26 @@
         "type": "github"
       }
     },
+    "omdrop-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791914857,
+        "narHash": "sha256-sn0lcMzUGTJExHIxZ2RbhkNNSLst9xNQERJPxoXHBII=",
+        "owner": "g4bri3lDev",
+        "repo": "omdrop-nix",
+        "rev": "070ae839134f2f284d8547d19d2d7356a7f5a427",
+        "type": "github"
+      },
+      "original": {
+        "owner": "g4bri3lDev",
+        "repo": "omdrop-nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "bedrock-on-linux": "bedrock-on-linux",
@@ -307,6 +327,7 @@
         "nixpkgs-fresh": "nixpkgs-fresh",
         "nixpkgs-stable": "nixpkgs-stable",
         "noctalia": "noctalia",
+        "omdrop-nix": "omdrop-nix",
         "wrappers": "wrappers",
         "zen-browser": "zen-browser",
         "zen-spaces": "zen-spaces"
