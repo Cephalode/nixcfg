@@ -12,6 +12,8 @@
     # Fallback: pin to stable here so if unstable breaks a package,
     # we can quickly add an overlay pulling from stable.
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    # Fresh unstable for bleeding-edge packages the pinned rev lags on (t3code etc.)
+    nixpkgs-fresh.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +46,10 @@
     };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    omdrop-nix = {
+      url = "github:g4bri3lDev/omdrop-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wrappers = {

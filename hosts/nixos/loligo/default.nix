@@ -10,9 +10,14 @@
   imports = [
     ./hardware-configuration.nix
     ../.
+    inputs.omdrop-nix.nixosModules.default
   ];
 
   networking.hostName = "loligo";
+
+  # AirDrop (omdrop): OWL radio backend + omdrop CLI/receiver. Intel iwlwifi
+  # means exclusive mode — Wi-Fi drops while the machine is visible.
+  programs.omdrop.enable = true;
 
   # Fingerprint unlock: login (greetd substacks it), noctalia's lock screen
   # (authenticates against "login" but drives the reader itself over D-Bus),

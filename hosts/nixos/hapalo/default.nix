@@ -11,9 +11,17 @@
     ./hardware-configuration.nix
     ../.
     ./powerbtn.nix
+    inputs.omdrop-nix.nixosModules.default
   ];
 
   networking.hostName = "hapalo";
+
+  # AirDrop (omdrop): OWL radio backend + omdrop CLI/receiver. Intel iwlwifi
+  # means exclusive mode — Wi-Fi drops while the machine is visible.
+  programs.omdrop.enable = true;
+
+  # Run prebuilt dynamically-linked binaries (opencode)
+  programs.nix-ld.enable = true;
   system.stateVersion = "25.05"; # Do not change
 
   # Primary account was renamed sqibo -> cephalode (live usermod, 2026-09-24);
@@ -212,9 +220,33 @@
             "playback.props" = {
               "node.name" = "effect_output.dt900_eq";
               "node.passive" = true;
+              # ponytail: pin to GA102 HDMI — unpinned, WirePlumber auto-connects
+              # and re-latches the fifine SC3 after replug/profile churn.
+              "node.target" = "alsa_output.pci-0000_08_00.1.hdmi-stereo";
             };
           };
         }
       ];
     };
+
+  # 2026-10-14: WirePlumber's stored profile for the SC3 drifted to input-only,
+  # dropping the analog output sink entirely -> DT 900s went silent. Pin the
+  # profile every time the device appears. Input must be ANALOG — iec958 is the
+  # S/PDIF port, always silent (peak 0) and it ate the mic until 2026-10-15.
+  services.pipewire.wireplumber.extraConfig."51-dt900-sc3" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          { "device.name" = "alsa_card.usb-MV-SILICON_fifine_SC3_20190808-00"; }
+        ];
+        actions."update-props" = {
+          # ponytail: 2026-10-15 Cephalode confirmed SC3 is mic-only — pin
+          # input-only so its phantom output sink can never re-latch the
+          # EQ chain (the silence bug). Analog input stays mandatory: iec958
+          # is the dead S/PDIF port.
+          "device.profile" = "input:analog-stereo";
+        };
+      }
+    ];
+  };
 }
