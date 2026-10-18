@@ -19,6 +19,14 @@
   # means exclusive mode — Wi-Fi drops while the machine is visible.
   programs.omdrop.enable = true;
 
+  # Upstream ships this in its own module: udev must not give awdl0 a MAC of
+  # its own, or the phone is sent a link-local awdl0 doesn't have and never
+  # connects. g4bri3lDev's module omits it.
+  systemd.network.links."10-omdrop-owl-awdl0" = {
+    matchConfig.OriginalName = "awdl0";
+    linkConfig.MACAddressPolicy = "none";
+  };
+
   # Fingerprint unlock: login (greetd substacks it), noctalia's lock screen
   # (authenticates against "login" but drives the reader itself over D-Bus),
   # and sudo/polkit all route through this. Enroll with fprintd-enroll.

@@ -20,6 +20,14 @@
   # means exclusive mode — Wi-Fi drops while the machine is visible.
   programs.omdrop.enable = true;
 
+  # Upstream ships this in its own module: udev must not give awdl0 a MAC of
+  # its own, or the phone is sent a link-local awdl0 doesn't have and never
+  # connects. g4bri3lDev's module omits it.
+  systemd.network.links."10-omdrop-owl-awdl0" = {
+    matchConfig.OriginalName = "awdl0";
+    linkConfig.MACAddressPolicy = "none";
+  };
+
   # Run prebuilt dynamically-linked binaries (opencode)
   programs.nix-ld.enable = true;
   system.stateVersion = "25.05"; # Do not change
