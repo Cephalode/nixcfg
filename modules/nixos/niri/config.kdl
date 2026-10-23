@@ -156,6 +156,8 @@ window-rule {
     geometry-corner-radius 0
     clip-to-geometry true
     draw-border-with-background false
+    border { off; }
+    focus-ring { off; }
 }
 
 // Rounded corners for all windows
