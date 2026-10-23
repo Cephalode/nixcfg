@@ -140,8 +140,22 @@ window-rule {
   open-on-workspace "game"
 }
 window-rule {
-  match app-id="^steam-"
-  open-fullscreen true
+  match app-id="^steam[_-]"
+  match title="^masterduel$"
+  open-on-workspace "game"
+  open-floating false
+  open-fullscreen false
+}
+
+// Browser video mode: 16:9 borderless. Active when the Hyper+Shift+W
+// "video mode" bind sizes the browser to 2048 logical px (= 2560 device px
+// at scale 1.25, the exact 16:9 width of this 3440x1440 panel). Radius off
+// so corners stay square, like true fullscreen.
+window-rule {
+    match app-id="^zen-twilight$"
+    geometry-corner-radius 0
+    clip-to-geometry true
+    draw-border-with-background false
 }
 
 // Rounded corners for all windows
@@ -189,6 +203,22 @@ binds {
     // swap) — matches the Windows/macOS screenshot muscle memory.
     Ctrl+Shift+S { screenshot; }
     Alt+Print { screenshot-window; }
+
+    // Clipboard history — physical Cmd+Shift+V after the kanata Ctrl<->Super
+    // swap (matches the macOS paste-from-history chord). Lists recorded
+    // selections in fuzzel; the pick is re-copied to the clipboard, then
+    // paste as usual. Requires the cliphist user service (records history
+    // while logged in). Fuzzel closes on Esc — no clipboard is touched.
+    Ctrl+Shift+V hotkey-overlay-title="Clipboard History: cliphist" { spawn-sh "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
+    // Screen recording — mirrors the Game Bar record chord (Win+Alt+R): after
+    // the kanata Ctrl<->Super swap this lands on OS Ctrl+Alt+R (press physical
+    // Super+Alt+R). Ctrl+Shift+R stays free for browser hard-reload. wf-recorder
+    // selects a region with slurp and writes ~/Videos/rec-<timestamp>.mp4;
+    // pressing the key again sends SIGINT (clean finalize) instead of a second
+    // recording. libx264 explicitly: hapalo has no usable VAAPI/NVENC path
+    // (verified live); software encoding works everywhere.
+    Ctrl+Alt+R { spawn-sh "if pkill -INT -x wf-recorder 2>/dev/null; then :; else mkdir -p \"$HOME/Videos\"; wf-recorder -c libx264 -g \"$(slurp)\" -f \"$HOME/Videos/rec-$(date +%Y%m%d-%H%M%S).mp4\"; fi"; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
@@ -291,6 +321,13 @@ binds {
     Ctrl+Alt+Super+Shift+9 { move-column-to-workspace 9; }
 
     Ctrl+Alt+Super+Shift+F { fullscreen-window; }
+    // Video mode: size the browser to 16:9 (2048 logical px = 2560 device
+    // px at scale 1.25) and center it, so tiling siblings on the sides stay
+    // visible on this ultrawide. niri has no is-fullscreen matcher, so this
+    // is a manual "fake fullscreen" — pair with the borderless zen rule.
+    // niri 26.04 allows one action per bind, hence the two-step chord.
+    Ctrl+Alt+Super+Shift+W repeat=false { set-column-width "2048"; }
+    Ctrl+Alt+Super+Shift+B repeat=false { center-column; }
     Ctrl+Alt+Super+Shift+C { center-visible-columns; }
     Ctrl+Alt+Super+Shift+V { switch-focus-between-floating-and-tiling; }
     Ctrl+Alt+Super+Shift+R { switch-preset-window-height; }
