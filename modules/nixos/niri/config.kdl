@@ -325,8 +325,11 @@ binds {
     // px at scale 1.25) and center it, so tiling siblings on the sides stay
     // visible on this ultrawide. niri has no is-fullscreen matcher, so this
     // is a manual "fake fullscreen" — pair with the borderless zen rule.
-    // niri 26.04 allows one action per bind, hence the two-step chord.
-    Ctrl+Alt+Super+Shift+W repeat=false { set-column-width "2048"; }
+    // Runs the niri-video-mode script: resizes the focused browser to the
+    // 16:9 width (2048 logical = 2560 device px) and centers it. No-op when
+    // a non-browser window is focused. If the browser is true-fullscreen,
+    // it toggles that off first — so this also recovers from F11.
+    Ctrl+Alt+Super+Shift+W repeat=false { spawn "niri-video-mode"; }
     Ctrl+Alt+Super+Shift+B repeat=false { center-column; }
     Ctrl+Alt+Super+Shift+C { center-visible-columns; }
     Ctrl+Alt+Super+Shift+V { switch-focus-between-floating-and-tiling; }

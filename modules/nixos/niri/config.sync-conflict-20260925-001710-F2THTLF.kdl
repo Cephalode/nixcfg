@@ -1,0 +1,325 @@
+spawn-at-startup "noctalia"
+
+input {
+    keyboard {
+        xkb {
+        }
+        numlock
+    }
+
+    touchpad {
+        tap
+        // dwt
+        // dwtp
+        // drag false
+        // drag-lock
+        natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "two-finger"
+        // disabled-on-external-mouse
+    }
+
+    mouse {
+        // off
+        natural-scroll
+        // accel-speed 0.2
+        accel-profile "flat"
+        // scroll-method "no-scroll"
+    }
+    warp-mouse-to-focus
+
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+// by running `niri msg outputs` while inside a niri instance.
+// Laptop screen
+output "eDP-1" {
+    mode "1920x1080@60"
+    scale 1.25
+    transform "normal"
+    position x=0 y=0
+}
+
+// hapalo: UGREEN monitor on HDMI-A-1. Scale must match DP-1 (1.25):
+// mixed output scales break the Steam client's window math — it opens a
+// 35815px-wide window, GL texture alloc fails in niri, Xwayland BadAllocs,
+// xwayland-satellite panics, and every X11 app (Steam, Discord) crashes.
+output "HDMI-A-1" {
+    scale 1.25
+}
+
+// Main pc monitor
+output "DP-1" {
+    mode "3440x1440@164.999"
+    scale 1.25
+    transform "normal"
+    position x=0 y=0
+}
+
+layout {
+    gaps 10
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.38196601125 // (1-1/phi)
+        proportion 0.5
+        proportion 0.61803398875 // (1/phi)
+    }
+
+    preset-window-heights {
+        proportion 0.38196601125 // (1-1/phi)
+        proportion 0.5
+        proportion 0.61803398875 // (1/phi)
+    }
+
+    default-column-width { proportion 0.38196601125; }
+
+    focus-ring {
+        off
+    }
+
+    border {
+        width 4
+        active-color   "#7ed0ff"
+        inactive-color "#111416"
+        urgent-color   "#ffb4ab"
+    }
+
+    shadow {
+        on
+        //draw-behind-window true
+
+        softness 20
+        spread 10
+        offset x=4 y=5
+        color "#00000070"
+    }
+
+    tab-indicator {
+        active-color   "#7ed0ff"
+        inactive-color "#004c6a"
+        urgent-color   "#ffb4ab"
+    }
+
+    insert-hint {
+        color "#7ed0ff80"
+    }
+
+}
+
+hotkey-overlay {
+    skip-at-startup // Skip the hotkey help
+}
+
+prefer-no-csd // Remove app-created decorations
+
+screenshot-path null
+
+animations {
+    // off
+    slowdown 0.5 // Speed scale
+}
+
+// Browser floating PiP
+window-rule {
+    match title="^Picture-in-Picture$"
+    // match title="^moz-extension" // Currently does not work
+    open-floating true
+}
+
+// Games Workspace
+window-rule {
+  match app-id="^steam"
+  match app-id="^discord$"
+  open-on-workspace "game"
+}
+window-rule {
+  match app-id="^steam-"
+  open-fullscreen true
+}
+
+// Rounded corners for all windows
+window-rule {
+  match app-id=".*"
+  geometry-corner-radius 10
+  clip-to-geometry true
+  draw-border-with-background false
+}
+
+// Notifications
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
+// Add backdrop instead of boring grey
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
+}
+
+binds {
+    // ── Apps & System (Mod = Super) ────────────────────────────
+
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    Ctrl+Super+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Ctrl+Space hotkey-overlay-title="Run an Application: Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: Noctalia Lock" { spawn-sh "noctalia msg session lock"; }
+    Ctrl+Super+B hotkey-overlay-title="Open a Browser: Zen" { spawn "zen-twilight"; }
+    Ctrl+Super+D hotkey-overlay-title="Open Discord" { spawn "discord"; }
+
+    // Function key mods
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+
+    Mod+Shift+S { screenshot; }
+    Alt+Print { screenshot-window; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; }
+
+    // Powers off the monitors. To turn them back on, do any input like
+    // moving the mouse or pressing any other key.
+    Mod+Shift+P { power-off-monitors; }
+
+    // ── Window Manager: Meh (Ctrl+Alt+Super) — focus & view ────
+
+    Ctrl+Alt+Super+O repeat=false { toggle-overview; }
+    Ctrl+Super+Q repeat=false { close-window; }
+
+    Ctrl+Alt+Super+Left  { focus-column-left; }
+    Ctrl+Alt+Super+Down  { focus-window-down; }
+    Ctrl+Alt+Super+Up    { focus-window-up; }
+    Ctrl+Alt+Super+Right { focus-column-right; }
+    Ctrl+Alt+Super+H     { focus-column-left; }
+    Ctrl+Alt+Super+J     { focus-window-down; }
+    Ctrl+Alt+Super+K     { focus-window-up; }
+    Ctrl+Alt+Super+L     { focus-column-right; }
+
+    Ctrl+Alt+Super+Home { focus-column-first; }
+    Ctrl+Alt+Super+End  { focus-column-last; }
+
+    Ctrl+Alt+Super+Page_Down { focus-workspace-down; }
+    Ctrl+Alt+Super+Page_Up   { focus-workspace-up; }
+    Ctrl+Alt+Super+U         { focus-workspace-down; }
+    Ctrl+Alt+Super+I         { focus-workspace-up; }
+
+    Ctrl+Alt+Super+1 { focus-workspace 1; }
+    Ctrl+Alt+Super+2 { focus-workspace 2; }
+    Ctrl+Alt+Super+3 { focus-workspace 3; }
+    Ctrl+Alt+Super+4 { focus-workspace 4; }
+    Ctrl+Alt+Super+5 { focus-workspace 5; }
+    Ctrl+Alt+Super+6 { focus-workspace 6; }
+    Ctrl+Alt+Super+7 { focus-workspace 7; }
+    Ctrl+Alt+Super+8 { focus-workspace 8; }
+    Ctrl+Alt+Super+9 { focus-workspace 9; }
+
+    Ctrl+Alt+Super+BracketLeft  { consume-or-expel-window-left; }
+    Ctrl+Alt+Super+BracketRight { consume-or-expel-window-right; }
+
+    Ctrl+Alt+Super+Comma  { consume-window-into-column; }
+    Ctrl+Alt+Super+Period { expel-window-from-column; }
+
+    Ctrl+Alt+Super+R { switch-preset-column-width; }
+    Ctrl+Alt+Super+F { maximize-column; }
+    Ctrl+Alt+Super+C { center-column; }
+
+    Ctrl+Alt+Super+Minus { set-column-width "-10%"; }
+    Ctrl+Alt+Super+Equal { set-column-width "+10%"; }
+
+    Ctrl+Alt+Super+V { toggle-window-floating; }
+    Ctrl+Alt+Super+W { toggle-column-tabbed-display; }
+    Ctrl+Alt+Super+Slash { toggle-column-tabbed-display; }  // layout cycle, parity w/ aerospace Meh+/
+
+    // Mouse wheel (Meh = navigate)
+    Ctrl+Alt+Super+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Ctrl+Alt+Super+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Ctrl+Alt+Super+WheelScrollRight                     { focus-column-right; }
+    Ctrl+Alt+Super+WheelScrollLeft                      { focus-column-left; }
+
+    // ── Window Manager: Hyper (Ctrl+Alt+Super+Shift) — move & manipulate ──
+
+    Ctrl+Alt+Super+Shift+Left  { move-column-left; }
+    Ctrl+Alt+Super+Shift+Down  { move-window-down; }
+    Ctrl+Alt+Super+Shift+Up    { move-window-up; }
+    Ctrl+Alt+Super+Shift+Right { move-column-right; }
+    Ctrl+Alt+Super+Shift+H     { move-column-left; }
+    Ctrl+Alt+Super+Shift+J     { move-window-down; }
+    Ctrl+Alt+Super+Shift+K     { move-window-up; }
+    Ctrl+Alt+Super+Shift+L     { move-column-right; }
+
+    Ctrl+Alt+Super+Shift+Home { move-column-to-first; }
+    Ctrl+Alt+Super+Shift+End  { move-column-to-last; }
+
+    Ctrl+Alt+Super+Shift+Page_Down { move-column-to-workspace-down; }
+    Ctrl+Alt+Super+Shift+Page_Up   { move-column-to-workspace-up; }
+    Ctrl+Alt+Super+Shift+U         { move-column-to-workspace-down; }
+    Ctrl+Alt+Super+Shift+I         { move-column-to-workspace-up; }
+
+    Ctrl+Alt+Super+Shift+1 { move-column-to-workspace 1; }
+    Ctrl+Alt+Super+Shift+2 { move-column-to-workspace 2; }
+    Ctrl+Alt+Super+Shift+3 { move-column-to-workspace 3; }
+    Ctrl+Alt+Super+Shift+4 { move-column-to-workspace 4; }
+    Ctrl+Alt+Super+Shift+5 { move-column-to-workspace 5; }
+    Ctrl+Alt+Super+Shift+6 { move-column-to-workspace 6; }
+    Ctrl+Alt+Super+Shift+7 { move-column-to-workspace 7; }
+    Ctrl+Alt+Super+Shift+8 { move-column-to-workspace 8; }
+    Ctrl+Alt+Super+Shift+9 { move-column-to-workspace 9; }
+
+    Ctrl+Alt+Super+Shift+F { fullscreen-window; }
+    Ctrl+Alt+Super+Shift+C { center-visible-columns; }
+    Ctrl+Alt+Super+Shift+V { switch-focus-between-floating-and-tiling; }
+    Ctrl+Alt+Super+Shift+R { switch-preset-window-height; }
+
+    Ctrl+Alt+Super+Shift+Minus { set-window-height "-10%"; }
+    Ctrl+Alt+Super+Shift+Equal { set-window-height "+10%"; }
+
+    // Mouse wheel (Hyper = move)
+    Ctrl+Alt+Super+Shift+WheelScrollDown      cooldown-ms=150 { move-column-to-workspace-down; }
+    Ctrl+Alt+Super+Shift+WheelScrollUp        cooldown-ms=150 { move-column-to-workspace-up; }
+    Ctrl+Alt+Super+Shift+WheelScrollRight                      { move-column-right; }
+    Ctrl+Alt+Super+Shift+WheelScrollLeft                       { move-column-left; }
+
+    // ── Monitors (Mod+Shift / Mod+Ctrl+Shift) ──────────────────
+
+    Mod+Shift+Left  { focus-monitor-left; }
+    Mod+Shift+Down  { focus-monitor-down; }
+    Mod+Shift+Up    { focus-monitor-up; }
+    Mod+Shift+Right { focus-monitor-right; }
+    Mod+Shift+H     { focus-monitor-left; }
+    Mod+Shift+J     { focus-monitor-down; }
+    Mod+Shift+K     { focus-monitor-up; }
+    Mod+Shift+L     { focus-monitor-right; }
+
+    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+
+    // ── Workspace reorder (Mod+Shift) ──────────────────────────
+
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+    Mod+Shift+U         { move-workspace-down; }
+    Mod+Shift+I         { move-workspace-up; }
+}
+
+recent-windows {
+    highlight {
+        active-color "#7ed0ff"
+        urgent-color "#ffb4ab"
+    }
+}
