@@ -5,13 +5,13 @@
 # self-distributes to loligo/hapalo via the zen profile sync.
 {
   launchd.user.agents.zen-omni-relay = {
-    command = "/run/current-system/sw/bin/python3 /Users/sqibo/devel/zen-omni-sync/relay.py";
+    command = "/run/current-system/sw/bin/python3 /Users/cephalode/dev/zen-omni-sync/relay.py";
     serviceConfig = {
       KeepAlive = true;
       RunAtLoad = true;
       ThrottleInterval = 10;
-      StandardOutPath = "/Users/sqibo/devel/zen-omni-sync/relay-launchd.log";
-      StandardErrorPath = "/Users/sqibo/devel/zen-omni-sync/relay-launchd.log";
+      StandardOutPath = "/Users/cephalode/dev/zen-omni-sync/relay-launchd.log";
+      StandardErrorPath = "/Users/cephalode/dev/zen-omni-sync/relay-launchd.log";
     };
   };
 }

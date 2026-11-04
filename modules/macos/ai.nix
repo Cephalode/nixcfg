@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    codex
     pi-coding-agent
   ];
   homebrew.brews = [

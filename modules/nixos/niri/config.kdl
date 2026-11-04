@@ -3,6 +3,12 @@ spawn-at-startup "noctalia"
 input {
     keyboard {
         xkb {
+            // Caps Lock cannot latch, period: kanata owns the physical key on
+            // internal keyboards, but external keyboards and kanata's
+            // crash-restart gap pass raw caps through — this makes even those
+            // inert at the XKB layer. To clear a latch that's already set:
+            //   ssh <host> 'WAYLAND_DISPLAY=wayland-1 XDG_RUNTIME_DIR=/run/user/1000 wtype -m capslock'
+            options "caps:none"
         }
         numlock
     }
@@ -134,6 +140,12 @@ window-rule {
     open-floating true
 }
 
+// Discord opens 800px wide
+window-rule {
+    match app-id="^discord$"
+    open-width 800
+}
+
 // Games Workspace
 window-rule {
   match app-id="^steam"
@@ -189,6 +201,22 @@ binds {
     // swap) — matches the Windows/macOS screenshot muscle memory.
     Ctrl+Shift+S { screenshot; }
     Alt+Print { screenshot-window; }
+
+    // Clipboard history — physical Cmd+Shift+V after the kanata Ctrl<->Super
+    // swap (matches the macOS paste-from-history chord). Lists recorded
+    // selections in fuzzel; the pick is re-copied to the clipboard, then
+    // paste as usual. Requires the cliphist user service (records history
+    // while logged in). Fuzzel closes on Esc — no clipboard is touched.
+    Ctrl+Shift+V hotkey-overlay-title="Clipboard History: cliphist" { spawn-sh "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
+    // Screen recording — mirrors the Game Bar record chord (Win+Alt+R): after
+    // the kanata Ctrl<->Super swap this lands on OS Ctrl+Alt+R (press physical
+    // Super+Alt+R). Ctrl+Shift+R stays free for browser hard-reload. wf-recorder
+    // selects a region with slurp and writes ~/Videos/rec-<timestamp>.mp4;
+    // pressing the key again sends SIGINT (clean finalize) instead of a second
+    // recording. libx264 explicitly: hapalo has no usable VAAPI/NVENC path
+    // (verified live); software encoding works everywhere.
+    Ctrl+Alt+R { spawn-sh "if pkill -INT -x wf-recorder 2>/dev/null; then :; else mkdir -p \"$HOME/Videos\"; wf-recorder -c libx264 -g \"$(slurp)\" -f \"$HOME/Videos/rec-$(date +%Y%m%d-%H%M%S).mp4\"; fi"; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 

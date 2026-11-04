@@ -11,17 +11,49 @@
     ./hardware-configuration.nix
     ../.
     ./powerbtn.nix
+    inputs.omdrop-nix.nixosModules.default
   ];
 
   networking.hostName = "hapalo";
+
+  # AirDrop (omdrop): OWL radio backend + omdrop CLI/receiver. Intel iwlwifi
+  # means exclusive mode — Wi-Fi drops while the machine is visible.
+  programs.omdrop.enable = true;
+
+  # Upstream ships this in its own module: udev must not give awdl0 a MAC of
+  # its own, or the phone is sent a link-local awdl0 doesn't have and never
+  # connects. g4bri3lDev's module omits it.
+  systemd.network.links."10-omdrop-owl-awdl0" = {
+    matchConfig.OriginalName = "awdl0";
+    linkConfig.MACAddressPolicy = "none";
+  };
+
+  # Run prebuilt dynamically-linked binaries (opencode)
+  programs.nix-ld.enable = true;
   system.stateVersion = "25.05"; # Do not change
+
+  # Primary account was renamed sqibo -> cephalode (live usermod, 2026-09-24);
+  # declared here so activation stops dropping it from /etc/passwd (2026-09-25
+  # ssh lockout after an undeclared-account switch). uid pinned to the existing
+  # 1000 (syncthing's configured user + home-dir ownership).
+  cephalode.nixosUser = "cephalode";
+  cephalode.nixosUid = 1000;
+
+  # Legacy account kept as console fallback after the rename (drop when
+  # nothing needs it); uid pinned clear of cephalode's 1000.
+  users.users.sqibo = {
+    isNormalUser = true;
+    description = "Legacy account (renamed to cephalode 2026-09-24).";
+    uid = 1001;
+    extraGroups = [ "wheel" "networkmanager" ];
+  };
 
   # Zen twilight profile — synced via syncthing (modules/common/syncthing.nix)
   cephalode.zenProfilePath = "/home/sqibo/.zen/0vkp3u7b.Default Profile";
 
   # Power button: owned by powerbtn.nix daemon (short press = sw, hold = poweroff).
   # logind must ignore the key globally — its only sources here are the ACPI buttons.
-  services.logind.powerKey = "ignore";
+  services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
     cmus
@@ -110,6 +142,40 @@
   # leaves evidence before the next one.
   hardware.rasdaemon.enable = true;
 
+  # RTX 3080 millisecond transient spikes trip the PSU's over-current
+  # protection (instant power-off with zero kernel trace — 2026-09-18 and
+  # 2026-09-26 crashes right at game launch; standby LED latches on until
+  # AC is pulled). Clamp the board limit: spikes scale with it, ~3-5% perf
+  # cost. nvidia-smi has no nixpkgs option; boot-time oneshot is enough —
+  # the limit persists until the next reboot.
+  systemd.services.nvidia-power-limit = {
+    description = "Clamp GPU power limit to 325W (PSU OCP mitigation)";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-modules-load.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "/run/current-system/sw/bin/nvidia-smi -pl 325";
+    };
+  };
+
+  # SMB server — browse hapalo's filesystem from the iPhone Files app:
+  # Files → ⋯ → "Connect to Server" → smb://hapalo (login: cephalode).
+  # homes = each user's own /home. iOS speaks SMB2/3; pinned as the floor.
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      global = {
+        "server min protocol" = "SMB2";
+      };
+      homes = {
+        browseable = "yes";
+        "read only" = "no";
+        "valid users" = "%S";
+      };
+    };
+  };
+
   hardware.customNvidia = {
     open = false;
   };
@@ -162,9 +228,33 @@
             "playback.props" = {
               "node.name" = "effect_output.dt900_eq";
               "node.passive" = true;
+              # ponytail: pin to GA102 HDMI — unpinned, WirePlumber auto-connects
+              # and re-latches the fifine SC3 after replug/profile churn.
+              "node.target" = "alsa_output.pci-0000_08_00.1.hdmi-stereo";
             };
           };
         }
       ];
     };
+
+  # 2026-10-14: WirePlumber's stored profile for the SC3 drifted to input-only,
+  # dropping the analog output sink entirely -> DT 900s went silent. Pin the
+  # profile every time the device appears. Input must be ANALOG — iec958 is the
+  # S/PDIF port, always silent (peak 0) and it ate the mic until 2026-10-15.
+  services.pipewire.wireplumber.extraConfig."51-dt900-sc3" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          { "device.name" = "alsa_card.usb-MV-SILICON_fifine_SC3_20190808-00"; }
+        ];
+        actions."update-props" = {
+          # ponytail: 2026-10-15 Cephalode confirmed SC3 is mic-only — pin
+          # input-only so its phantom output sink can never re-latch the
+          # EQ chain (the silence bug). Analog input stays mandatory: iec958
+          # is the dead S/PDIF port.
+          "device.profile" = "input:analog-stereo";
+        };
+      }
+    ];
+  };
 }

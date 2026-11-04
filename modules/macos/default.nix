@@ -9,6 +9,9 @@
   nixpkgs.overlays = [
     (final: prev: {
       notesmd-cli = final.callPackage ../../pkgs/notesmd-cli { };
+      # atuin's e2e_capture test is flaky under the macOS sandbox (fails here,
+      # passes on the NixOS hosts) — skip tests rather than block every rebuild.
+      atuin = prev.atuin.overrideAttrs (_: { doCheck = false; });
       # NOTE: no kitty override here. The nix kitty wrapper breaks its code
       # signature (empty AX tree -> invisible to OmniWM); macOS kitty is the
       # Homebrew cask in modules/macos/applications.nix. The nix wrapper is
@@ -28,7 +31,7 @@
     ./tcc-apps.nix
     ./ai.nix
     ./kanata.nix  # kanata = the remapper; retires Karabiner's engine at each boot
-    ./syncthing.nix
+    # syncthing removed 2026-10-31 (service retired on metasepia)
     # zen-omni-relay disabled 2026-09-19 (omni sync off on all machines).
     # Extensions renamed *.disabled-2026-09-18 in every Zen profile on
     # metasepia + loligo. Re-enable: restore import + rename dirs back.
