@@ -4,6 +4,7 @@
     inputs.nixos-wsl.nixosModules.default
     ../.
     ../../common
+    ../../../modules/nixos/syncthing.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";

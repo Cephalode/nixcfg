@@ -9,6 +9,7 @@
 {
   imports = [
     ../common
+    ./options.nix
   ];
 
   time.timeZone = "America/Toronto";
