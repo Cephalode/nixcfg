@@ -10,6 +10,10 @@ alias tree='tree --dirsfirst'
 alias cat='bat'
 alias ls='eza'
 
+# Obsidian / notes (vault: ~/dev/notes → iCloud on macOS, git clone elsewhere)
+alias notes='cd "$OBSIDIAN_MAIN_DIR"'
+alias vn='nvim -c "ObsidianQuickSwitch"'
+alias nn='$XDG_CONFIG_HOME/scripts/on'
 # Editors
 alias svim='sudoedit'
 alias claude='claude --dangerously-skip-permissions'

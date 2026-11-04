@@ -24,8 +24,7 @@ fi
 export EDITOR="nvim"
 export VISUAL="nvim"
 export SUDO_EDITOR="nvim"
-export OBSIDIAN_MAIN_DIR="$HOME"/notes/main
-export OBSIDIAN_WORK_DIR="$HOME"/notes/work
+export OBSIDIAN_MAIN_DIR="$HOME"/dev/notes
 
 # zsh history file
 export HISTFILE="$XDG_STATE_HOME"/zsh/history

@@ -18,6 +18,7 @@
   environment.systemPackages = with pkgs; [
     discordo
     discord
+    codex
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
   ];
 } // lib.optionalAttrs (system == "x86_64-linux" || system == "aarch64-linux") {

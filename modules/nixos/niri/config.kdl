@@ -3,6 +3,12 @@ spawn-at-startup "noctalia"
 input {
     keyboard {
         xkb {
+            // Caps Lock cannot latch, period: kanata owns the physical key on
+            // internal keyboards, but external keyboards and kanata's
+            // crash-restart gap pass raw caps through — this makes even those
+            // inert at the XKB layer. To clear a latch that's already set:
+            //   ssh <host> 'WAYLAND_DISPLAY=wayland-1 XDG_RUNTIME_DIR=/run/user/1000 wtype -m capslock'
+            options "caps:none"
         }
         numlock
     }
@@ -132,6 +138,12 @@ window-rule {
     match title="^Picture-in-Picture$"
     // match title="^moz-extension" // Currently does not work
     open-floating true
+}
+
+// Discord opens 800px wide
+window-rule {
+    match app-id="^discord$"
+    open-width 800
 }
 
 // Games Workspace
