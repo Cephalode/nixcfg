@@ -12,6 +12,9 @@ in
     # %admin (not a hardcoded username): the account was renamed sqibo ->
     # cephalode once already; group rule survives future renames.
     %admin ALL=(root) NOPASSWD: ${rebuild}/bin/darwin-rebuild-wrapper
+    # Agents get full passwordless sudo (Cephalode request, 2026-10-07).
+    # Group-based like the rule above — survives account renames.
+    %admin ALL=(ALL) NOPASSWD: ALL
   '';
 
   environment.systemPackages = [ rebuild ];

@@ -11,7 +11,10 @@
   nix = {
     settings = {
       # macOS account is `cephalode` (renamed from sqibo); NixOS hosts keep `sqibo`.
-      trusted-users = [ "root" "cephalode" "sqibo" ];
+      trusted-users =
+        [ "root" ]
+        ++ lib.optional pkgs.stdenv.isDarwin "cephalode"
+        ++ lib.optional pkgs.stdenv.isLinux "sqibo";
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
     };

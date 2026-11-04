@@ -63,9 +63,9 @@ layout {
     center-focused-column "never"
 
     preset-column-widths {
-        proportion 0.38196601125 // (1-1/phi)
+        proportion 0.23809524
         proportion 0.5
-        proportion 0.61803398875 // (1/phi)
+        proportion 0.76190476
     }
 
     preset-window-heights {
@@ -74,7 +74,7 @@ layout {
         proportion 0.61803398875 // (1/phi)
     }
 
-    default-column-width { proportion 0.38196601125; }
+    default-column-width { proportion 0.23809524; }
 
     focus-ring {
         off

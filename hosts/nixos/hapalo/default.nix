@@ -25,18 +25,6 @@
 
   # Run prebuilt dynamically-linked binaries (opencode)
   programs.nix-ld.enable = true;
-  # /dev/shm exhaustion kills steamwebhelper with SIGBUS while Master Duel runs
-  # (kernel-shmem pinned with no owner — 3rd occurrence 2026-10-08; remount
-  # self-heals the loop). Kernel default is 50% RAM = 16G, which the leak
-  # fills in ~1-2h. 32G was live-verified; remount does not survive boot, so
-  # pin it here. Find the leak properly before going bigger.
-  # /dev/shm exhaustion SIGBUSes steamwebhelper while Master Duel runs (3rd
-  # occurrence 2026-10-08). Default is 50% RAM = 16G; the leak fills it in
-  # ~1-2h. Native option — specialfs mounts it at this size at boot AND on
-  # every activation (a grow-service cannot: the built-in remount to default
-  # size then fails with usage above it).
-  boot.devShmSize = "32G";
-
   system.stateVersion = "25.05"; # Do not change
 
   # Primary account was renamed sqibo -> cephalode (live usermod, 2026-09-24);
@@ -63,8 +51,34 @@
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
+    # NVIDIA EGL leaves Bambu Studio's 3D viewport blank under Wayland.
+    # Wrap the cached package with the Nixpkgs Mesa/Zink workaround.
+    (symlinkJoin {
+      name = "bambu-studio-nvidia";
+      paths = [ bambu-studio ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/bambu-studio \
+          --set __GLX_VENDOR_LIBRARY_NAME mesa \
+          --set __EGL_VENDOR_LIBRARY_FILENAMES /run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json \
+          --set MESA_LOADER_DRIVER_OVERRIDE zink \
+          --set GALLIUM_DRIVER zink
+      '';
+    })
     cmus
     google-chrome
+    # OBS with NVENC: obs dlopens libnvidia-encode by soname, but driver libs
+    # live only in /run/opengl-driver/lib (never on the global loader path).
+    # Wrap OBS itself instead of setting LD_LIBRARY_PATH system-wide.
+    (symlinkJoin {
+      name = "obs-studio-nvenc";
+      paths = [ obs-studio ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/obs \
+          --prefix LD_LIBRARY_PATH : /run/opengl-driver/lib
+      '';
+    })
     inputs.bedrock-on-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.grok-build.packages.${pkgs.stdenv.hostPlatform.system}.default
 
@@ -235,9 +249,29 @@
             "playback.props" = {
               "node.name" = "effect_output.dt900_eq";
               "node.passive" = true;
+              # ponytail: pin to GA102 HDMI — unpinned, WirePlumber auto-connects
+              # and re-latches the fifine SC3 after replug/profile churn.
+              "node.target" = "alsa_output.pci-0000_08_00.1.hdmi-stereo";
             };
           };
         }
       ];
     };
+
+  # 2026-10-14: WirePlumber's stored profile for the SC3 drifted to input-only,
+  # dropping the analog output sink entirely -> DT 900s went silent. Pin the
+  # profile every time the device appears. Input must be ANALOG — iec958 is the
+  # S/PDIF port, always silent (peak 0) and it ate the mic until 2026-10-15.
+  services.pipewire.wireplumber.extraConfig."51-dt900-sc3" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          { "device.name" = "alsa_card.usb-MV-SILICON_fifine_SC3_20190808-00"; }
+        ];
+        actions."update-props" = {
+          "device.profile" = "output:analog-stereo+input:analog-stereo";
+        };
+      }
+    ];
+  };
 }

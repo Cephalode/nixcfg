@@ -14,6 +14,12 @@ alias ls='eza'
 alias svim='sudoedit'
 alias claude='claude --dangerously-skip-permissions'
 
+# Hermes profiles
+alias argonauta='hermes -p default'
+alias ocythoe='hermes -p ocythoe'
+alias lunalata='hermes -p lunalata'
+alias thaumo='hermes -p thaumo'
+
 # Command shortcuts
 alias hist='history | grep'
 alias srczsh='source $XDG_CONFIG_HOME/zsh/.zshrc; source $XDG_CONFIG_HOME/zsh/.zshenv'

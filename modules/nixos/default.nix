@@ -35,6 +35,12 @@
   ];
 
   config = {
+  # New nixpkgs zrythm wrapper hard-fails (XDG_DATA_DIRS #error in fixupPhase);
+  # pull from the pinned stable input until upstream fixes it.
+  nixpkgs.overlays = [
+    (final: prev: { zrythm = inputs.nixpkgs-stable.legacyPackages.${prev.system}.zrythm; })
+  ];
+
   programs = {
     zsh.enable = true;
   };
@@ -83,8 +89,6 @@ EOF
     {
       users = [ config.cephalode.nixosUser ];
       commands = [
-        # Agents get full passwordless sudo (Cephalode request, 2026-10-07).
-        { command = "ALL"; options = [ "NOPASSWD" ]; }
         {
           command = "/run/current-system/sw/bin/nix-env *";
           options = [ "NOPASSWD" "SETENV" ];
