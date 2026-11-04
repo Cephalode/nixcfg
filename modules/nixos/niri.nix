@@ -1,26 +1,4 @@
 { pkgs, ... }:
-let
-  # ponytail: pinned on the Aug-2026 nixpkgs lock — 0.8.2 has the Steam
-  # instant-closing-menus bug (focused OR popups), fixed by add27951 in 0.8.3
-  # (verified live on hapalo). Drop this pin when the nixpkgs input is updated.
-  xwayland-satellite = pkgs.xwayland-satellite.overrideAttrs (oa: rec {
-    version = "0.8.3";
-    src = pkgs.fetchFromGitHub {
-      owner = "Supreeeme";
-      repo = "xwayland-satellite";
-      tag = "v${version}";
-      hash = "sha256-eFEjCCniMCKeWU0PcZNv+tDYe08SLFPjRplyPY8OFt4=";
-    };
-    cargoHash = "sha256-gMGFvnbxM3hD5fmkSimaFd87GEf6BXFe/MGjoS6VNVU=";
-    # overrideAttrs alone does not reach the vendored-deps sub-derivation —
-    # rebuild it explicitly with the same hash.
-    cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-      inherit (oa) pname;
-      inherit src version;
-      hash = cargoHash;
-    };
-  });
-in
 {
   # ponytail: nixpkgs now ships programs.noctalia natively (nixos/modules/programs/wayland/noctalia.nix)
   # — no need to import inputs.noctalia.nixosModules.default (it would re-declare the same option).
