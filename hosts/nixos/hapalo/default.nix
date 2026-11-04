@@ -12,7 +12,15 @@
     ../.
     ./powerbtn.nix
     inputs.omdrop-nix.nixosModules.default
+    inputs.openwhispr.nixosModules.default
   ];
+
+  # Voice-to-text dictation (OpenWhispr). Upstream module also wires
+  # ydotoold + uinput for Wayland auto-paste under niri.
+  programs.openwhispr = {
+    enable = true;
+    users = [ "cephalode" ];
+  };
 
   networking.hostName = "hapalo";
 
@@ -56,8 +64,34 @@
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
   environment.systemPackages = with pkgs; [
+    # NVIDIA EGL leaves Bambu Studio's 3D viewport blank under Wayland.
+    # Wrap the cached package with the Nixpkgs Mesa/Zink workaround.
+    (symlinkJoin {
+      name = "bambu-studio-nvidia";
+      paths = [ bambu-studio ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/bambu-studio \
+          --set __GLX_VENDOR_LIBRARY_NAME mesa \
+          --set __EGL_VENDOR_LIBRARY_FILENAMES /run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json \
+          --set MESA_LOADER_DRIVER_OVERRIDE zink \
+          --set GALLIUM_DRIVER zink
+      '';
+    })
     cmus
     google-chrome
+    # OBS with NVENC: obs dlopens libnvidia-encode by soname, but driver libs
+    # live only in /run/opengl-driver/lib (never on the global loader path).
+    # Wrap OBS itself instead of setting LD_LIBRARY_PATH system-wide.
+    (symlinkJoin {
+      name = "obs-studio-nvenc";
+      paths = [ obs-studio ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/obs \
+          --prefix LD_LIBRARY_PATH : /run/opengl-driver/lib
+      '';
+    })
     inputs.bedrock-on-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.grok-build.packages.${pkgs.stdenv.hostPlatform.system}.default
 

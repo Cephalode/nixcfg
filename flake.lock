@@ -201,11 +201,11 @@
     },
     "nixpkgs-fresh": {
       "locked": {
-        "lastModified": 1791366222,
-        "narHash": "sha256-o0N4g6uSOIppU7CGToNvGlMf5vC+B6O6ukFHKY/TKOY=",
+        "lastModified": 1792782095,
+        "narHash": "sha256-KtL+p7f7jY34cO5Mt0/hUZNE3spnINk7hwpYxM2XLC4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "39ad350a0602fa0a58a544344e3e9187526ea45c",
+        "rev": "901c54c08bdc20e00c2b3c73716b97497b1b3c74",
         "type": "github"
       },
       "original": {
@@ -314,6 +314,26 @@
         "type": "github"
       }
     },
+    "openwhispr": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792107650,
+        "narHash": "sha256-4ryWlVw8cyeXxLyYmbGr+J932EYqTIgwygPhycdAIEc=",
+        "owner": "OpenWhispr",
+        "repo": "openwhispr",
+        "rev": "03cedd4f1c72bd45daea5c2d5a954313b9dcd22c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "OpenWhispr",
+        "repo": "openwhispr",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "bedrock-on-linux": "bedrock-on-linux",
@@ -328,6 +348,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "noctalia": "noctalia",
         "omdrop-nix": "omdrop-nix",
+        "openwhispr": "openwhispr",
         "wrappers": "wrappers",
         "zen-browser": "zen-browser",
         "zen-spaces": "zen-spaces"

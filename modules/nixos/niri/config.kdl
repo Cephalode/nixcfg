@@ -69,9 +69,9 @@ layout {
     center-focused-column "never"
 
     preset-column-widths {
-        proportion 0.38196601125 // (1-1/phi)
+        proportion 0.23809524
         proportion 0.5
-        proportion 0.61803398875 // (1/phi)
+        proportion 0.76190476
     }
 
     preset-window-heights {
@@ -80,7 +80,7 @@ layout {
         proportion 0.61803398875 // (1/phi)
     }
 
-    default-column-width { proportion 0.38196601125; }
+    default-column-width { proportion 0.23809524; }
 
     focus-ring {
         off
@@ -143,7 +143,7 @@ window-rule {
 // Discord opens 800px wide
 window-rule {
     match app-id="^discord$"
-    open-width 800
+    default-column-width { fixed 800; }
 }
 
 // Games Workspace
@@ -152,8 +152,11 @@ window-rule {
   open-on-workspace "game"
 }
 window-rule {
-  match app-id="^steam-"
-  open-fullscreen true
+  match app-id="^steam[_-]"
+  match title="^masterduel$"
+  open-on-workspace "game"
+  open-floating false
+  open-fullscreen false
 }
 
 // Rounded corners for all windows
@@ -164,6 +167,19 @@ window-rule {
   draw-border-with-background false
   // Floating windows anchor top-right instead of center
   default-floating-position x=0 y=0 relative-to="top-right"
+}
+
+// Browser video mode: 16:9 borderless. Active when the Hyper+Shift+W
+// "video mode" bind sizes the browser to 2048 logical px (= 2560 device px
+// at scale 1.25, the exact 16:9 width of this 3440x1440 panel). Radius off
+// so corners stay square, like true fullscreen.
+window-rule {
+    match app-id="^zen-twilight$"
+    geometry-corner-radius 0
+    clip-to-geometry true
+    draw-border-with-background false
+    border { off; }
+    focus-ring { off; }
 }
 
 // Notifications
@@ -319,6 +335,16 @@ binds {
     Ctrl+Alt+Super+Shift+9 { move-column-to-workspace 9; }
 
     Ctrl+Alt+Super+Shift+F { fullscreen-window; }
+    // Video mode: size the browser to 16:9 (2048 logical px = 2560 device
+    // px at scale 1.25) and center it, so tiling siblings on the sides stay
+    // visible on this ultrawide. niri has no is-fullscreen matcher, so this
+    // is a manual "fake fullscreen" — pair with the borderless zen rule.
+    // Runs the niri-video-mode script: resizes the focused browser to the
+    // 16:9 width (2048 logical = 2560 device px) and centers it. No-op when
+    // a non-browser window is focused. If the browser is true-fullscreen,
+    // it toggles that off first — so this also recovers from F11.
+    Ctrl+Alt+Super+Shift+W repeat=false { spawn "niri-video-mode"; }
+    Ctrl+Alt+Super+Shift+B repeat=false { center-column; }
     Ctrl+Alt+Super+Shift+C { center-visible-columns; }
     Ctrl+Alt+Super+Shift+V { switch-focus-between-floating-and-tiling; }
     Ctrl+Alt+Super+Shift+R { switch-preset-window-height; }
