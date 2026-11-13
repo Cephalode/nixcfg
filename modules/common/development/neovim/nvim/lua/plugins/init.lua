@@ -2,7 +2,7 @@
 local all = {}
 for _, mod in ipairs({
   "oil", "pick", "treesitter", "lsp", "completion",
-  "format", "lint", "git", "obsidian", "ui",
+  "format", "lint", "git", "obsidian", "excalidraw", "ui",
 }) do
   vim.list_extend(all, require("plugins." .. mod))
 end

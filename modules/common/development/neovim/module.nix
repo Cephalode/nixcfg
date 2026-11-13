@@ -24,6 +24,20 @@
     lazy = true;
     data = pkgs.vimPlugins.obsidian-nvim;
   };
+  config.specs.excalidraw = {
+    lazy = true;
+    data = pkgs.vimUtils.buildVimPlugin {
+      pname = "excalidraw.nvim";
+      version = "unstable-2025-01-21";
+      src = pkgs.fetchFromGitHub {
+        owner = "marcocofano";
+        repo = "excalidraw.nvim";
+        rev = "0d1babd50e6dd3e41359df03946d0e4d1c7f1f5f";
+        hash = "sha256-oywEaz8Cm9eOb3d0nIlimm+bq/IioEpIAxeo7n0+UVc=";
+      };
+      dependencies = with pkgs.vimPlugins; [ telescope-nvim plenary-nvim ];
+    };
+  };
   config.specs.completion = {
     lazy = true;
     data = with pkgs.vimPlugins; [ blink-cmp friendly-snippets ];
