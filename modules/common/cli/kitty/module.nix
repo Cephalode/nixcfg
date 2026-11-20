@@ -33,7 +33,7 @@ in
         "ctrl+v" = "paste_from_clipboard"; # mac Cmd+V
         "super+c" = "copy_or_interrupt"; # mac Ctrl+C (SIGINT position)
         # corner Ctrl+V: after the kanata swap it arrives as Super+V. Don't
-        # paste it — forward the raw ^V so nvim keeps visual block mode.
+        # paste it. Forward the raw ^V to terminal applications.
         "super+v" = "send_text all \\x16"; # mac corner Ctrl+V
       });
 

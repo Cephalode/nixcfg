@@ -20,10 +20,6 @@ if [[ -d /opt/homebrew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Default editor
-export EDITOR="nvim"
-export VISUAL="nvim"
-export SUDO_EDITOR="nvim"
 export OBSIDIAN_MAIN_DIR="$HOME"/dev/notes
 
 # zsh history file

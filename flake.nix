@@ -67,12 +67,6 @@
     let
       inherit (self) outputs;
 
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
-
       mkNixosHost = { host, moduleSet, system }: nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit outputs inputs system; };
@@ -80,13 +74,6 @@
       };
     in
     {
-      packages = forAllSystems (system: {
-        nvim = inputs.wrappers.lib.evalPackage [
-          ./modules/common/development/neovim/module.nix
-          { pkgs = import nixpkgs { inherit system; }; }
-        ];
-      });
-
       nixosConfigurations = {
         hapalo = mkNixosHost { host = "hapalo"; moduleSet = ./modules/nixos; system = "x86_64-linux"; };
         loligo = mkNixosHost { host = "loligo"; moduleSet = ./modules/nixos; system = "x86_64-linux"; };

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Obsidian new note (from ZarenCodes, adapted)
-# nn "example note" -> [01] Rough Note/YYYY-MM-DD-example-note.md in nvim
+# nn "example note" opens [01] Rough Note/YYYY-MM-DD-example-note.md in $EDITOR.
 
 if [ -z "$1" ]; then
   echo "Error: A file name must be set, e.g. nn \"example note\"."
@@ -14,4 +14,4 @@ fi
 file_name=$(echo "$1" | tr ' ' '-')
 target="$OBSIDIAN_MAIN_DIR/[01] Rough Note/$(date "+%Y-%m-%d")-${file_name}.md"
 mkdir -p "$(dirname "$target")"
-nvim "$target"
+"${EDITOR:-vi}" "$target"

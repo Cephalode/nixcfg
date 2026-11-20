@@ -116,7 +116,6 @@ in
 
       # ── Session persistence ──────────────────────────────
       set -g @resurrect-capture-pane-contents 'on'
-      set -g @resurrect-strategy-nvim 'session'
       set -g @continuum-restore 'on'
       set -g @continuum-save-interval '10'
 
