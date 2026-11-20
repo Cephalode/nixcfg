@@ -9,7 +9,6 @@
   imports = [
     ../common
     ./devices
-    ./niri.nix
     ./niri
     ./noctalia
     ./security.nix

@@ -2,7 +2,7 @@
 #
 # This module symlinks config.toml into ~/.config/noctalia/ via user
 # systemd-tmpfiles (same pattern as the niri config symlink). noctalia itself
-# is installed by the nixpkgs-native programs.noctalia in ../niri.nix, and
+# is installed by the nixpkgs-native programs.noctalia in ../niri/default.nix, and
 # niri spawns it via spawn-at-startup (systemd.enable = false there — the
 # service races Wayland at login).
 #
